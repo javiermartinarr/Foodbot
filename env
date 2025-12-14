@@ -1,0 +1,28 @@
+# ============================================
+# VARIABLES DE ENTORNO - SUPABASE
+# ============================================
+# 
+# Copia este archivo a ".env" y rellena con tus valores reales:
+#   cp .env.example .env
+#
+# ⚠️ NUNCA subas el archivo .env a GitHub
+# ============================================
+
+# URL de tu proyecto Supabase
+# La encuentras en: Settings → API → Project URL
+SUPABASE_URL=https://tu-proyecto-id.supabase.co
+
+# Service Role Key (para escritura)
+# La encuentras en: Settings → API → service_role (secret)
+# ⚠️ Esta key tiene acceso TOTAL a tu base de datos. No la compartas.
+SUPABASE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+
+# ============================================
+# PARA EL FUTURO (aún no se usan)
+# ============================================
+
+# API Key de Google Maps (para geocoding)
+# GOOGLE_MAPS_API_KEY=AIza...
+
+# API Key de Gemini (para el chatbot)
+# GEMINI_API_KEY=...
