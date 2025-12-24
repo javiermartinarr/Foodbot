@@ -337,7 +337,6 @@ function Explorar({ restaurantes, loading }) {
                 </div>
               </div>
               
-              {/*nuevo bloque de codigo para las url web y carta*/}
               {(selectedRestaurante.url_web || selectedRestaurante.url_carta) && (
                 <div className="w-full mb-4">
                   {selectedRestaurante.url_web && (
