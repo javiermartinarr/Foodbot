@@ -1,5 +1,41 @@
 import { useState } from 'react'
 
+// SVG Icon for Top Choice badge
+function TopChoiceIcon({ className }) {
+  return (
+    <svg 
+      className={className}
+      viewBox="0 0 16 16" 
+      fill="none" 
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path 
+        d="M8 1L9.5 6L14 6.5L10.5 10L11.5 14.5L8 12L4.5 14.5L5.5 10L2 6.5L6.5 6L8 1Z" 
+        fill="currentColor"
+        stroke="currentColor"
+        strokeWidth="0.5"
+      />
+    </svg>
+  )
+}
+
+// Function to get plain color background class based on score
+function getScoreGradient(score) {
+  if (!score) return 'bg-gray-300 border-[0.5px] border-gray-400'
+  
+  if (score >= 4.5) {
+    return 'bg-green-200 border-[0.5px] border-gray-400'
+  } else if (score >= 4.0) {
+    return 'bg-green-100 border-[0.5px] border-gray-400'
+  } else if (score >= 3.5) {
+    return 'bg-amber-200 border-[0.5px] border-gray-400'
+  } else if (score >= 3.0) {
+    return 'bg-orange-200 border-[0.5px] border-gray-400'
+  } else {
+    return 'bg-gray-200 border-[0.5px] border-gray-400'
+  }
+}
+
 function Explorar({ restaurantes, loading }) {
   const [selectedRestaurante, setSelectedRestaurante] = useState(null)
   const [filtros, setFiltros] = useState({
@@ -175,8 +211,12 @@ function Explorar({ restaurantes, loading }) {
                     {restaurante.tipo_comida} {restaurante.subtipo_comida && `· ${restaurante.subtipo_comida}`}
                   </p>
                 </div>
-                <div className="flex items-center gap-1 bg-gray-900 text-white px-2.5 py-1 rounded-lg ml-2">
-                  <span className="text-xs">⭐</span>
+                <div className={`flex items-center gap-1 ${getScoreGradient(restaurante.puntuacion)} text-gray-900 px-2.5 py-1 rounded-lg ml-2`}>
+                  {restaurante.destacado ? (
+                    <TopChoiceIcon className="w-3 h-3" />
+                  ) : (
+                    <span className="text-xs">⭐</span>
+                  )}
                   <span className="font-semibold text-xs">{restaurante.puntuacion?.toFixed(1) || '-'}</span>
                 </div>
               </div>
@@ -278,9 +318,14 @@ function Explorar({ restaurantes, loading }) {
 
             <div className="p-6 space-y-6">
               <div className="flex items-center gap-4">
-                <div className="bg-gray-900 text-white px-5 py-3 rounded-2xl">
-                  <span className="text-3xl font-bold">{selectedRestaurante.puntuacion?.toFixed(1) || '-'}</span>
-                  <span className="text-gray-400 text-sm ml-1">/ 5</span>
+                <div className={`${getScoreGradient(selectedRestaurante.puntuacion)} text-gray-900 px-5 py-3 rounded-2xl flex items-center gap-2`}>
+                  {selectedRestaurante.destacado && (
+                    <TopChoiceIcon className="w-4 h-4" />
+                  )}
+                  <div>
+                    <span className="text-3xl font-bold">{selectedRestaurante.puntuacion?.toFixed(1) || '-'}</span>
+                    <span className="text-gray-700 text-sm ml-1">/ 5</span>
+                  </div>
                 </div>
                 <div>
                   <p className="font-medium text-gray-900">{selectedRestaurante.precio_categoria}</p>

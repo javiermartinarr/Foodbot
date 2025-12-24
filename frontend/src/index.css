@@ -1,1 +1,27 @@
 @import "tailwindcss";
+
+@theme {
+  /* Soft pastel food-themed palette - Olive Green */
+  --color-pastel-olive-50: #f5f7f2;
+  --color-pastel-olive-100: #e8ede3;
+  --color-pastel-olive-200: #d4ddc8;
+  --color-pastel-olive-300: #b5c5a3;
+  --color-pastel-olive-400: #94a87a;
+  --color-pastel-olive-500: #7a8f5f;
+  
+  /* Soft pastel food-themed palette - Sage Green */
+  --color-pastel-sage-50: #f6f7f4;
+  --color-pastel-sage-100: #e9ede6;
+  --color-pastel-sage-200: #d3d9cc;
+  --color-pastel-sage-300: #b0bca5;
+  --color-pastel-sage-400: #8a9a7a;
+  --color-pastel-sage-500: #6d7d5a;
+  
+  /* Soft pastel food-themed palette - Cream */
+  --color-pastel-cream-50: #fefbf7;
+  --color-pastel-cream-100: #fdf6ed;
+  --color-pastel-cream-200: #faecd5;
+  --color-pastel-cream-300: #f5d9b5;
+  --color-pastel-cream-400: #eec28a;
+  --color-pastel-cream-500: #e5a85f;
+}
