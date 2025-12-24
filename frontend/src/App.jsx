@@ -44,35 +44,37 @@ function App() {
         <div className="max-w-7xl mx-auto px-6">
           {/* Título y estado */}
           <div className="flex items-center justify-between py-4">
-            <div>
-              <h1 className="text-xl font-semibold text-gray-900 tracking-tight">
-                Foodie Madrid
+            <div className="flex-1"></div>
+            <div className="flex items-center gap-2">
+              <h1 className="text-3xl font-semibold text-gray-900 tracking-tight">
+                Foodbot
               </h1>
-              <p className="text-xs text-gray-500">
-                by Javier
+              <p className="text-sm text-gray-500 self-center">
+                by Alba and Javi
               </p>
             </div>
-            <div className="flex items-center gap-2 text-xs text-gray-400">
-              <span className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></span>
-              {restaurantes.length} restaurantes
+            <div className="flex-1 flex items-center justify-end">
+              <div className="flex items-center gap-2 text-xs text-gray-400">
+                <span className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></span>
+                {restaurantes.length} restaurantes
+              </div>
             </div>
           </div>
 
           {/* Pestañas de navegación */}
-          <nav className="flex gap-1 -mb-px">
+          <nav className="flex gap-1 -mb-px justify-center">
             {pestanas.map(pestana => (
               <button
                 key={pestana.id}
                 onClick={() => setPestanaActiva(pestana.id)}
                 className={`
-                  px-5 py-3 text-sm font-medium rounded-t-xl transition-all
+                  px-5 py-3 text-sm font-medium rounded-t-xl transition-all text-center
                   ${pestanaActiva === pestana.id
                     ? 'bg-gray-100 text-gray-900'
                     : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'
                   }
                 `}
               >
-                <span className="mr-2">{pestana.icono}</span>
                 {pestana.nombre}
               </button>
             ))}

@@ -153,50 +153,87 @@ function Explorar({ restaurantes, loading }) {
           </button>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {restaurantesFiltrados.map(restaurante => (
             <article
               key={restaurante.id}
               onClick={() => setSelectedRestaurante(restaurante)}
-              className="group bg-white rounded-3xl shadow-sm border border-gray-200/50 p-6 cursor-pointer hover:shadow-xl hover:shadow-gray-200/50 hover:-translate-y-1 active:scale-[0.98] transition-all duration-300"
+              className="group bg-white rounded-2xl shadow-sm border border-gray-200/50 p-4 cursor-pointer hover:shadow-xl hover:shadow-gray-200/50 hover:-translate-y-1 active:scale-[0.98] transition-all duration-300 relative"
             >
-              <div className="flex justify-between items-start mb-4">
+              {restaurante.destacado && (
+                <div className="absolute top-2 right-2 bg-amber-500 text-white text-xs px-2 py-0.5 rounded-full font-semibold">
+                  ⭐ Top Pick
+                </div>
+              )}
+              
+              <div className="flex justify-between items-start mb-3">
                 <div className="flex-1 min-w-0">
-                  <h3 className="font-semibold text-gray-900 text-lg truncate group-hover:text-gray-700 transition-colors">
+                  <h3 className="font-semibold text-gray-900 text-base truncate group-hover:text-gray-700 transition-colors">
                     {restaurante.nombre}
                   </h3>
-                  <p className="text-sm text-gray-500 mt-0.5">
+                  <p className="text-xs text-gray-500 mt-0.5">
                     {restaurante.tipo_comida} {restaurante.subtipo_comida && `· ${restaurante.subtipo_comida}`}
                   </p>
                 </div>
-                <div className="flex items-center gap-1 bg-gray-900 text-white px-3 py-1.5 rounded-xl ml-3">
-                  <span className="text-sm">⭐</span>
-                  <span className="font-semibold text-sm">{restaurante.puntuacion?.toFixed(1) || '-'}</span>
+                <div className="flex items-center gap-1 bg-gray-900 text-white px-2.5 py-1 rounded-lg ml-2">
+                  <span className="text-xs">⭐</span>
+                  <span className="font-semibold text-xs">{restaurante.puntuacion?.toFixed(1) || '-'}</span>
                 </div>
               </div>
 
-              <div className="flex flex-wrap gap-2 mb-4">
-                <span className="inline-flex items-center gap-1.5 bg-gray-100 text-gray-700 text-xs px-3 py-1.5 rounded-full font-medium">
+              <div className="flex flex-wrap gap-1.5 mb-3">
+                <span className="inline-flex items-center gap-1 bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded-full font-medium">
                   📍 {restaurante.barrio}
                 </span>
-                <span className="inline-flex items-center gap-1.5 bg-gray-100 text-gray-700 text-xs px-3 py-1.5 rounded-full font-medium">
+                <span className="inline-flex items-center gap-1 bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded-full font-medium">
                   {restaurante.precio_categoria}
+                  {restaurante.precio_min && restaurante.precio_max && (
+                    <span className="ml-1 text-gray-500">
+                      ({restaurante.precio_min}-{restaurante.precio_max}€)
+                    </span>
+                  )}
                 </span>
-                <span className="inline-flex items-center gap-1.5 bg-gray-100 text-gray-700 text-xs px-3 py-1.5 rounded-full font-medium">
+                <span className="inline-flex items-center gap-1 bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded-full font-medium">
                   {restaurante.ambiente}
                 </span>
               </div>
 
-              {restaurante.plato_recomendado && (
-                <div className="bg-amber-50 rounded-2xl p-3 mb-4">
-                  <p className="text-xs text-amber-600 font-medium mb-0.5">Pedir sí o sí</p>
-                  <p className="text-sm text-amber-900 font-medium">{restaurante.plato_recomendado}</p>
+              {restaurante.tags && restaurante.tags.length > 0 && (
+                <div className="flex flex-wrap gap-1.5 mb-3">
+                  {restaurante.tags.slice(0, 3).map((tag, idx) => (
+                    <span key={idx} className="inline-flex items-center gap-1 bg-blue-50 text-blue-700 text-xs px-2 py-1 rounded-full font-medium">
+                      {tag}
+                    </span>
+                  ))}
                 </div>
               )}
 
-              <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+              {restaurante.mejor_para && restaurante.mejor_para.length > 0 && (
+                <div className="flex flex-wrap gap-1.5 mb-3">
+                  {restaurante.mejor_para.slice(0, 2).map((ocasion, idx) => (
+                    <span key={idx} className="inline-flex items-center gap-1 bg-purple-50 text-purple-700 text-xs px-2 py-1 rounded-full font-medium">
+                      {ocasion}
+                    </span>
+                  ))}
+                </div>
+              )}
+
+              {restaurante.plato_recomendado && (
+                <div className="bg-amber-50 rounded-xl p-2 mb-3">
+                  <p className="text-xs text-amber-600 font-medium mb-0.5">Recomendacion</p>
+                  <p className="text-xs text-amber-900 font-medium">{restaurante.plato_recomendado}</p>
+                </div>
+              )}
+
+              <div className="flex items-center justify-between pt-3 border-t border-gray-100">
                 <span className="text-xs text-gray-400">
-                  {restaurante.acepta_reservas ? '✓ Acepta reservas' : 'Sin reservas'}
+                  {restaurante.requiere_reserva ? (
+                    <span className="text-amber-600 font-medium">⚠️ Requiere reserva</span>
+                  ) : restaurante.acepta_reservas ? (
+                    '✓ Acepta reservas'
+                  ) : (
+                    'Sin reservas'
+                  )}
                 </span>
                 <span className="text-xs text-gray-400 group-hover:text-gray-600 transition-colors">
                   Ver más →
@@ -219,7 +256,14 @@ function Explorar({ restaurantes, loading }) {
           >
             <div className="sticky top-0 bg-white rounded-t-3xl border-b border-gray-100 p-6 flex justify-between items-start">
               <div>
-                <h2 className="text-2xl font-semibold text-gray-900">{selectedRestaurante.nombre}</h2>
+                <div className="flex items-center gap-2">
+                  <h2 className="text-2xl font-semibold text-gray-900">{selectedRestaurante.nombre}</h2>
+                  {selectedRestaurante.destacado && (
+                    <span className="bg-amber-500 text-white text-xs px-2 py-1 rounded-full font-semibold">
+                      ⭐ Top Pick
+                    </span>
+                  )}
+                </div>
                 <p className="text-gray-500 mt-1">
                   {selectedRestaurante.tipo_comida} {selectedRestaurante.subtipo_comida && `· ${selectedRestaurante.subtipo_comida}`}
                 </p>
@@ -248,17 +292,20 @@ function Explorar({ restaurantes, loading }) {
                 </div>
               </div>
 
-              {selectedRestaurante.plato_recomendado && (
-                <div className="bg-amber-50 rounded-2xl p-4">
-                  <p className="text-sm text-amber-600 font-medium mb-1">⭐ Plato recomendado</p>
-                  <p className="text-amber-900 font-semibold">{selectedRestaurante.plato_recomendado}</p>
-                </div>
-              )}
-
-              {selectedRestaurante.descripcion_personal && (
-                <div>
-                  <p className="text-sm text-gray-500 font-medium mb-2">Mi opinión</p>
-                  <p className="text-gray-700 leading-relaxed">{selectedRestaurante.descripcion_personal}</p>
+              {(selectedRestaurante.plato_recomendado || selectedRestaurante.descripcion_personal) && (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {selectedRestaurante.plato_recomendado && (
+                    <div className="bg-amber-50 rounded-2xl p-4">
+                      <p className="text-sm text-amber-600 font-medium mb-1">⭐ Recomendacion</p>
+                      <p className="text-amber-900 font-semibold">{selectedRestaurante.plato_recomendado}</p>
+                    </div>
+                  )}
+                  {selectedRestaurante.descripcion_personal && (
+                    <div className="bg-gray-50 rounded-2xl p-4">
+                      <p className="text-sm text-gray-500 font-medium mb-2">Descripcion general</p>
+                      <p className="text-gray-700 leading-relaxed text-sm">{selectedRestaurante.descripcion_personal}</p>
+                    </div>
+                  )}
                 </div>
               )}
 
@@ -292,6 +339,19 @@ function Explorar({ restaurantes, loading }) {
                     {selectedRestaurante.mejor_para.map(ocasion => (
                       <span key={ocasion} className="bg-blue-50 text-blue-700 text-sm px-3 py-1.5 rounded-full font-medium">
                         {ocasion}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {selectedRestaurante.tags && selectedRestaurante.tags.length > 0 && (
+                <div>
+                  <p className="text-sm text-gray-500 font-medium mb-2">Características</p>
+                  <div className="flex flex-wrap gap-2">
+                    {selectedRestaurante.tags.map((tag, idx) => (
+                      <span key={idx} className="bg-purple-50 text-purple-700 text-sm px-3 py-1.5 rounded-full font-medium">
+                        {tag}
                       </span>
                     ))}
                   </div>
