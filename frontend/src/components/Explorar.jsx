@@ -324,7 +324,7 @@ function Explorar({ restaurantes, loading }) {
                   )}
                   <div>
                     <span className="text-3xl font-bold">{selectedRestaurante.puntuacion?.toFixed(1) || '-'}</span>
-                    <span className="text-gray-700 text-sm ml-1">/ 5</span>
+                    <span className="text-gray-700 text-sm ml-1">/ 5.0</span>
                   </div>
                 </div>
                 <div>
@@ -336,6 +336,32 @@ function Explorar({ restaurantes, loading }) {
                   </p>
                 </div>
               </div>
+              
+              {/*nuevo bloque de codigo para las url web y carta*/}
+              {(selectedRestaurante.url_web || selectedRestaurante.url_carta) && (
+                <div className="w-full mb-4">
+                  {selectedRestaurante.url_web && (
+                    <a
+                      href={selectedRestaurante.url_web}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block w-full text-center text-base font-medium text-blue-700 underline hover:no-underline bg-blue-50 rounded-xl px-4 py-2 mb-2"
+                    >
+                      🌐 Web oficial
+                    </a>
+                  )}
+                  {selectedRestaurante.url_carta && (
+                    <a
+                      href={selectedRestaurante.url_carta}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block w-full text-center text-base font-medium text-amber-700 underline hover:no-underline bg-amber-50 rounded-xl px-4 py-2"
+                    >
+                      📋 Ver carta/menú
+                    </a>
+                  )}
+                </div>
+              )}
 
               {(selectedRestaurante.plato_recomendado || selectedRestaurante.descripcion_personal) && (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
