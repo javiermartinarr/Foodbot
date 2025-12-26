@@ -31,3 +31,34 @@
   --color-text-dark: #1F2937;
   --color-cream-light: #FFF7ED;
 }
+
+/* Estilos para el popup de Leaflet - botón cerrar estilo Explorar */
+.leaflet-popup-close-button {
+  width: 32px !important;
+  height: 32px !important;
+  background: #F3F4F6 !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 16px !important;
+  color: #1F2937 !important;
+  top: 8px !important;
+  right: 8px !important;
+  transition: background 0.2s !important;
+}
+
+.leaflet-popup-close-button:hover {
+  background: #E5E7EB !important;
+  color: #1F2937 !important;
+}
+
+/* Quitar el borde y sombra por defecto del popup */
+.leaflet-popup-content-wrapper {
+  border-radius: 16px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+}
+
+.leaflet-popup-tip {
+  background: white !important;
+}
