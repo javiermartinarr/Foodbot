@@ -1,4 +1,4 @@
-﻿import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import { Icon, DivIcon } from 'leaflet'
 
 // Fix para los iconos de Leaflet en React
@@ -220,7 +220,7 @@ function Mapa({ restaurantes }) {
 
                   {/* Botón Google Maps */}
                   {restaurante.google_maps_url && (
-<a 
+                    <a 
                       href={restaurante.google_maps_url} 
                       target="_blank" 
                       rel="noopener noreferrer"
@@ -240,7 +240,6 @@ function Mapa({ restaurantes }) {
                       Abrir en Google Maps →
                     </a>
                   )}
-
                 </div>
               </Popup>
             </Marker>
