@@ -23,37 +23,60 @@ export const config = {
   - Ofrece alternativas cercanas si las hay`
   
   export default async function handler(req) {
+    // Log para verificar que la función se ejecuta
+    console.log('API llamada, método:', req.method)
+    
     if (req.method !== 'POST') {
-      return new Response('Method not allowed', { status: 405 })
+      return new Response(JSON.stringify({ error: 'Method not allowed' }), { 
+        status: 405,
+        headers: { 'Content-Type': 'application/json' }
+      })
+    }
+  
+    // Verificar que existe la API key
+    const apiKey = process.env.GEMINI_API_KEY
+    console.log('API Key existe:', !!apiKey)
+    console.log('API Key length:', apiKey?.length || 0)
+    
+    if (!apiKey) {
+      return new Response(JSON.stringify({ error: 'API key no configurada' }), { 
+        status: 500,
+        headers: { 'Content-Type': 'application/json' }
+      })
     }
   
     try {
-      const { mensaje, restaurantes } = await req.json()
+      const body = await req.json()
+      const { mensaje, restaurantes } = body
+      
+      console.log('Mensaje recibido:', mensaje)
+      console.log('Restaurantes recibidos:', restaurantes?.length || 0)
   
-      // Preparar contexto con los restaurantes
-      const restaurantesContext = restaurantes
-        .map(r => `
-  - **${r.nombre}** (${r.tipo_comida}${r.subtipo_comida ? ` - ${r.subtipo_comida}` : ''})
-    Barrio: ${r.barrio} | Precio: ${r.precio_categoria} ${r.precio_min && r.precio_max ? `(${r.precio_min}-${r.precio_max}€)` : ''}
-    Puntuación: ${r.puntuacion?.toFixed(1) || 'Sin puntuar'}/5
-    ${r.plato_recomendado ? `Pedir: ${r.plato_recomendado}` : ''}
-    ${r.descripcion_personal ? `Mi opinión: ${r.descripcion_personal}` : ''}
-    ${r.ambiente ? `Ambiente: ${r.ambiente}` : ''}
-    ${r.requiere_reserva ? '⚠️ Requiere reserva' : r.acepta_reservas ? 'Acepta reservas' : 'Sin reservas'}
-    ${r.mejor_para?.length ? `Ideal para: ${r.mejor_para.join(', ')}` : ''}
-  `).join('\n')
+      if (!mensaje) {
+        return new Response(JSON.stringify({ error: 'Mensaje vacío' }), { 
+          status: 400,
+          headers: { 'Content-Type': 'application/json' }
+        })
+      }
+  
+      // Preparar contexto con los restaurantes (limitado a 20 para no exceder tokens)
+      const restaurantesLimitados = restaurantes?.slice(0, 20) || []
+      const restaurantesContext = restaurantesLimitados
+        .map(r => `- ${r.nombre} (${r.tipo_comida}): ${r.barrio}, ${r.precio_categoria}, ${r.puntuacion?.toFixed(1) || '?'}/5${r.plato_recomendado ? `, Pedir: ${r.plato_recomendado}` : ''}`)
+        .join('\n')
   
       const prompt = `${SYSTEM_PROMPT}
   
-  ESTOS SON MIS RESTAURANTES (tu base de datos):
+  MIS RESTAURANTES:
   ${restaurantesContext}
   
-  PREGUNTA DEL USUARIO:
-  ${mensaje}`
+  USUARIO: ${mensaje}`
+  
+      console.log('Llamando a Gemini...')
   
       // Llamar a Gemini
       const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
         {
           method: 'POST',
           headers: {
@@ -65,16 +88,24 @@ export const config = {
             }],
             generationConfig: {
               temperature: 0.7,
-              maxOutputTokens: 1024,
+              maxOutputTokens: 512,
             }
           })
         }
       )
   
+      console.log('Gemini response status:', response.status)
+  
       const data = await response.json()
       
+      console.log('Gemini response:', JSON.stringify(data).slice(0, 200))
+      
       if (data.error) {
-        throw new Error(data.error.message)
+        console.error('Gemini error:', data.error)
+        return new Response(JSON.stringify({ error: data.error.message }), { 
+          status: 500,
+          headers: { 'Content-Type': 'application/json' }
+        })
       }
   
       const respuesta = data.candidates?.[0]?.content?.parts?.[0]?.text || 'No pude generar una respuesta'
@@ -84,9 +115,9 @@ export const config = {
       })
   
     } catch (error) {
-      console.error('Error:', error)
+      console.error('Error completo:', error.message, error.stack)
       return new Response(
-        JSON.stringify({ error: 'Error procesando la solicitud' }), 
+        JSON.stringify({ error: `Error: ${error.message}` }), 
         { status: 500, headers: { 'Content-Type': 'application/json' } }
       )
     }

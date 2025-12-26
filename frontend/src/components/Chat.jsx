@@ -51,7 +51,7 @@ function Chat({ restaurantes }) {
       console.error('Error:', error)
       setMensajes(prev => [...prev, { 
         tipo: 'bot', 
-        texto: 'Ups, algo ha fallado. ¿Puedes intentarlo de nuevo?' 
+        texto: `Error: ${error.message}. Revisa la consola para más detalles.`
       }])
     } finally {
       setLoading(false)
