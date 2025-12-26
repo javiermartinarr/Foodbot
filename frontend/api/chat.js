@@ -59,8 +59,8 @@ export const config = {
         })
       }
   
-      // Preparar contexto con los restaurantes (limitado a 20 para no exceder tokens)
-      const restaurantesLimitados = restaurantes?.slice(0, 20) || []
+      // Preparar contexto con los restaurantes
+      const restaurantesLimitados = restaurantes || []
       const restaurantesContext = restaurantesLimitados
         .map(r => `- ${r.nombre} (${r.tipo_comida}): ${r.barrio}, ${r.precio_categoria}, ${r.puntuacion?.toFixed(1) || '?'}/5${r.plato_recomendado ? `, Pedir: ${r.plato_recomendado}` : ''}`)
         .join('\n')
