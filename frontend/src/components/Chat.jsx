@@ -27,7 +27,6 @@ function Chat({ restaurantes }) {
     const mensajeUsuario = input.trim()
     setInput('')
     
-    // Añadir mensaje del usuario
     setMensajes(prev => [...prev, { tipo: 'user', texto: mensajeUsuario }])
     setLoading(true)
 
@@ -63,7 +62,8 @@ function Chat({ restaurantes }) {
     "¿Dónde como bien por Chamartin?",
     "Recomiéndame un italiano",
     "Sitio para una cita especial", 
-    "¿Dónde puedo ir sin reservar?"]
+    "¿Dónde puedo ir sin reservar?"
+  ]
 
   return (
     <div className="max-w-3xl mx-auto px-6 py-8">
@@ -93,7 +93,7 @@ function Chat({ restaurantes }) {
                     : 'bg-gray-100 text-gray-900 rounded-bl-md'
                 }`}
               >
-                <div className="text-sm">
+                <div className={`text-sm ${msg.tipo === 'bot' ? '[&_p]:mb-3 [&_p:last-child]:mb-0 [&_strong]:text-gray-900 [&_strong]:font-semibold [&_br]:mb-2' : ''}`}>
                   <ReactMarkdown>{msg.texto}</ReactMarkdown>
                 </div>
               </div>
