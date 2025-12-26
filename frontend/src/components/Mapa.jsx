@@ -104,15 +104,10 @@ function Mapa({ restaurantes }) {
                   </p>
 
                   {restaurante.google_maps_url && (
-                    
-                      href={restaurante.google_maps_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-block mt-2 text-sm text-blue-600 hover:underline"
-                    >
-                      Abrir en Google Maps →
-                    </a>
-                  )}
+                  <a href={restaurante.google_maps_url} target="_blank" rel="noopener noreferrer" className="inline-block mt-2 text-sm text-blue-600 hover:underline">
+                    Abrir en Google Maps →
+                  </a>
+                )}
                 </div>
               </Popup>
             </Marker>
