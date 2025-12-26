@@ -51,7 +51,7 @@ function App() {
           <div className="flex items-center justify-between py-4">
             <div className="flex-1"></div>
             <div className="flex items-center gap-2">
-              <h1 className="text-3xl font-semibold text-gray-900 tracking-tight">
+              <h1 className="text-3xl font-semibold text-[#1F2937] tracking-tight" style={{ fontFamily: 'Merriweather, serif' }}>
                 Foodbot
               </h1>
               <p className="text-sm text-gray-500 self-center">

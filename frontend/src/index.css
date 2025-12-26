@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap');
 
 @theme {
   /* Soft pastel food-themed palette - Olive Green */
@@ -24,4 +25,9 @@
   --color-pastel-cream-300: #f5d9b5;
   --color-pastel-cream-400: #eec28a;
   --color-pastel-cream-500: #e5a85f;
+  
+  /* Brand colors */
+  --color-amber-brand: #D97706;
+  --color-text-dark: #1F2937;
+  --color-cream-light: #FFF7ED;
 }

@@ -91,7 +91,7 @@ function Explorar({ restaurantes, loading }) {
             <input
               type="text"
               placeholder="Buscar restaurante..."
-              className="w-full pl-12 pr-4 py-3.5 bg-gray-50 border-0 rounded-2xl focus:outline-none focus:ring-2 focus:ring-gray-900 focus:bg-white transition-all text-gray-900 placeholder-gray-400"
+              className="w-full pl-12 pr-4 py-3.5 bg-gray-50 border-0 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#D97706]/20 focus:bg-white transition-all text-[#1F2937] placeholder-gray-400"
               value={filtros.busqueda}
               onChange={(e) => setFiltros({...filtros, busqueda: e.target.value})}
             />
@@ -101,7 +101,7 @@ function Explorar({ restaurantes, loading }) {
         {/* Filtros en grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
           <select
-            className="px-4 py-3 bg-gray-50 border-0 rounded-2xl focus:outline-none focus:ring-2 focus:ring-gray-900 transition-all text-gray-700 text-sm font-medium cursor-pointer hover:bg-gray-100"
+            className="px-4 py-3 bg-gray-50 border-[0.5px] border-[#D97706]/30 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#D97706]/20 transition-all text-[#1F2937] text-sm font-medium cursor-pointer hover:bg-[#FFF7ED]"
             value={filtros.tipo_comida}
             onChange={(e) => setFiltros({...filtros, tipo_comida: e.target.value})}
           >
@@ -112,7 +112,7 @@ function Explorar({ restaurantes, loading }) {
           </select>
 
           <select
-            className="px-4 py-3 bg-gray-50 border-0 rounded-2xl focus:outline-none focus:ring-2 focus:ring-gray-900 transition-all text-gray-700 text-sm font-medium cursor-pointer hover:bg-gray-100"
+            className="px-4 py-3 bg-gray-50 border-[0.5px] border-[#D97706]/30 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#D97706]/20 transition-all text-[#1F2937] text-sm font-medium cursor-pointer hover:bg-[#FFF7ED]"
             value={filtros.barrio}
             onChange={(e) => setFiltros({...filtros, barrio: e.target.value})}
           >
@@ -123,7 +123,7 @@ function Explorar({ restaurantes, loading }) {
           </select>
 
           <select
-            className="px-4 py-3 bg-gray-50 border-0 rounded-2xl focus:outline-none focus:ring-2 focus:ring-gray-900 transition-all text-gray-700 text-sm font-medium cursor-pointer hover:bg-gray-100"
+            className="px-4 py-3 bg-gray-50 border-[0.5px] border-[#D97706]/30 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#D97706]/20 transition-all text-[#1F2937] text-sm font-medium cursor-pointer hover:bg-[#FFF7ED]"
             value={filtros.precio_categoria}
             onChange={(e) => setFiltros({...filtros, precio_categoria: e.target.value})}
           >
@@ -134,7 +134,7 @@ function Explorar({ restaurantes, loading }) {
           </select>
 
           <select
-            className="px-4 py-3 bg-gray-50 border-0 rounded-2xl focus:outline-none focus:ring-2 focus:ring-gray-900 transition-all text-gray-700 text-sm font-medium cursor-pointer hover:bg-gray-100"
+            className="px-4 py-3 bg-gray-50 border-[0.5px] border-[#D97706]/30 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#D97706]/20 transition-all text-[#1F2937] text-sm font-medium cursor-pointer hover:bg-[#FFF7ED]"
             value={filtros.puntuacion_min}
             onChange={(e) => setFiltros({...filtros, puntuacion_min: e.target.value})}
           >
@@ -146,7 +146,7 @@ function Explorar({ restaurantes, loading }) {
           </select>
 
           <select
-            className="px-4 py-3 bg-gray-50 border-0 rounded-2xl focus:outline-none focus:ring-2 focus:ring-gray-900 transition-all text-gray-700 text-sm font-medium cursor-pointer hover:bg-gray-100"
+            className="px-4 py-3 bg-gray-50 border-[0.5px] border-[#D97706]/30 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#D97706]/20 transition-all text-[#1F2937] text-sm font-medium cursor-pointer hover:bg-[#FFF7ED]"
             value={filtros.ordenar}
             onChange={(e) => setFiltros({...filtros, ordenar: e.target.value})}
           >
@@ -159,7 +159,7 @@ function Explorar({ restaurantes, loading }) {
           {hayFiltrosActivos && (
             <button
               onClick={() => setFiltros({ tipo_comida: '', barrio: '', precio_categoria: '', busqueda: '', puntuacion_min: '', ordenar: 'puntuacion' })}
-              className="px-4 py-3 bg-gray-900 text-white rounded-2xl text-sm font-medium hover:bg-gray-800 active:scale-95 transition-all"
+              className="px-4 py-3 bg-[#D97706] text-white rounded-2xl text-sm font-medium hover:bg-[#D97706]/90 active:scale-95 transition-all"
             >
               ✕ Limpiar
             </button>
@@ -196,44 +196,45 @@ function Explorar({ restaurantes, loading }) {
               onClick={() => setSelectedRestaurante(restaurante)}
               className="group bg-white rounded-2xl shadow-sm border border-gray-200/50 p-4 cursor-pointer hover:shadow-xl hover:shadow-gray-200/50 hover:-translate-y-1 active:scale-[0.98] transition-all duration-300 relative"
             >
-              {restaurante.destacado && (
-                <div className="absolute top-2 right-2 bg-amber-500 text-white text-xs px-2 py-0.5 rounded-full font-semibold">
-                  ⭐ Top Pick
-                </div>
-              )}
-              
               <div className="flex justify-between items-start mb-3">
                 <div className="flex-1 min-w-0">
-                  <h3 className="font-semibold text-gray-900 text-base truncate group-hover:text-gray-700 transition-colors">
+                  <h3 className="font-semibold text-[#1F2937] text-base truncate group-hover:text-gray-700 transition-colors" style={{ fontFamily: 'Merriweather, serif' }}>
                     {restaurante.nombre}
                   </h3>
-                  <p className="text-xs text-gray-500 mt-0.5">
+                  <p className="text-xs text-[#1F2937] mt-0.5">
                     {restaurante.tipo_comida} {restaurante.subtipo_comida && `· ${restaurante.subtipo_comida}`}
                   </p>
                 </div>
-                <div className={`flex items-center gap-1 ${getScoreGradient(restaurante.puntuacion)} text-gray-900 px-2.5 py-1 rounded-lg ml-2`}>
-                  {restaurante.destacado ? (
-                    <TopChoiceIcon className="w-3 h-3" />
-                  ) : (
-                    <span className="text-xs">⭐</span>
+                <div className="flex items-center gap-2">
+                  {restaurante.destacado && (
+                    <div className="bg-[#D97706] text-white text-xs px-2 py-0.5 rounded-full font-semibold">
+                      ⭐ Top Pick
+                    </div>
                   )}
-                  <span className="font-semibold text-xs">{restaurante.puntuacion?.toFixed(1) || '-'}</span>
+                  <div className={`flex items-center gap-1 ${getScoreGradient(restaurante.puntuacion)} text-[#1F2937] px-2.5 py-1 rounded-lg`}>
+                    {restaurante.destacado ? (
+                      <TopChoiceIcon className="w-3 h-3 text-[#D97706]" />
+                    ) : (
+                      <span className="text-xs" style={{ color: '#D97706' }}>⭐</span>
+                    )}
+                    <span className="font-semibold text-xs">{restaurante.puntuacion?.toFixed(1) || '-'}</span>
+                  </div>
                 </div>
               </div>
 
               <div className="flex flex-wrap gap-1.5 mb-3">
-                <span className="inline-flex items-center gap-1 bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded-full font-medium">
+                <span className="inline-flex items-center gap-1 bg-gray-100 text-[#1F2937] text-xs px-2 py-1 rounded-full font-medium">
                   📍 {restaurante.barrio}
                 </span>
-                <span className="inline-flex items-center gap-1 bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded-full font-medium">
+                <span className="inline-flex items-center gap-1 bg-gray-100 text-[#1F2937] text-xs px-2 py-1 rounded-full font-medium">
                   {restaurante.precio_categoria}
                   {restaurante.precio_min && restaurante.precio_max && (
-                    <span className="ml-1 text-gray-500">
+                    <span className="ml-1 text-[#1F2937]">
                       ({restaurante.precio_min}-{restaurante.precio_max}€)
                     </span>
                   )}
                 </span>
-                <span className="inline-flex items-center gap-1 bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded-full font-medium">
+                <span className="inline-flex items-center gap-1 bg-gray-100 text-[#1F2937] text-xs px-2 py-1 rounded-full font-medium">
                   {restaurante.ambiente}
                 </span>
               </div>
@@ -297,14 +298,14 @@ function Explorar({ restaurantes, loading }) {
             <div className="sticky top-0 bg-white rounded-t-3xl border-b border-gray-100 p-6 flex justify-between items-start">
               <div>
                 <div className="flex items-center gap-2">
-                  <h2 className="text-2xl font-semibold text-gray-900">{selectedRestaurante.nombre}</h2>
+                  <h2 className="text-2xl font-semibold text-[#1F2937]" style={{ fontFamily: 'Merriweather, serif' }}>{selectedRestaurante.nombre}</h2>
                   {selectedRestaurante.destacado && (
-                    <span className="bg-amber-500 text-white text-xs px-2 py-1 rounded-full font-semibold">
+                    <span className="bg-[#D97706] text-white text-xs px-2 py-1 rounded-full font-semibold">
                       ⭐ Top Pick
                     </span>
                   )}
                 </div>
-                <p className="text-gray-500 mt-1">
+                <p className="text-[#1F2937] mt-1">
                   {selectedRestaurante.tipo_comida} {selectedRestaurante.subtipo_comida && `· ${selectedRestaurante.subtipo_comida}`}
                 </p>
               </div>
@@ -318,18 +319,20 @@ function Explorar({ restaurantes, loading }) {
 
             <div className="p-6 space-y-6">
               <div className="flex items-center gap-4">
-                <div className={`${getScoreGradient(selectedRestaurante.puntuacion)} text-gray-900 px-5 py-3 rounded-2xl flex items-center gap-2`}>
-                  {selectedRestaurante.destacado && (
-                    <TopChoiceIcon className="w-4 h-4" />
+                <div className={`${getScoreGradient(selectedRestaurante.puntuacion)} text-[#1F2937] px-5 py-3 rounded-2xl flex items-center gap-2`}>
+                  {selectedRestaurante.destacado ? (
+                    <TopChoiceIcon className="w-4 h-4 text-[#D97706]" />
+                  ) : (
+                    <span className="text-lg" style={{ color: '#D97706' }}>⭐</span>
                   )}
                   <div>
                     <span className="text-3xl font-bold">{selectedRestaurante.puntuacion?.toFixed(1) || '-'}</span>
-                    <span className="text-gray-700 text-sm ml-1">/ 5.0</span>
+                    <span className="text-[#1F2937] text-sm ml-1">/ 5.0</span>
                   </div>
                 </div>
                 <div>
-                  <p className="font-medium text-gray-900">{selectedRestaurante.precio_categoria}</p>
-                  <p className="text-sm text-gray-500">
+                  <p className="font-medium text-[#1F2937]">{selectedRestaurante.precio_categoria}</p>
+                  <p className="text-sm text-[#1F2937]">
                     {selectedRestaurante.precio_min && selectedRestaurante.precio_max 
                       ? `${selectedRestaurante.precio_min}-${selectedRestaurante.precio_max}€ por persona`
                       : 'Precio no especificado'}
@@ -344,7 +347,7 @@ function Explorar({ restaurantes, loading }) {
                       href={selectedRestaurante.url_web}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="block w-full text-center text-base font-medium text-blue-700 underline hover:no-underline bg-blue-50 rounded-xl px-4 py-2 mb-2"
+                      className="block w-full text-center text-base font-medium text-[#D97706] underline hover:no-underline bg-[#FFF7ED] rounded-xl px-4 py-2 mb-2"
                     >
                       🌐 Web oficial
                     </a>
@@ -354,7 +357,7 @@ function Explorar({ restaurantes, loading }) {
                       href={selectedRestaurante.url_carta}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="block w-full text-center text-base font-medium text-amber-700 underline hover:no-underline bg-amber-50 rounded-xl px-4 py-2"
+                      className="block w-full text-center text-base font-medium text-[#D97706] underline hover:no-underline bg-[#FFF7ED] rounded-xl px-4 py-2"
                     >
                       📋 Ver carta/menú
                     </a>
@@ -362,49 +365,49 @@ function Explorar({ restaurantes, loading }) {
                 </div>
               )}
 
-              {(selectedRestaurante.plato_recomendado || selectedRestaurante.descripcion_personal) && (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {selectedRestaurante.plato_recomendado && (
-                    <div className="bg-amber-50 rounded-2xl p-4">
-                      <p className="text-sm text-amber-600 font-medium mb-1">⭐ Recomendacion</p>
-                      <p className="text-amber-900 font-semibold">{selectedRestaurante.plato_recomendado}</p>
-                    </div>
-                  )}
-                  {selectedRestaurante.descripcion_personal && (
-                    <div className="bg-gray-50 rounded-2xl p-4">
-                      <p className="text-sm text-gray-500 font-medium mb-2">Descripcion general</p>
-                      <p className="text-gray-700 leading-relaxed text-sm">{selectedRestaurante.descripcion_personal}</p>
-                    </div>
-                  )}
+              {selectedRestaurante.descripcion_personal && (
+                <div className="bg-[#EDEDED] rounded-2xl p-4 w-full">
+                  <p className="text-sm text-[#1F2937] font-medium mb-2">Descripcion general</p>
+                  <p className="text-[#1F2937] leading-relaxed text-sm">{selectedRestaurante.descripcion_personal}</p>
                 </div>
               )}
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {selectedRestaurante.plato_recomendado ? (
+                  <div className="bg-amber-50 rounded-2xl p-4">
+                    <p className="text-sm text-amber-600 font-medium mb-1">⭐ Recomendacion</p>
+                    <p className="text-amber-900 font-semibold">{selectedRestaurante.plato_recomendado}</p>
+                  </div>
+                ) : (
+                  <div></div>
+                )}
                 <div className="bg-gray-50 rounded-2xl p-4">
-                  <p className="text-xs text-gray-500 mb-1">📍 Ubicación</p>
-                  <p className="text-sm font-medium text-gray-900">{selectedRestaurante.barrio}</p>
-                  <p className="text-xs text-gray-500 mt-1">{selectedRestaurante.direccion}</p>
-                </div>
-                <div className="bg-gray-50 rounded-2xl p-4">
-                  <p className="text-xs text-gray-500 mb-1">✨ Ambiente</p>
-                  <p className="text-sm font-medium text-gray-900">{selectedRestaurante.ambiente}</p>
+                  <p className="text-xs text-[#1F2937] mb-1">✨ Ambiente</p>
+                  <p className="text-sm font-medium text-[#1F2937]">{selectedRestaurante.ambiente}</p>
                 </div>
               </div>
 
-              <div className="bg-gray-50 rounded-2xl p-4">
-                <p className="text-xs text-gray-500 mb-1">📞 Reservas</p>
-                <p className="text-sm font-medium text-gray-900">
-                  {selectedRestaurante.requiere_reserva 
-                    ? '⚠️ Requiere reserva' 
-                    : selectedRestaurante.acepta_reservas 
-                      ? '✓ Acepta reservas' 
-                      : 'No acepta reservas'}
-                </p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="bg-gray-50 rounded-2xl p-4">
+                  <p className="text-xs text-[#1F2937] mb-1">📍 Ubicación</p>
+                  <p className="text-sm font-medium text-[#1F2937]">{selectedRestaurante.barrio}</p>
+                  <p className="text-xs text-[#1F2937] mt-1">{selectedRestaurante.direccion}</p>
+                </div>
+                <div className="bg-gray-50 rounded-2xl p-4">
+                  <p className="text-xs text-[#1F2937] mb-1">📞 Reservas</p>
+                  <p className="text-sm font-medium text-[#1F2937]">
+                    {selectedRestaurante.requiere_reserva 
+                      ? '⚠️ Requiere reserva' 
+                      : selectedRestaurante.acepta_reservas 
+                        ? '✓ Acepta reservas' 
+                        : 'No acepta reservas'}
+                  </p>
+                </div>
               </div>
 
               {selectedRestaurante.mejor_para && selectedRestaurante.mejor_para.length > 0 && (
                 <div>
-                  <p className="text-sm text-gray-500 font-medium mb-2">Ideal para</p>
+                  <p className="text-sm text-[#1F2937] font-medium mb-2">Ideal para</p>
                   <div className="flex flex-wrap gap-2">
                     {selectedRestaurante.mejor_para.map(ocasion => (
                       <span key={ocasion} className="bg-blue-50 text-blue-700 text-sm px-3 py-1.5 rounded-full font-medium">
@@ -417,7 +420,7 @@ function Explorar({ restaurantes, loading }) {
 
               {selectedRestaurante.tags && selectedRestaurante.tags.length > 0 && (
                 <div>
-                  <p className="text-sm text-gray-500 font-medium mb-2">Características</p>
+                  <p className="text-sm text-[#1F2937] font-medium mb-2">Características</p>
                   <div className="flex flex-wrap gap-2">
                     {selectedRestaurante.tags.map((tag, idx) => (
                       <span key={idx} className="bg-purple-50 text-purple-700 text-sm px-3 py-1.5 rounded-full font-medium">
@@ -430,12 +433,12 @@ function Explorar({ restaurantes, loading }) {
 
               <div className="flex gap-3 pt-4">
                 {selectedRestaurante.url_carta && (
-                  <a href={selectedRestaurante.url_carta} target="_blank" rel="noopener noreferrer" className="flex-1 bg-gray-900 text-white text-center py-3.5 rounded-2xl font-medium hover:bg-gray-800 active:scale-[0.98] transition-all">
+                  <a href={selectedRestaurante.url_carta} target="_blank" rel="noopener noreferrer" className="flex-1 bg-black text-white text-center py-3.5 rounded-2xl font-medium hover:bg-gray-800 active:scale-[0.98] transition-all">
                     Ver carta
                   </a>
                 )}
                 {selectedRestaurante.google_maps_url && (
-                  <a href={selectedRestaurante.google_maps_url} target="_blank" rel="noopener noreferrer" className="flex-1 bg-gray-100 text-gray-900 text-center py-3.5 rounded-2xl font-medium hover:bg-gray-200 active:scale-[0.98] transition-all">
+                  <a href={selectedRestaurante.google_maps_url} target="_blank" rel="noopener noreferrer" className="flex-1 bg-gray-100 text-[#1F2937] text-center py-3.5 rounded-2xl font-medium hover:bg-gray-200 active:scale-[0.98] transition-all">
                     Cómo llegar
                   </a>
                 )}
