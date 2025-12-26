@@ -1,6 +1,5 @@
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import { Icon } from 'leaflet'
-import { useState } from 'react'
 
 // Fix para los iconos de Leaflet en React
 import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png'
@@ -15,8 +14,6 @@ Icon.Default.mergeOptions({
 })
 
 function Mapa({ restaurantes }) {
-  const [selectedId, setSelectedId] = useState(null)
-  
   // Filtrar solo restaurantes con coordenadas
   const restaurantesConCoordenadas = restaurantes.filter(
     r => r.latitud && r.longitud
@@ -55,12 +52,12 @@ function Mapa({ restaurantes }) {
       </div>
 
       {/* Mapa */}
-      <div className="bg-white rounded-3xl shadow-sm border border-gray-200/50 overflow-hidden">
+      <div className="rounded-3xl overflow-hidden shadow-sm border border-gray-200/50">
         <MapContainer
           center={centroMadrid}
           zoom={13}
-          style={{ height: '600px', width: '100%' }}
-          className="rounded-3xl"
+          scrollWheelZoom={true}
+          style={{ height: '70vh', width: '100%' }}
         >
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
@@ -71,9 +68,6 @@ function Mapa({ restaurantes }) {
             <Marker
               key={restaurante.id}
               position={[restaurante.latitud, restaurante.longitud]}
-              eventHandlers={{
-                click: () => setSelectedId(restaurante.id),
-              }}
             >
               <Popup>
                 <div className="min-w-[200px]">
@@ -104,32 +98,15 @@ function Mapa({ restaurantes }) {
                   </p>
 
                   {restaurante.google_maps_url && (
-                  <a href={restaurante.google_maps_url} target="_blank" rel="noopener noreferrer" className="inline-block mt-2 text-sm text-blue-600 hover:underline">
-                    Abrir en Google Maps →
-                  </a>
-                )}
+                    <a href={restaurante.google_maps_url} target="_blank" rel="noopener noreferrer" className="inline-block mt-2 text-sm text-blue-600 hover:underline">
+                      Abrir en Google Maps →
+                    </a>
+                  )}
                 </div>
               </Popup>
             </Marker>
           ))}
         </MapContainer>
-      </div>
-
-      {/* Lista bajo el mapa */}
-      <div className="mt-6">
-        <h3 className="text-sm font-medium text-gray-700 mb-3">
-          Restaurantes en el mapa:
-        </h3>
-        <div className="flex flex-wrap gap-2">
-          {restaurantesConCoordenadas.map(r => (
-            <span
-              key={r.id}
-              className="bg-gray-100 text-gray-700 text-xs px-3 py-1.5 rounded-full"
-            >
-              {r.nombre}
-            </span>
-          ))}
-        </div>
       </div>
     </div>
   )
