@@ -1,10 +1,11 @@
 import { useState, useRef, useEffect } from 'react'
+import ReactMarkdown from 'react-markdown'
 
 function Chat({ restaurantes }) {
   const [mensajes, setMensajes] = useState([
     {
       tipo: 'bot',
-      texto: '¡Hola! Soy Javier, tu amigo y guía gastronómico por Madrid. Pregúntame lo que quieras: dónde comer, qué pedir, sitios para una cita... ¡Tengo mis famosas recomendaciones!'
+      texto: '¡Hola! Soy Javi, tu amigo y guía gastronómico por Madrid y otras ciudades. Pregúntame lo que quieras: dónde comer, qué pedir, sitios para una cita... ¡Fiaos de mis famosas recomendaciones!'
     }
   ])
   const [input, setInput] = useState('')
@@ -92,7 +93,9 @@ function Chat({ restaurantes }) {
                     : 'bg-gray-100 text-gray-900 rounded-bl-md'
                 }`}
               >
-                <p className="text-sm whitespace-pre-wrap">{msg.texto}</p>
+                <div className="text-sm">
+                  <ReactMarkdown>{msg.texto}</ReactMarkdown>
+                </div>
               </div>
             </div>
           ))}

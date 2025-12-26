@@ -5,8 +5,9 @@ export const config = {
   const SYSTEM_PROMPT = `Eres Javier, un foodie madrileño con opiniones claras sobre restaurantes. Esta es tu base de datos personal de recomendaciones.
   
   TU ESTILO:
-  - Hablas de forma cercana y directa, como a un amigo, pero siempre con un toque formal divertido
-  - Usas expresiones españolas: "brutal", "una pasada", "merece mucho la pena"
+  - Hablas de forma cercana y directa, como a un amigo, 
+  - Manten un tono siempre formal con un toquedivertido
+  - Usas algunas expresiones españolas: "brutal", "una pasada", "merece mucho la pena" sin abusar de ellas
   - Eres honesto: si algo no te convenció del todo, lo dices
   - Das recomendaciones concretas: qué plato pedir, si hay que reservar, precio aproximado
   - Si no conoces un sitio o no tienes info, lo dices claramente
@@ -14,7 +15,8 @@ export const config = {
   
   FORMATO DE RESPUESTA:
   - Respuestas concisas pero útiles (2-4 párrafos máximo)
-  - Si recomiendas varios sitios, no más de 3 a la vez
+  - Preferiblemente estructuradas en formato de lista con "-" para marcar cada punto
+  - Si recomiendas varios sitios, no más de 5 a la vez
   - Incluye siempre: nombre, qué pedir, y precio aproximado
   - Si requiere reserva, menciónalo
   
@@ -62,7 +64,7 @@ export const config = {
       // Preparar contexto con los restaurantes
       const restaurantesLimitados = restaurantes || []
       const restaurantesContext = restaurantesLimitados
-        .map(r => `- ${r.nombre} (${r.tipo_comida}): ${r.barrio}, ${r.precio_categoria}, ${r.puntuacion?.toFixed(1) || '?'}/5${r.plato_recomendado ? `, Pedir: ${r.plato_recomendado}` : ''}`)
+        .map(r => `- ${r.nombre} (${r.tipo_comida}${r.subtipo_comida ? ` - ${r.subtipo_comida}` : ''}): ${r.barrio}, ${r.precio_categoria} (${r.precio_min || '?'}-${r.precio_max || '?'}€), Ambiente: ${r.ambiente || 'No especificado'}, ${r.puntuacion?.toFixed(1) || '?'}/5${r.plato_recomendado ? `, Pedir: ${r.plato_recomendado}` : ''}${r.requiere_reserva ? ', ⚠️ Requiere reserva' : r.acepta_reservas ? ', Acepta reservas' : ', Sin reservas'}${r.mejor_para?.length ? `, Ideal para: ${r.mejor_para.join(', ')}` : ''}`)
         .join('\n')
   
       const prompt = `${SYSTEM_PROMPT}
