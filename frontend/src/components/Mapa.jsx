@@ -66,13 +66,13 @@ function Mapa({ restaurantes }) {
   if (restaurantesConCoordenadas.length === 0) {
     return (
       <div className="max-w-7xl mx-auto px-6 py-8">
-        <div className="bg-white rounded-3xl shadow-sm border border-gray-200/50 p-12 text-center">
+        <div className="bg-white dark:bg-dark-card rounded-3xl shadow-sm border border-gray-200/50 dark:border-dark-border p-12 text-center">
           <div className="text-6xl mb-4">🗺️</div>
-          <h2 className="text-2xl font-semibold text-gray-900 mb-2">Mapa interactivo</h2>
-          <p className="text-gray-500">
+          <h2 className="text-2xl font-semibold text-gray-900 dark:text-dark-text mb-2" style={{ fontFamily: 'Merriweather, serif' }}>Mapa interactivo</h2>
+          <p className="text-gray-500 dark:text-dark-muted">
             No hay restaurantes con coordenadas todavía.
           </p>
-          <p className="text-sm text-gray-400 mt-2">
+          <p className="text-sm text-gray-400 dark:text-dark-muted mt-2">
             Añade latitud y longitud en Supabase para verlos aquí.
           </p>
         </div>
@@ -84,16 +84,16 @@ function Mapa({ restaurantes }) {
     <div className="max-w-7xl mx-auto px-6 py-8">
       {/* Info */}
       <div className="mb-4 flex items-center justify-between">
-        <p className="text-sm text-gray-500">
+        <p className="text-sm text-gray-500 dark:text-dark-muted">
           📍 {restaurantesConCoordenadas.length} restaurantes en el mapa
         </p>
-        <p className="text-xs text-gray-400">
+        <p className="text-xs text-gray-400 dark:text-dark-muted">
           Click en un marcador para ver detalles
         </p>
       </div>
 
       {/* Mapa */}
-      <div className="rounded-3xl overflow-hidden shadow-sm border border-gray-200/50">
+      <div className="rounded-3xl overflow-hidden shadow-sm border border-gray-200/50 dark:border-dark-border">
         <MapContainer
           center={centroMadrid}
           zoom={13}
