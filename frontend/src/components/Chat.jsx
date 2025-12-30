@@ -93,7 +93,7 @@ function Chat({ restaurantes }) {
                     : 'bg-gray-100 text-gray-900 rounded-bl-md'
                 }`}
               >
-                <div className={`text-sm ${msg.tipo === 'bot' ? '[&_p]:mb-3 [&_p:last-child]:mb-0 [&_strong]:text-gray-900 [&_strong]:font-semibold [&_br]:mb-2' : ''}`}>
+                <div className={`text-sm ${msg.tipo === 'bot' ? '[&_p]:mb-3 [&_p:last-child]:mb-0 [&_strong]:text-gray-900 [&_strong]:font-semibold [&_ul]:my-2 [&_ul]:ml-4 [&_li]:mb-1 [&_li]:list-disc [&_li]:list-inside' : ''}`}>
                   <ReactMarkdown>{msg.texto}</ReactMarkdown>
                 </div>
               </div>
