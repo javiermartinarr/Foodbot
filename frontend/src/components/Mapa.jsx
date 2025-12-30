@@ -1,10 +1,13 @@
+import { useState } from 'react'
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
-import { Icon, DivIcon } from 'leaflet'
+import { DivIcon } from 'leaflet'
+import RestaurantModal from './RestaurantModal'
 
 // Fix para los iconos de Leaflet en React
 import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png'
 import markerIcon from 'leaflet/dist/images/marker-icon.png'
 import markerShadow from 'leaflet/dist/images/marker-shadow.png'
+import { Icon } from 'leaflet'
 
 delete Icon.Default.prototype._getIconUrl
 Icon.Default.mergeOptions({
@@ -13,44 +16,23 @@ Icon.Default.mergeOptions({
   shadowUrl: markerShadow,
 })
 
-// Función para obtener color según puntuación (misma lógica que Explorar)
-function getScoreColor(score) {
-  if (!score) return { bg: '#D1D5DB', border: '#9CA3AF', text: '#374151' }
-  
-  if (score >= 4.5) {
-    return { bg: '#BBF7D0', border: '#22C55E', text: '#166534' }
-  } else if (score >= 4.0) {
-    return { bg: '#DCFCE7', border: '#4ADE80', text: '#166534' }
-  } else if (score >= 3.5) {
-    return { bg: '#FDE68A', border: '#F59E0B', text: '#92400E' }
-  } else if (score >= 3.0) {
-    return { bg: '#FED7AA', border: '#FB923C', text: '#9A3412' }
-  } else {
-    return { bg: '#E5E7EB', border: '#9CA3AF', text: '#374151' }
-  }
-}
-
-// Crear icono personalizado con la puntuación
-// Crear icono de chincheta con color según puntuación
-// Crear icono estilo Apple Maps con color según puntuación
 // Crear icono estilo Apple Maps con color según puntuación
 function createCustomIcon(restaurante) {
   const score = restaurante.puntuacion
   
-  // Mismas franjas que en Explorar.jsx
   let pinColor
   if (!score) {
-    pinColor = '#E5E7EB'  // gray-200
+    pinColor = '#E5E7EB'
   } else if (score >= 4.5) {
-    pinColor = '#BBF7D0'  // green-200
+    pinColor = '#BBF7D0'
   } else if (score >= 4.0) {
-    pinColor = '#DCFCE7'  // green-100
+    pinColor = '#DCFCE7'
   } else if (score >= 3.5) {
-    pinColor = '#FDE68A'  // amber-200
+    pinColor = '#FDE68A'
   } else if (score >= 3.0) {
-    pinColor = '#FED7AA'  // orange-200
+    pinColor = '#FED7AA'
   } else {
-    pinColor = '#E5E7EB'  // gray-200
+    pinColor = '#E5E7EB'
   }
   
   return new DivIcon({
@@ -70,25 +52,9 @@ function createCustomIcon(restaurante) {
   })
 }
 
-
-// Función para obtener el estilo del badge de puntuación (igual que Explorar)
-function getScoreBadgeStyle(score) {
-  if (!score) return 'background: #E5E7EB; border: 0.5px solid #9CA3AF;'
-  
-  if (score >= 4.5) {
-    return 'background: #BBF7D0; border: 0.5px solid #9CA3AF;'
-  } else if (score >= 4.0) {
-    return 'background: #DCFCE7; border: 0.5px solid #9CA3AF;'
-  } else if (score >= 3.5) {
-    return 'background: #FDE68A; border: 0.5px solid #9CA3AF;'
-  } else if (score >= 3.0) {
-    return 'background: #FED7AA; border: 0.5px solid #9CA3AF;'
-  } else {
-    return 'background: #E5E7EB; border: 0.5px solid #9CA3AF;'
-  }
-}
-
 function Mapa({ restaurantes }) {
+  const [selectedRestaurante, setSelectedRestaurante] = useState(null)
+
   // Filtrar solo restaurantes con coordenadas
   const restaurantesConCoordenadas = restaurantes.filter(
     r => r.latitud && r.longitud
@@ -147,7 +113,7 @@ function Mapa({ restaurantes }) {
             >
               <Popup>
                 <div style={{ minWidth: '220px', padding: '4px' }}>
-                  {/* Nombre con fuente Merriweather */}
+                  {/* Nombre */}
                   <h3 style={{ 
                     fontFamily: 'Merriweather, serif', 
                     fontWeight: 600, 
@@ -159,7 +125,7 @@ function Mapa({ restaurantes }) {
                     {restaurante.nombre}
                   </h3>
                   
-                  {/* Tipo y subtipo de comida */}
+                  {/* Tipo y subtipo */}
                   <p style={{ 
                     fontSize: '13px', 
                     color: '#6B7280', 
@@ -177,10 +143,7 @@ function Mapa({ restaurantes }) {
                     marginBottom: '10px'
                   }}>
                     <span style={{
-                      ...Object.fromEntries(getScoreBadgeStyle(restaurante.puntuacion).split(';').filter(s => s.trim()).map(s => {
-                        const [key, value] = s.split(':').map(x => x.trim())
-                        return [key.replace(/-([a-z])/g, g => g[1].toUpperCase()), value]
-                      })),
+                      background: '#F3F4F6',
                       padding: '4px 10px',
                       borderRadius: '8px',
                       fontSize: '13px',
@@ -213,39 +176,66 @@ function Mapa({ restaurantes }) {
                     color: '#6B7280',
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '4px'
+                    gap: '4px',
+                    marginBottom: '12px'
                   }}>
                     📍 {restaurante.barrio}
                   </p>
 
-                  {/* Botón Google Maps */}
-                  {restaurante.google_maps_url && (
-                    <a 
-                      href={restaurante.google_maps_url} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
+                  {/* Botones */}
+                  <div style={{ display: 'flex', gap: '8px' }}>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        setSelectedRestaurante(restaurante)
+                      }}
                       style={{
-                        display: 'block',
-                        marginTop: '12px',
+                        flex: 1,
                         padding: '8px 12px',
-                        background: '#F3F4F6',
+                        background: '#D97706',
+                        color: 'white',
                         borderRadius: '10px',
-                        textAlign: 'center',
                         fontSize: '13px',
                         fontWeight: 500,
-                        color: '#1F2937',
-                        textDecoration: 'none'
+                        border: 'none',
+                        cursor: 'pointer'
                       }}
                     >
-                      Abrir en Google Maps →
-                    </a>
-                  )}
+                      Ver más
+                    </button>
+                    {restaurante.google_maps_url && (
+                      <a 
+                        href={restaurante.google_maps_url} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        style={{
+                          flex: 1,
+                          padding: '8px 12px',
+                          background: '#F3F4F6',
+                          borderRadius: '10px',
+                          textAlign: 'center',
+                          fontSize: '13px',
+                          fontWeight: 500,
+                          color: '#1F2937',
+                          textDecoration: 'none'
+                        }}
+                      >
+                        Maps →
+                      </a>
+                    )}
+                  </div>
                 </div>
               </Popup>
             </Marker>
           ))}
         </MapContainer>
       </div>
+
+      {/* Modal de detalle - Reutilizado de Explorar */}
+      <RestaurantModal 
+        restaurante={selectedRestaurante} 
+        onClose={() => setSelectedRestaurante(null)} 
+      />
     </div>
   )
 }
