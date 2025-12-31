@@ -14,6 +14,10 @@ function DarkModeToggle() {
   })
 
   useEffect(() => {
+    // Ensure we're in the browser
+    if (typeof window === 'undefined') return
+    
+    // Apply dark mode immediately
     if (darkMode) {
       document.documentElement.classList.add('dark')
       // APLICAMOS EL COLOR DE FONDO EXACTO DE LA CONFIGURACIÓN (dark.bg)
@@ -23,6 +27,8 @@ function DarkModeToggle() {
       // Mantenemos tu gradiente cálido original
       document.documentElement.style.setProperty('--bg-gradient', 'linear-gradient(to bottom, #fef3e7, #fde8d4, #fce4c4)')
     }
+    
+    // Save to localStorage (only if it changed from initial state)
     localStorage.setItem('darkMode', JSON.stringify(darkMode))
   }, [darkMode])
 
@@ -33,8 +39,10 @@ function DarkModeToggle() {
       aria-label="Toggle dark mode"
     >
       <span
-        className={`absolute top-0.5 left-0.5 w-6 h-6 bg-white dark:bg-dark-muted/20 text-dark-bg dark:text-dark-text rounded-full shadow-md transform transition-transform duration-300 flex items-center justify-center ${
-          darkMode ? 'translate-x-7 bg-dark-card' : 'translate-x-0'
+        className={`absolute top-0.5 left-0.5 w-6 h-6 rounded-full shadow-md transform transition-transform duration-300 flex items-center justify-center ${
+          darkMode 
+            ? 'translate-x-7 bg-dark-card text-dark-text' 
+            : 'translate-x-0 bg-white text-gray-900'
         }`}
       >
         {/* He simplificado los iconos para que se vean más limpios */}
