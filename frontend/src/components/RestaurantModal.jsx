@@ -122,8 +122,8 @@ function RestaurantModal({ restaurante, onClose }) {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {restaurante.plato_recomendado ? (
               <div className="bg-amber-50 dark:bg-amber-900/30 rounded-2xl p-4">
-                <p className="text-sm text-amber-600 dark:text-amber-400 font-medium mb-1">⭐ Recomendación</p>
-                <p className="text-amber-900 dark:text-amber-200 font-semibold">{restaurante.plato_recomendado}</p>
+                <p className="text-xs text-amber-600 font-medium mb-0.5">⭐ Recomendación</p>
+                <p className="text-xs text-amber-900 font-medium">{restaurante.plato_recomendado}</p>
               </div>
             ) : (
               <div></div>

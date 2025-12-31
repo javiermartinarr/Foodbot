@@ -2,18 +2,18 @@ import { useState } from 'react'
 import RestaurantModal from './RestaurantModal'
 
 function getScoreGradient(score) {
-  if (!score) return 'bg-gray-300 dark:bg-gray-600 border-[0.5px] border-gray-400 dark:border-gray-500'
+  if (!score) return 'bg-gray-300 border-[0.5px] border-gray-400'
   
   if (score >= 4.5) {
-    return 'bg-green-200 dark:bg-green-900 border-[0.5px] border-gray-400 dark:border-green-700'
+    return 'bg-green-200 border-[0.5px] border-gray-400'
   } else if (score >= 4.0) {
-    return 'bg-green-100 dark:bg-green-900/70 border-[0.5px] border-gray-400 dark:border-green-700'
+    return 'bg-green-100 border-[0.5px] border-gray-400'
   } else if (score >= 3.5) {
-    return 'bg-amber-200 dark:bg-amber-900 border-[0.5px] border-gray-400 dark:border-amber-700'
+    return 'bg-amber-200 border-[0.5px] border-gray-400'
   } else if (score >= 3.0) {
-    return 'bg-orange-200 dark:bg-orange-900 border-[0.5px] border-gray-400 dark:border-orange-700'
+    return 'bg-orange-200 border-[0.5px] border-gray-400'
   } else {
-    return 'bg-gray-200 dark:bg-gray-700 border-[0.5px] border-gray-400 dark:border-gray-500'
+    return 'bg-gray-200 border-[0.5px] border-gray-400'
   }
 }
 
