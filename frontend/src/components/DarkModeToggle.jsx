@@ -13,28 +13,42 @@ function DarkModeToggle() {
     return false
   })
 
-  useEffect(() => {
-    // Ensure we're in the browser
+  // Function to apply dark mode styles
+  const applyDarkMode = (isDark) => {
     if (typeof window === 'undefined') return
     
-    // Apply dark mode immediately
-    if (darkMode) {
-      document.documentElement.classList.add('dark')
-      // APLICAMOS EL COLOR DE FONDO EXACTO DE LA CONFIGURACIÓN (dark.bg)
-      document.documentElement.style.setProperty('--bg-gradient', '#191918')
-    } else {
-      document.documentElement.classList.remove('dark')
-      // Mantenemos tu gradiente cálido original
-      document.documentElement.style.setProperty('--bg-gradient', 'linear-gradient(to bottom, #fef3e7, #fde8d4, #fce4c4)')
-    }
+    const html = document.documentElement
     
-    // Save to localStorage (only if it changed from initial state)
+    if (isDark) {
+      html.classList.add('dark')
+      html.style.setProperty('--bg-gradient', '#191918')
+    } else {
+      html.classList.remove('dark')
+      html.style.setProperty('--bg-gradient', 'linear-gradient(to bottom, #fef3e7, #fde8d4, #fce4c4)')
+    }
+  }
+
+  // Apply on mount to ensure it's set immediately
+  useEffect(() => {
+    applyDarkMode(darkMode)
+  }, [darkMode])
+
+  // Apply when darkMode changes
+  useEffect(() => {
+    applyDarkMode(darkMode)
     localStorage.setItem('darkMode', JSON.stringify(darkMode))
   }, [darkMode])
 
+  const handleToggle = () => {
+    const newDarkMode = !darkMode
+    // Apply immediately before state update to prevent flash
+    applyDarkMode(newDarkMode)
+    setDarkMode(newDarkMode)
+  }
+
   return (
     <button
-      onClick={() => setDarkMode(!darkMode)}
+      onClick={handleToggle}
       className="relative w-14 h-7 bg-gray-200 dark:bg-dark-border rounded-full transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-dark-accent/50"
       aria-label="Toggle dark mode"
     >
