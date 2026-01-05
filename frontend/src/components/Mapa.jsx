@@ -84,10 +84,17 @@ function Mapa({ restaurantes }) {
     <div className="max-w-7xl mx-auto px-6 py-8">
       {/* Info */}
       <div className="mb-4 flex items-center justify-between">
-        <p className="text-sm text-gray-500 dark:text-dark-muted">
-          📍 {restaurantesConCoordenadas.length} restaurantes en el mapa
+        <p 
+          className="text-sm font-medium flex items-center gap-2"
+          style={{ color: 'var(--card-subtitle)' }} // CAMBIO: Forzamos variable CSS
+        >
+          <span style={{ color: '#D97706' }}>📍</span> 
+          {restaurantesConCoordenadas.length} restaurantes en el mapa
         </p>
-        <p className="text-xs text-gray-400 dark:text-dark-muted">
+        <p 
+          className="text-xs"
+          style={{ color: 'var(--card-meta)' }} // CAMBIO: Forzamos variable CSS
+        >
           Click en un marcador para ver detalles
         </p>
       </div>

@@ -5,7 +5,7 @@ function Chat({ restaurantes }) {
   const [mensajes, setMensajes] = useState([
     {
       tipo: 'bot',
-      texto: '¡Hola! Soy Javi, tu amigo y guía gastronómico por Madrid y otras ciudades. Pregúntame lo que quieras: dónde comer, qué pedir, sitios para una cita... ¡Fiaos de mis famosas recomendaciones!'
+      texto: '¡Hola! Soy Javi, tu amigo y guía gastronómico por Madrid. Pregúntame lo que quieras: dónde comer, qué pedir, sitios para una cita... ¡Fiaos de mis recomendaciones!'
     }
   ])
   const [input, setInput] = useState('')
@@ -65,21 +65,52 @@ function Chat({ restaurantes }) {
     "¿Dónde puedo ir sin reservar?"
   ]
 
+  // Estilos semánticos basados en tus variables CSS
+  const containerStyle = {
+    backgroundColor: 'var(--card-bg)',
+    borderColor: 'var(--card-border)',
+  }
+
+  const headerStyle = {
+    borderBottomColor: 'var(--card-divider)',
+    backgroundColor: 'var(--filter-bg)' // Ligeramente distinto al card base
+  }
+
+  const botBubbleStyle = {
+    backgroundColor: 'var(--badge-bg)', // Usamos el color de badges para el bot
+    color: 'var(--card-title)'
+  }
+
+  const userBubbleStyle = {
+    backgroundColor: 'var(--color-amber-brand)', // Tu color de marca
+    color: '#FFFFFF'
+  }
+
+  const inputStyle = {
+    backgroundColor: 'var(--input-bg)',
+    borderColor: 'var(--input-border)',
+    color: 'var(--input-text)'
+  }
+
   return (
     <div className="max-w-3xl mx-auto px-6 py-8">
-      <div className="bg-white dark:bg-dark-card rounded-3xl shadow-sm border border-gray-200/50 dark:border-dark-border overflow-hidden flex flex-col" style={{ height: '70vh' }}>
+      {/* Contenedor principal del chat */}
+      <div 
+        className="rounded-3xl shadow-sm border overflow-hidden flex flex-col transition-colors duration-300" 
+        style={{ ...containerStyle, height: '70vh' }}
+      >
         
         {/* Header */}
-        <div className="bg-gray-50 dark:bg-dark-bg border-b border-gray-200/50 dark:border-dark-border px-6 py-4">
-          <h2 className="font-semibold text-gray-900 dark:text-dark-text" style={{ fontFamily: 'Merriweather, serif' }}>
+        <div className="border-b px-6 py-4" style={headerStyle}>
+          <h2 className="font-semibold" style={{ fontFamily: 'Merriweather, serif', color: 'var(--card-title)' }}>
             💬 Pregúntame
           </h2>
-          <p className="text-sm text-gray-500 dark:text-dark-muted">
+          <p className="text-sm" style={{ color: 'var(--card-subtitle)' }}>
             Tu asistente gastronómico personal · {restaurantes.length} restaurantes en mi base de datos
           </p>
         </div>
 
-        {/* Mensajes */}
+        {/* Área de Mensajes */}
         <div className="flex-1 overflow-y-auto p-6 space-y-4">
           {mensajes.map((msg, idx) => (
             <div
@@ -87,13 +118,14 @@ function Chat({ restaurantes }) {
               className={`flex ${msg.tipo === 'user' ? 'justify-end' : 'justify-start'}`}
             >
               <div
-                className={`max-w-[80%] px-4 py-3 rounded-2xl ${
+                className={`max-w-[85%] px-4 py-3 rounded-2xl shadow-sm text-sm ${
                   msg.tipo === 'user'
-                    ? 'bg-[#D97706] text-white rounded-br-md'
-                    : 'bg-gray-100 dark:bg-dark-elevated text-gray-900 dark:text-dark-text rounded-bl-md'
+                    ? 'rounded-br-md'
+                    : 'rounded-bl-md'
                 }`}
+                style={msg.tipo === 'user' ? userBubbleStyle : botBubbleStyle}
               >
-                <div className={`text-sm ${msg.tipo === 'bot' ? '[&_p]:mb-3 [&_p:last-child]:mb-0 [&_strong]:font-semibold [&_ul]:my-2 [&_ul]:ml-4 [&_li]:mb-1 [&_li]:list-disc [&_li]:list-inside' : ''}`}>
+                <div className={`${msg.tipo === 'bot' ? '[&_strong]:font-bold [&_ul]:my-2 [&_ul]:ml-4 [&_li]:mb-1 [&_li]:list-disc [&_li]:list-inside' : ''}`}>
                   <ReactMarkdown>{msg.texto}</ReactMarkdown>
                 </div>
               </div>
@@ -102,11 +134,14 @@ function Chat({ restaurantes }) {
           
           {loading && (
             <div className="flex justify-start">
-              <div className="bg-gray-100 dark:bg-dark-elevated text-gray-900 dark:text-dark-text px-4 py-3 rounded-2xl rounded-bl-md">
+              <div 
+                className="px-4 py-3 rounded-2xl rounded-bl-md"
+                style={botBubbleStyle}
+              >
                 <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 bg-gray-400 dark:bg-dark-muted rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
-                  <div className="w-2 h-2 bg-gray-400 dark:bg-dark-muted rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
-                  <div className="w-2 h-2 bg-gray-400 dark:bg-dark-muted rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+                  <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
+                  <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
+                  <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
                 </div>
               </div>
             </div>
@@ -118,13 +153,18 @@ function Chat({ restaurantes }) {
         {/* Sugerencias */}
         {mensajes.length === 1 && (
           <div className="px-6 pb-4">
-            <p className="text-xs text-gray-500 dark:text-dark-muted mb-2">Prueba a preguntar:</p>
+            <p className="text-xs mb-2" style={{ color: 'var(--card-meta)' }}>Prueba a preguntar:</p>
             <div className="flex flex-wrap gap-2">
               {sugerencias.map((sug, idx) => (
                 <button
                   key={idx}
                   onClick={() => setInput(sug)}
-                  className="text-xs bg-gray-100 dark:bg-dark-elevated hover:bg-gray-200 dark:hover:bg-dark-hover text-gray-700 dark:text-dark-text px-3 py-1.5 rounded-full transition-colors"
+                  className="text-xs px-3 py-1.5 rounded-full transition-all hover:opacity-80 active:scale-95 border"
+                  style={{ 
+                    backgroundColor: 'var(--input-bg)', 
+                    color: 'var(--card-subtitle)',
+                    borderColor: 'var(--card-border)'
+                  }}
                 >
                   {sug}
                 </button>
@@ -133,8 +173,8 @@ function Chat({ restaurantes }) {
           </div>
         )}
 
-        {/* Input */}
-        <form onSubmit={enviarMensaje} className="border-t border-gray-200/50 dark:border-dark-border p-4">
+        {/* Input Area */}
+        <form onSubmit={enviarMensaje} className="border-t p-4" style={{ borderColor: 'var(--card-divider)' }}>
           <div className="flex gap-3">
             <input
               type="text"
@@ -142,12 +182,14 @@ function Chat({ restaurantes }) {
               onChange={(e) => setInput(e.target.value)}
               placeholder="Escribe tu pregunta..."
               disabled={loading}
-              className="flex-1 px-4 py-3 bg-gray-50 dark:bg-dark-bg border-0 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#D97706]/20 focus:bg-white dark:focus:bg-dark-elevated transition-all text-gray-900 dark:text-dark-text placeholder-gray-400 dark:placeholder-dark-muted disabled:opacity-50"
+              className="flex-1 px-4 py-3 border rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#D97706]/20 transition-all placeholder-gray-400 disabled:opacity-50"
+              style={inputStyle}
             />
             <button
               type="submit"
               disabled={loading || !input.trim()}
-              className="px-6 py-3 bg-[#D97706] text-white rounded-2xl font-medium hover:bg-[#D97706]/90 active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-6 py-3 text-white rounded-2xl font-medium hover:opacity-90 active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-md"
+              style={{ backgroundColor: 'var(--color-amber-brand)' }}
             >
               Enviar
             </button>

@@ -37,9 +37,9 @@ function DarkModeToggle() {
   return (
     <button
       onClick={() => setDarkMode(!darkMode)}
-      className="relative flex items-center w-14 h-8 rounded-full transition-colors duration-300 focus:outline-none border-2 border-[#D97706]"
+      className="relative flex items-center w-14 h-8 rounded-full transition-colors duration-300 focus:outline-none border-2 border-[#E17100]"
       style={{
-        backgroundColor: darkMode ? '#404040' : '#FDE68A'
+        backgroundColor: darkMode ? '#404040' : '#FFFCFA'
       }}
       aria-label="Toggle dark mode"
       title={darkMode ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'}

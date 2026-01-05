@@ -81,18 +81,22 @@ function App() {
           {/* Pestañas de navegación */}
           <nav className="flex gap-1 -mb-px justify-center">
             {pestanas.map(pestana => (
-              <button
-                key={pestana.id}
-                onClick={() => setPestanaActiva(pestana.id)}
-                className="px-5 py-3 text-sm font-medium rounded-t-xl transition-all text-center"
-                style={{
-                  backgroundColor: pestanaActiva === pestana.id ? 'var(--input-bg)' : 'transparent',
-                  color: pestanaActiva === pestana.id ? 'var(--card-title)' : 'var(--card-subtitle)'
-                }}
-              >
-                {pestana.nombre}
-              </button>
-            ))}
+                <button
+                  key={pestana.id}
+                  onClick={() => setPestanaActiva(pestana.id)}
+                  className="px-5 py-3 text-sm font-medium rounded-t-xl transition-all text-center"
+                  style={{
+                    // CAMBIO AQUÍ: Fondo transparente para evitar el corte feo
+                    backgroundColor: 'transparent',
+                    // Añadimos una línea inferior sutil o sombra para marcar la activa
+                    boxShadow: pestanaActiva === pestana.id ? 'inset 0 -2px 0 0 var(--card-title)' : 'none',
+                    color: pestanaActiva === pestana.id ? 'var(--card-title)' : 'var(--card-subtitle)',
+                    opacity: pestanaActiva === pestana.id ? 1 : 0.7
+                  }}
+                >
+                  {pestana.nombre}
+                </button>
+              ))}
           </nav>
         </div>
       </header>
