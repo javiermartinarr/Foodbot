@@ -1,16 +1,6 @@
 @import "tailwindcss";
 @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap');
 
-/* Default background gradient for light mode */
-:root {
-  --bg-gradient: linear-gradient(to bottom, #fef3e7, #fde8d4, #fce4c4);
-}
-
-/* Dark mode background */
-.dark {
-  --bg-gradient: #1a1a1a;
-}
-
 @theme {
   /* Soft pastel food-themed palette - Olive Green */
   --color-pastel-olive-50: #f5f7f2;
@@ -40,6 +30,21 @@
   --color-amber-brand: #D97706;
   --color-text-dark: #1F2937;
   --color-cream-light: #FFF7ED;
+  
+  /* ===== ANTHROPIC-INSPIRED DARK MODE PALETTE ===== */
+  /* Background layers */
+  --color-dark-bg: #1a1a1a;
+  --color-dark-card: #2d2d2d;
+  --color-dark-elevated: #363636;
+  --color-dark-border: #404040;
+  --color-dark-hover: #4a4a4a;
+  
+  /* Text colors */
+  --color-dark-text: #F5E6D3;
+  --color-dark-muted: #C4A584;
+  
+  /* Accent */
+  --color-dark-accent: #E67D22;
 }
 
 /* Estilos para el popup de Leaflet - botón cerrar estilo Explorar */

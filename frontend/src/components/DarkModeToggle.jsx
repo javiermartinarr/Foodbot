@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 
 function DarkModeToggle() {
   const [darkMode, setDarkMode] = useState(() => {
-    // Verificamos si estamos en el navegador para evitar errores de SSR si usaras Next.js
     if (typeof window !== 'undefined') {
       const saved = localStorage.getItem('darkMode')
       if (saved !== null) {
@@ -13,53 +12,33 @@ function DarkModeToggle() {
     return false
   })
 
-  // Function to apply dark mode styles
-  const applyDarkMode = (isDark) => {
-    if (typeof window === 'undefined') return
-    
+  useEffect(() => {
     const html = document.documentElement
     
-    if (isDark) {
+    if (darkMode) {
       html.classList.add('dark')
       html.style.setProperty('--bg-gradient', '#1a1a1a')
     } else {
       html.classList.remove('dark')
       html.style.setProperty('--bg-gradient', 'linear-gradient(to bottom, #fef3e7, #fde8d4, #fce4c4)')
     }
-  }
-
-  // Apply on mount to ensure it's set immediately
-  useEffect(() => {
-    applyDarkMode(darkMode)
-  }, [darkMode])
-
-  // Apply when darkMode changes
-  useEffect(() => {
-    applyDarkMode(darkMode)
+    
     localStorage.setItem('darkMode', JSON.stringify(darkMode))
   }, [darkMode])
 
-  const handleToggle = () => {
-    const newDarkMode = !darkMode
-    // Apply immediately before state update to prevent flash
-    applyDarkMode(newDarkMode)
-    setDarkMode(newDarkMode)
-  }
-
   return (
     <button
-      onClick={handleToggle}
-      className="relative w-14 h-7 bg-gray-200 dark:bg-dark-border rounded-full transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-dark-accent/50"
+      onClick={() => setDarkMode(!darkMode)}
+      className="relative w-14 h-7 bg-gray-200 dark:bg-dark-border rounded-full transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-amber-brand/50"
       aria-label="Toggle dark mode"
     >
       <span
         className={`absolute top-0.5 left-0.5 w-6 h-6 rounded-full shadow-md transform transition-transform duration-300 flex items-center justify-center ${
           darkMode 
-            ? 'translate-x-7 bg-dark-bg text-dark-text' 
-            : 'translate-x-0 bg-white text-gray-900'
+            ? 'translate-x-7 bg-dark-card' 
+            : 'translate-x-0 bg-white'
         }`}
       >
-        {/* He simplificado los iconos para que se vean más limpios */}
         {darkMode ? (
           <span className="text-xs">🌙</span>
         ) : (

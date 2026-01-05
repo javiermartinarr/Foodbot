@@ -1,16 +1,17 @@
+// Score gradient - MANTENER COLORES CLAROS ORIGINALES (sin dark mode en badges de puntuación)
 function getScoreGradient(score) {
-  if (!score) return 'bg-gray-300 dark:bg-gray-800 dark:text-dark-text border-[0.5px] border-gray-400 dark:border-gray-600'
+  if (!score) return 'bg-gray-300 border-[0.5px] border-gray-400'
   
   if (score >= 4.5) {
-    return 'bg-green-200 dark:bg-green-900/50 dark:text-green-100 border-[0.5px] border-gray-400 dark:border-green-700/50'
+    return 'bg-green-200 border-[0.5px] border-gray-400'
   } else if (score >= 4.0) {
-    return 'bg-green-100 dark:bg-green-900/40 dark:text-green-100 border-[0.5px] border-gray-400 dark:border-green-700/50'
+    return 'bg-green-100 border-[0.5px] border-gray-400'
   } else if (score >= 3.5) {
-    return 'bg-amber-200 dark:bg-amber-900/50 dark:text-amber-100 border-[0.5px] border-gray-400 dark:border-amber-700/50'
+    return 'bg-amber-200 border-[0.5px] border-gray-400'
   } else if (score >= 3.0) {
-    return 'bg-orange-200 dark:bg-orange-900/50 dark:text-orange-100 border-[0.5px] border-gray-400 dark:border-orange-700/50'
+    return 'bg-orange-200 border-[0.5px] border-gray-400'
   } else {
-    return 'bg-gray-200 dark:bg-gray-800 dark:text-dark-text border-[0.5px] border-gray-400 dark:border-gray-600'
+    return 'bg-gray-200 border-[0.5px] border-gray-400'
   }
 }
 
@@ -63,7 +64,7 @@ function RestaurantModal({ restaurante, onClose }) {
           </div>
           <button 
             onClick={onClose}
-            className="w-10 h-10 rounded-full bg-gray-100 dark:bg-dark-border flex items-center justify-center hover:bg-gray-200 dark:hover:bg-dark-bg transition-colors text-[#1F2937] dark:text-dark-text"
+            className="w-10 h-10 rounded-full bg-gray-100 dark:bg-dark-elevated flex items-center justify-center hover:bg-gray-200 dark:hover:bg-dark-hover transition-colors text-[#1F2937] dark:text-dark-text"
           >
             ✕
           </button>
@@ -71,9 +72,9 @@ function RestaurantModal({ restaurante, onClose }) {
 
         {/* Contenido */}
         <div className="p-6 space-y-6">
-          {/* Puntuación y precio */}
+          {/* Puntuación y precio - SIEMPRE colores claros */}
           <div className="flex items-center gap-4">
-            <div className={`${getScoreGradient(restaurante.puntuacion)} text-[#1F2937] dark:text-dark-text px-5 py-3 rounded-2xl flex items-center gap-2`}>
+            <div className={`${getScoreGradient(restaurante.puntuacion)} text-[#1F2937] px-5 py-3 rounded-2xl flex items-center gap-2`}>
               {restaurante.destacado ? (
                 <TopChoiceIcon className="w-4 h-4 text-[#D97706]" />
               ) : (
@@ -102,7 +103,7 @@ function RestaurantModal({ restaurante, onClose }) {
                   href={restaurante.url_web}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block w-full text-center text-base font-medium text-[#D97706] underline hover:no-underline bg-[#FFF7ED] dark:bg-amber-900/30 rounded-xl px-4 py-2 mb-2"
+                  className="block w-full text-center text-base font-medium text-[#D97706] underline hover:no-underline bg-[#FFF7ED] dark:bg-dark-accent/20 rounded-xl px-4 py-2 mb-2"
                 >
                   🌐 Web oficial
                 </a>
@@ -112,23 +113,24 @@ function RestaurantModal({ restaurante, onClose }) {
 
           {/* Descripción */}
           {restaurante.descripcion_personal && (
-            <div className="bg-[#EDEDED] dark:bg-dark-border rounded-2xl p-4 w-full">
+            <div className="bg-[#EDEDED] dark:bg-dark-elevated rounded-2xl p-4 w-full">
               <p className="text-sm text-[#1F2937] dark:text-dark-muted font-medium mb-2">Descripción general</p>
               <p className="text-[#1F2937] dark:text-dark-text leading-relaxed text-sm">{restaurante.descripcion_personal}</p>
             </div>
           )}
 
-          {/* Plato y ambiente */}
+          {/* Plato recomendado y ambiente */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Recomendación - SIEMPRE colores claros */}
             {restaurante.plato_recomendado ? (
-              <div className="bg-amber-50 dark:bg-amber-900/20 dark:border dark:border-amber-800/30 rounded-2xl p-4">
-                <p className="text-xs text-amber-600 dark:text-amber-300 font-medium mb-0.5">⭐ Recomendación</p>
-                <p className="text-xs text-amber-900 dark:text-amber-100 font-medium">{restaurante.plato_recomendado}</p>
+              <div className="bg-amber-50 rounded-2xl p-4">
+                <p className="text-xs text-amber-600 font-medium mb-0.5">⭐ Recomendación</p>
+                <p className="text-xs text-amber-900 font-medium">{restaurante.plato_recomendado}</p>
               </div>
             ) : (
               <div></div>
             )}
-            <div className="bg-gray-50 dark:bg-dark-border rounded-2xl p-4">
+            <div className="bg-gray-50 dark:bg-dark-elevated rounded-2xl p-4">
               <p className="text-xs text-[#1F2937] dark:text-dark-muted mb-1">✨ Ambiente</p>
               <p className="text-sm font-medium text-[#1F2937] dark:text-dark-text">{restaurante.ambiente}</p>
             </div>
@@ -136,12 +138,12 @@ function RestaurantModal({ restaurante, onClose }) {
 
           {/* Ubicación y reservas */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="bg-gray-50 dark:bg-dark-border rounded-2xl p-4">
+            <div className="bg-gray-50 dark:bg-dark-elevated rounded-2xl p-4">
               <p className="text-xs text-[#1F2937] dark:text-dark-muted mb-1">📍 Ubicación</p>
               <p className="text-sm font-medium text-[#1F2937] dark:text-dark-text">{restaurante.barrio}</p>
               <p className="text-xs text-[#1F2937] dark:text-dark-muted mt-1">{restaurante.direccion}</p>
             </div>
-            <div className="bg-gray-50 dark:bg-dark-border rounded-2xl p-4">
+            <div className="bg-gray-50 dark:bg-dark-elevated rounded-2xl p-4">
               <p className="text-xs text-[#1F2937] dark:text-dark-muted mb-1">📞 Reservas</p>
               <p className="text-sm font-medium text-[#1F2937] dark:text-dark-text">
                 {restaurante.requiere_reserva 
@@ -184,12 +186,12 @@ function RestaurantModal({ restaurante, onClose }) {
           {/* Botones */}
           <div className="flex gap-3 pt-4">
             {restaurante.url_carta && (
-              <a href={restaurante.url_carta} target="_blank" rel="noopener noreferrer" className="flex-1 bg-black dark:bg-white text-white dark:text-black text-center py-3.5 rounded-2xl font-medium hover:bg-gray-800 dark:hover:bg-gray-200 active:scale-[0.98] transition-all">
+              <a href={restaurante.url_carta} target="_blank" rel="noopener noreferrer" className="flex-1 bg-black dark:bg-dark-text text-white dark:text-dark-bg text-center py-3.5 rounded-2xl font-medium hover:bg-gray-800 dark:hover:bg-dark-muted active:scale-[0.98] transition-all">
                 Ver carta
               </a>
             )}
             {restaurante.google_maps_url && (
-              <a href={restaurante.google_maps_url} target="_blank" rel="noopener noreferrer" className="flex-1 bg-gray-100 dark:bg-dark-border text-[#1F2937] dark:text-dark-text text-center py-3.5 rounded-2xl font-medium hover:bg-gray-200 dark:hover:bg-dark-bg active:scale-[0.98] transition-all">
+              <a href={restaurante.google_maps_url} target="_blank" rel="noopener noreferrer" className="flex-1 bg-gray-100 dark:bg-dark-elevated text-[#1F2937] dark:text-dark-text text-center py-3.5 rounded-2xl font-medium hover:bg-gray-200 dark:hover:bg-dark-hover active:scale-[0.98] transition-all">
                 Cómo llegar
               </a>
             )}

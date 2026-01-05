@@ -1,19 +1,20 @@
 import { useState } from 'react'
 import RestaurantModal from './RestaurantModal'
 
+// Score gradient - MANTENER COLORES CLAROS ORIGINALES (sin dark mode en badges de puntuación)
 function getScoreGradient(score) {
-  if (!score) return 'bg-gray-300 dark:bg-gray-800 dark:text-dark-text border-[0.5px] border-gray-400 dark:border-gray-600'
+  if (!score) return 'bg-gray-300 border-[0.5px] border-gray-400'
   
   if (score >= 4.5) {
-    return 'bg-green-200 dark:bg-green-900/50 dark:text-green-100 border-[0.5px] border-gray-400 dark:border-green-700/50'
+    return 'bg-green-200 border-[0.5px] border-gray-400'
   } else if (score >= 4.0) {
-    return 'bg-green-100 dark:bg-green-900/40 dark:text-green-100 border-[0.5px] border-gray-400 dark:border-green-700/50'
+    return 'bg-green-100 border-[0.5px] border-gray-400'
   } else if (score >= 3.5) {
-    return 'bg-amber-200 dark:bg-amber-900/50 dark:text-amber-100 border-[0.5px] border-gray-400 dark:border-amber-700/50'
+    return 'bg-amber-200 border-[0.5px] border-gray-400'
   } else if (score >= 3.0) {
-    return 'bg-orange-200 dark:bg-orange-900/50 dark:text-orange-100 border-[0.5px] border-gray-400 dark:border-orange-700/50'
+    return 'bg-orange-200 border-[0.5px] border-gray-400'
   } else {
-    return 'bg-gray-200 dark:bg-gray-800 dark:text-dark-text border-[0.5px] border-gray-400 dark:border-gray-600'
+    return 'bg-gray-200 border-[0.5px] border-gray-400'
   }
 }
 
@@ -89,7 +90,7 @@ function Explorar({ restaurantes, loading }) {
             <input
               type="text"
               placeholder="Buscar restaurante..."
-              className="w-full pl-12 pr-4 py-3.5 bg-gray-50 dark:bg-dark-card border-0 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#D97706]/20 transition-all text-[#1F2937] dark:text-dark-text placeholder-gray-400 dark:placeholder-dark-muted"
+              className="w-full pl-12 pr-4 py-3.5 bg-gray-50 dark:bg-dark-bg border-0 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#D97706]/20 transition-all text-[#1F2937] dark:text-dark-text placeholder-gray-400 dark:placeholder-dark-muted"
               value={filtros.busqueda}
               onChange={(e) => setFiltros({...filtros, busqueda: e.target.value})}
             />
@@ -99,7 +100,7 @@ function Explorar({ restaurantes, loading }) {
         {/* Filtros grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
           <select
-            className="px-4 py-3 bg-gray-50 dark:bg-dark-card border-[0.5px] border-[#D97706]/30 dark:border-dark-border rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#D97706]/20 transition-all text-[#1F2937] dark:text-dark-text text-sm font-medium cursor-pointer hover:bg-[#FFF7ED] dark:hover:bg-dark-hover"
+            className="px-4 py-3 bg-gray-50 dark:bg-dark-bg border-[0.5px] border-[#D97706]/30 dark:border-dark-border rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#D97706]/20 transition-all text-[#1F2937] dark:text-dark-text text-sm font-medium cursor-pointer hover:bg-[#FFF7ED] dark:hover:bg-dark-hover"
             value={filtros.tipo_comida}
             onChange={(e) => setFiltros({...filtros, tipo_comida: e.target.value})}
           >
@@ -110,7 +111,7 @@ function Explorar({ restaurantes, loading }) {
           </select>
 
           <select
-            className="px-4 py-3 bg-gray-50 dark:bg-dark-card border-[0.5px] border-[#D97706]/30 dark:border-dark-border rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#D97706]/20 transition-all text-[#1F2937] dark:text-dark-text text-sm font-medium cursor-pointer hover:bg-[#FFF7ED] dark:hover:bg-dark-hover"
+            className="px-4 py-3 bg-gray-50 dark:bg-dark-bg border-[0.5px] border-[#D97706]/30 dark:border-dark-border rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#D97706]/20 transition-all text-[#1F2937] dark:text-dark-text text-sm font-medium cursor-pointer hover:bg-[#FFF7ED] dark:hover:bg-dark-hover"
             value={filtros.barrio}
             onChange={(e) => setFiltros({...filtros, barrio: e.target.value})}
           >
@@ -121,7 +122,7 @@ function Explorar({ restaurantes, loading }) {
           </select>
 
           <select
-            className="px-4 py-3 bg-gray-50 dark:bg-dark-card border-[0.5px] border-[#D97706]/30 dark:border-dark-border rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#D97706]/20 transition-all text-[#1F2937] dark:text-dark-text text-sm font-medium cursor-pointer hover:bg-[#FFF7ED] dark:hover:bg-dark-hover"
+            className="px-4 py-3 bg-gray-50 dark:bg-dark-bg border-[0.5px] border-[#D97706]/30 dark:border-dark-border rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#D97706]/20 transition-all text-[#1F2937] dark:text-dark-text text-sm font-medium cursor-pointer hover:bg-[#FFF7ED] dark:hover:bg-dark-hover"
             value={filtros.precio_categoria}
             onChange={(e) => setFiltros({...filtros, precio_categoria: e.target.value})}
           >
@@ -132,7 +133,7 @@ function Explorar({ restaurantes, loading }) {
           </select>
 
           <select
-            className="px-4 py-3 bg-gray-50 dark:bg-dark-card border-[0.5px] border-[#D97706]/30 dark:border-dark-border rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#D97706]/20 transition-all text-[#1F2937] dark:text-dark-text text-sm font-medium cursor-pointer hover:bg-[#FFF7ED] dark:hover:bg-dark-hover"
+            className="px-4 py-3 bg-gray-50 dark:bg-dark-bg border-[0.5px] border-[#D97706]/30 dark:border-dark-border rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#D97706]/20 transition-all text-[#1F2937] dark:text-dark-text text-sm font-medium cursor-pointer hover:bg-[#FFF7ED] dark:hover:bg-dark-hover"
             value={filtros.puntuacion_min}
             onChange={(e) => setFiltros({...filtros, puntuacion_min: e.target.value})}
           >
@@ -144,7 +145,7 @@ function Explorar({ restaurantes, loading }) {
           </select>
 
           <select
-            className="px-4 py-3 bg-gray-50 dark:bg-dark-card border-[0.5px] border-[#D97706]/30 dark:border-dark-border rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#D97706]/20 transition-all text-[#1F2937] dark:text-dark-text text-sm font-medium cursor-pointer hover:bg-[#FFF7ED] dark:hover:bg-dark-hover"
+            className="px-4 py-3 bg-gray-50 dark:bg-dark-bg border-[0.5px] border-[#D97706]/30 dark:border-dark-border rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#D97706]/20 transition-all text-[#1F2937] dark:text-dark-text text-sm font-medium cursor-pointer hover:bg-[#FFF7ED] dark:hover:bg-dark-hover"
             value={filtros.ordenar}
             onChange={(e) => setFiltros({...filtros, ordenar: e.target.value})}
           >
@@ -192,11 +193,11 @@ function Explorar({ restaurantes, loading }) {
             <article
               key={restaurante.id}
               onClick={() => setSelectedRestaurante(restaurante)}
-              className="group bg-white dark:bg-dark-card rounded-2xl shadow-sm border border-gray-200/50 dark:border-dark-border p-4 cursor-pointer hover:shadow-xl hover:shadow-gray-200/50 dark:hover:shadow-black/20 hover:-translate-y-1 active:scale-[0.98] transition-all duration-300 relative overflow-visible"
+              className="group bg-white dark:bg-dark-card rounded-2xl shadow-sm border border-gray-200/50 dark:border-dark-border p-4 cursor-pointer hover:shadow-xl hover:shadow-gray-200/50 dark:hover:shadow-black/20 hover:-translate-y-1 active:scale-[0.98] transition-all duration-300 relative"
             >
               <div className="flex justify-between items-start mb-3">
                 <div className="flex-1 min-w-0">
-                  <h3 className="font-semibold text-[#1F2937] dark:text-dark-text text-base truncate group-hover:text-gray-700 dark:group-hover:text-white transition-colors relative z-10" style={{ fontFamily: 'Merriweather, serif' }}>
+                  <h3 className="font-semibold text-[#1F2937] dark:text-dark-text text-base truncate group-hover:text-gray-700 dark:group-hover:text-white transition-colors" style={{ fontFamily: 'Merriweather, serif' }}>
                     {restaurante.nombre}
                   </h3>
                   <p className="text-xs text-[#1F2937] dark:text-dark-muted mt-0.5">
@@ -209,7 +210,8 @@ function Explorar({ restaurantes, loading }) {
                       ⭐ Top Pick
                     </div>
                   )}
-                  <div className={`flex items-center gap-1 ${getScoreGradient(restaurante.puntuacion)} text-[#1F2937] dark:text-dark-text px-2.5 py-1 rounded-lg`}>
+                  {/* Badge de puntuación - SIEMPRE colores claros */}
+                  <div className={`flex items-center gap-1 ${getScoreGradient(restaurante.puntuacion)} text-[#1F2937] px-2.5 py-1 rounded-lg`}>
                     {restaurante.destacado ? (
                       <TopChoiceIcon className="w-3 h-3 text-[#D97706]" />
                     ) : (
@@ -221,10 +223,10 @@ function Explorar({ restaurantes, loading }) {
               </div>
 
               <div className="flex flex-wrap gap-1.5 mb-3">
-                <span className="inline-flex items-center gap-1 bg-gray-100 dark:bg-dark-border text-[#1F2937] dark:text-dark-text text-xs px-2 py-1 rounded-full font-medium">
+                <span className="inline-flex items-center gap-1 bg-gray-100 dark:bg-dark-elevated text-[#1F2937] dark:text-dark-text text-xs px-2 py-1 rounded-full font-medium">
                   📍 {restaurante.barrio}
                 </span>
-                <span className="inline-flex items-center gap-1 bg-gray-100 dark:bg-dark-border text-[#1F2937] dark:text-dark-text text-xs px-2 py-1 rounded-full font-medium">
+                <span className="inline-flex items-center gap-1 bg-gray-100 dark:bg-dark-elevated text-[#1F2937] dark:text-dark-text text-xs px-2 py-1 rounded-full font-medium">
                   {restaurante.precio_categoria}
                   {restaurante.precio_min && restaurante.precio_max && (
                     <span className="ml-1">
@@ -232,7 +234,7 @@ function Explorar({ restaurantes, loading }) {
                     </span>
                   )}
                 </span>
-                <span className="inline-flex items-center gap-1 bg-gray-100 dark:bg-dark-border text-[#1F2937] dark:text-dark-text text-xs px-2 py-1 rounded-full font-medium">
+                <span className="inline-flex items-center gap-1 bg-gray-100 dark:bg-dark-elevated text-[#1F2937] dark:text-dark-text text-xs px-2 py-1 rounded-full font-medium">
                   {restaurante.ambiente}
                 </span>
               </div>
@@ -257,17 +259,18 @@ function Explorar({ restaurantes, loading }) {
                 </div>
               )}
 
+              {/* Sección de recomendación - SIEMPRE colores claros (amber) */}
               {restaurante.plato_recomendado && (
-                <div className="bg-amber-50 dark:bg-amber-900/20 dark:border dark:border-amber-800/30 rounded-xl p-2 mb-3">
-                  <p className="text-xs text-amber-600 dark:text-amber-300 font-medium mb-0.5">Recomendación</p>
-                  <p className="text-xs text-amber-900 dark:text-amber-100 font-medium">{restaurante.plato_recomendado}</p>
+                <div className="bg-amber-50 rounded-xl p-2 mb-3">
+                  <p className="text-xs text-amber-600 font-medium mb-0.5">Recomendación</p>
+                  <p className="text-xs text-amber-900 font-medium">{restaurante.plato_recomendado}</p>
                 </div>
               )}
 
               <div className="flex items-center justify-between pt-3 border-t border-gray-100 dark:border-dark-border">
                 <span className="text-xs text-gray-400 dark:text-dark-muted">
                   {restaurante.requiere_reserva ? (
-                    <span className="text-amber-600 dark:text-amber-400 font-medium">⚠️ Requiere reserva</span>
+                    <span className="text-amber-600 font-medium">⚠️ Requiere reserva</span>
                   ) : restaurante.acepta_reservas ? (
                     '✓ Acepta reservas'
                   ) : (
