@@ -46,7 +46,13 @@ function App() {
       }}
     >
       {/* Header con navegación */}
-      <header className="bg-white/80 dark:bg-dark-card/90 backdrop-blur-lg border-b border-gray-200/50 dark:border-dark-border sticky top-0 z-40">
+      <header 
+        className="backdrop-blur-lg sticky top-0 z-40"
+        style={{
+          backgroundColor: 'color-mix(in srgb, var(--filter-bg) 80%, transparent)',
+          borderBottom: '1px solid var(--filter-border)'
+        }}
+      >
         <div className="max-w-7xl mx-auto px-6">
           {/* Título y estado */}
           <div className="flex items-center justify-between py-4">
@@ -54,15 +60,18 @@ function App() {
               <DarkModeToggle />
             </div>
             <div className="flex items-center gap-2">
-              <h1 className="text-3xl font-semibold text-[#1F2937] dark:text-dark-text tracking-tight" style={{ fontFamily: 'Merriweather, serif' }}>
+              <h1 
+                className="text-3xl font-semibold tracking-tight" 
+                style={{ fontFamily: 'Merriweather, serif', color: 'var(--card-title)' }}
+              >
                 Foodbot
               </h1>
-              <p className="text-sm text-gray-500 dark:text-dark-muted self-center">
+              <p className="text-sm self-center" style={{ color: 'var(--card-subtitle)' }}>
                 by Alba and Javi
               </p>
             </div>
             <div className="flex-1 flex items-center justify-end">
-              <div className="flex items-center gap-2 text-xs text-gray-400 dark:text-dark-muted">
+              <div className="flex items-center gap-2 text-xs" style={{ color: 'var(--card-meta)' }}>
                 <span className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></span>
                 {restaurantes.length} restaurantes
               </div>
@@ -75,13 +84,11 @@ function App() {
               <button
                 key={pestana.id}
                 onClick={() => setPestanaActiva(pestana.id)}
-                className={`
-                  px-5 py-3 text-sm font-medium rounded-t-xl transition-all text-center
-                  ${pestanaActiva === pestana.id
-                    ? 'bg-gray-100 dark:bg-dark-bg text-gray-900 dark:text-dark-text'
-                    : 'text-gray-500 dark:text-dark-muted hover:text-gray-700 dark:hover:text-dark-text hover:bg-gray-50 dark:hover:bg-dark-elevated'
-                  }
-                `}
+                className="px-5 py-3 text-sm font-medium rounded-t-xl transition-all text-center"
+                style={{
+                  backgroundColor: pestanaActiva === pestana.id ? 'var(--input-bg)' : 'transparent',
+                  color: pestanaActiva === pestana.id ? 'var(--card-title)' : 'var(--card-subtitle)'
+                }}
               >
                 {pestana.nombre}
               </button>

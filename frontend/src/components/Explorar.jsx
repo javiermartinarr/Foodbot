@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import RestaurantModal from './RestaurantModal'
 
-// Score gradient - Colores claros fijos para ambos modos (indicador visual consistente)
+// Score gradient - Colores claros fijos
 function getScoreGradient(score) {
   if (!score) return 'bg-gray-300 border-[0.5px] border-gray-400'
   
@@ -77,20 +77,49 @@ function Explorar({ restaurantes, loading }) {
 
   const hayFiltrosActivos = filtros.tipo_comida || filtros.barrio || filtros.precio_categoria || filtros.busqueda || filtros.puntuacion_min
 
+  // Estilos comunes usando CSS variables (cambian automáticamente con dark mode)
+  const filterContainerStyle = {
+    backgroundColor: 'var(--filter-bg)',
+    borderColor: 'var(--filter-border)',
+    borderWidth: '1px'
+  }
+
+  const inputStyle = {
+    backgroundColor: 'var(--input-bg)',
+    borderColor: 'var(--input-border)',
+    borderWidth: '1px',
+    color: 'var(--input-text)'
+  }
+
+  const cardStyle = {
+    backgroundColor: 'var(--card-bg)',
+    borderColor: 'var(--card-border)',
+    borderWidth: '1px'
+  }
+
+  const badgeStyle = {
+    backgroundColor: 'var(--badge-bg)',
+    color: 'var(--badge-text)'
+  }
+
   return (
     <div className="max-w-7xl mx-auto px-6 py-8">
-      {/* Filtros - Fondo blanco en modo claro, dark-card en oscuro */}
-      <div className="bg-white dark:bg-dark-card rounded-3xl shadow-sm border border-gray-200 dark:border-dark-border p-6 mb-8">
+      {/* Filtros */}
+      <div 
+        className="rounded-3xl shadow-sm p-6 mb-8"
+        style={filterContainerStyle}
+      >
         {/* Buscador */}
         <div className="mb-6">
           <div className="relative">
-            <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 dark:text-dark-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5" style={{ color: 'var(--card-meta)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
             <input
               type="text"
               placeholder="Buscar restaurante..."
-              className="w-full pl-12 pr-4 py-3.5 bg-gray-50 dark:bg-dark-bg border border-gray-200 dark:border-dark-border rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#D97706]/20 transition-all text-[#1F2937] dark:text-dark-text placeholder-gray-400 dark:placeholder-dark-muted"
+              className="w-full pl-12 pr-4 py-3.5 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#D97706]/20 transition-all placeholder-gray-400"
+              style={inputStyle}
               value={filtros.busqueda}
               onChange={(e) => setFiltros({...filtros, busqueda: e.target.value})}
             />
@@ -100,7 +129,8 @@ function Explorar({ restaurantes, loading }) {
         {/* Filtros grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
           <select
-            className="px-4 py-3 bg-gray-50 dark:bg-dark-bg border border-gray-200 dark:border-dark-border rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#D97706]/20 transition-all text-[#1F2937] dark:text-dark-text text-sm font-medium cursor-pointer hover:bg-gray-100 dark:hover:bg-dark-hover"
+            className="px-4 py-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#D97706]/20 transition-all text-sm font-medium cursor-pointer"
+            style={inputStyle}
             value={filtros.tipo_comida}
             onChange={(e) => setFiltros({...filtros, tipo_comida: e.target.value})}
           >
@@ -111,7 +141,8 @@ function Explorar({ restaurantes, loading }) {
           </select>
 
           <select
-            className="px-4 py-3 bg-gray-50 dark:bg-dark-bg border border-gray-200 dark:border-dark-border rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#D97706]/20 transition-all text-[#1F2937] dark:text-dark-text text-sm font-medium cursor-pointer hover:bg-gray-100 dark:hover:bg-dark-hover"
+            className="px-4 py-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#D97706]/20 transition-all text-sm font-medium cursor-pointer"
+            style={inputStyle}
             value={filtros.barrio}
             onChange={(e) => setFiltros({...filtros, barrio: e.target.value})}
           >
@@ -122,7 +153,8 @@ function Explorar({ restaurantes, loading }) {
           </select>
 
           <select
-            className="px-4 py-3 bg-gray-50 dark:bg-dark-bg border border-gray-200 dark:border-dark-border rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#D97706]/20 transition-all text-[#1F2937] dark:text-dark-text text-sm font-medium cursor-pointer hover:bg-gray-100 dark:hover:bg-dark-hover"
+            className="px-4 py-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#D97706]/20 transition-all text-sm font-medium cursor-pointer"
+            style={inputStyle}
             value={filtros.precio_categoria}
             onChange={(e) => setFiltros({...filtros, precio_categoria: e.target.value})}
           >
@@ -133,7 +165,8 @@ function Explorar({ restaurantes, loading }) {
           </select>
 
           <select
-            className="px-4 py-3 bg-gray-50 dark:bg-dark-bg border border-gray-200 dark:border-dark-border rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#D97706]/20 transition-all text-[#1F2937] dark:text-dark-text text-sm font-medium cursor-pointer hover:bg-gray-100 dark:hover:bg-dark-hover"
+            className="px-4 py-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#D97706]/20 transition-all text-sm font-medium cursor-pointer"
+            style={inputStyle}
             value={filtros.puntuacion_min}
             onChange={(e) => setFiltros({...filtros, puntuacion_min: e.target.value})}
           >
@@ -145,7 +178,8 @@ function Explorar({ restaurantes, loading }) {
           </select>
 
           <select
-            className="px-4 py-3 bg-gray-50 dark:bg-dark-bg border border-gray-200 dark:border-dark-border rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#D97706]/20 transition-all text-[#1F2937] dark:text-dark-text text-sm font-medium cursor-pointer hover:bg-gray-100 dark:hover:bg-dark-hover"
+            className="px-4 py-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#D97706]/20 transition-all text-sm font-medium cursor-pointer"
+            style={inputStyle}
             value={filtros.ordenar}
             onChange={(e) => setFiltros({...filtros, ordenar: e.target.value})}
           >
@@ -167,22 +201,23 @@ function Explorar({ restaurantes, loading }) {
       </div>
 
       {/* Contador */}
-      <p className="text-sm text-gray-500 dark:text-dark-muted mb-4">
+      <p className="text-sm mb-4" style={{ color: 'var(--card-subtitle)' }}>
         {restaurantesFiltrados.length} de {restaurantes.length} restaurantes
       </p>
 
       {/* Lista de restaurantes */}
       {loading ? (
         <div className="flex items-center justify-center py-20">
-          <div className="w-8 h-8 border-2 border-gray-300 dark:border-dark-border border-t-gray-900 dark:border-t-dark-text rounded-full animate-spin"></div>
+          <div className="w-8 h-8 border-2 rounded-full animate-spin" style={{ borderColor: 'var(--card-border)', borderTopColor: 'var(--card-title)' }}></div>
         </div>
       ) : restaurantesFiltrados.length === 0 ? (
         <div className="text-center py-20">
           <div className="text-6xl mb-4">🍽️</div>
-          <p className="text-gray-500 dark:text-dark-muted text-lg">No hay restaurantes que coincidan</p>
+          <p className="text-lg" style={{ color: 'var(--card-subtitle)' }}>No hay restaurantes que coincidan</p>
           <button
             onClick={() => setFiltros({ tipo_comida: '', barrio: '', precio_categoria: '', busqueda: '', puntuacion_min: '', ordenar: 'puntuacion' })}
-            className="mt-4 text-gray-900 dark:text-dark-text font-medium hover:underline"
+            className="mt-4 font-medium hover:underline"
+            style={{ color: 'var(--card-title)' }}
           >
             Ver todos
           </button>
@@ -193,14 +228,18 @@ function Explorar({ restaurantes, loading }) {
             <article
               key={restaurante.id}
               onClick={() => setSelectedRestaurante(restaurante)}
-              className="group bg-white dark:bg-dark-card rounded-2xl shadow-sm border border-gray-200 dark:border-dark-border p-4 cursor-pointer hover:shadow-xl hover:shadow-gray-200/50 dark:hover:shadow-black/20 hover:-translate-y-1 active:scale-[0.98] transition-all duration-300 relative"
+              className="group rounded-2xl shadow-sm p-4 cursor-pointer hover:shadow-xl hover:-translate-y-1 active:scale-[0.98] transition-all duration-300 relative"
+              style={cardStyle}
             >
               <div className="flex justify-between items-start mb-3">
                 <div className="flex-1 min-w-0">
-                  <h3 className="font-semibold text-[#1F2937] dark:text-dark-text text-base truncate group-hover:text-gray-700 dark:group-hover:text-white transition-colors" style={{ fontFamily: 'Merriweather, serif' }}>
+                  <h3 
+                    className="font-semibold text-base truncate transition-colors" 
+                    style={{ fontFamily: 'Merriweather, serif', color: 'var(--card-title)' }}
+                  >
                     {restaurante.nombre}
                   </h3>
-                  <p className="text-xs text-gray-500 dark:text-dark-muted mt-0.5">
+                  <p className="text-xs mt-0.5" style={{ color: 'var(--card-subtitle)' }}>
                     {restaurante.tipo_comida} {restaurante.subtipo_comida && `· ${restaurante.subtipo_comida}`}
                   </p>
                 </div>
@@ -210,7 +249,6 @@ function Explorar({ restaurantes, loading }) {
                       ⭐ Top Pick
                     </div>
                   )}
-                  {/* Badge de puntuación - Colores claros fijos */}
                   <div className={`flex items-center gap-1 ${getScoreGradient(restaurante.puntuacion)} text-[#1F2937] px-2.5 py-1 rounded-lg`}>
                     {restaurante.destacado ? (
                       <TopChoiceIcon className="w-3 h-3 text-[#D97706]" />
@@ -223,10 +261,10 @@ function Explorar({ restaurantes, loading }) {
               </div>
 
               <div className="flex flex-wrap gap-1.5 mb-3">
-                <span className="inline-flex items-center gap-1 bg-gray-100 dark:bg-dark-elevated text-gray-700 dark:text-dark-text text-xs px-2 py-1 rounded-full font-medium">
+                <span className="inline-flex items-center gap-1 text-xs px-2 py-1 rounded-full font-medium" style={badgeStyle}>
                   📍 {restaurante.barrio}
                 </span>
-                <span className="inline-flex items-center gap-1 bg-gray-100 dark:bg-dark-elevated text-gray-700 dark:text-dark-text text-xs px-2 py-1 rounded-full font-medium">
+                <span className="inline-flex items-center gap-1 text-xs px-2 py-1 rounded-full font-medium" style={badgeStyle}>
                   {restaurante.precio_categoria}
                   {restaurante.precio_min && restaurante.precio_max && (
                     <span className="ml-1">
@@ -234,7 +272,7 @@ function Explorar({ restaurantes, loading }) {
                     </span>
                   )}
                 </span>
-                <span className="inline-flex items-center gap-1 bg-gray-100 dark:bg-dark-elevated text-gray-700 dark:text-dark-text text-xs px-2 py-1 rounded-full font-medium">
+                <span className="inline-flex items-center gap-1 text-xs px-2 py-1 rounded-full font-medium" style={badgeStyle}>
                   {restaurante.ambiente}
                 </span>
               </div>
@@ -259,7 +297,7 @@ function Explorar({ restaurantes, loading }) {
                 </div>
               )}
 
-              {/* Sección de recomendación - Colores amber fijos */}
+              {/* Recomendación - Colores amber fijos */}
               {restaurante.plato_recomendado && (
                 <div className="bg-amber-50 rounded-xl p-2 mb-3">
                   <p className="text-xs text-amber-600 font-medium mb-0.5">Recomendación</p>
@@ -267,8 +305,8 @@ function Explorar({ restaurantes, loading }) {
                 </div>
               )}
 
-              <div className="flex items-center justify-between pt-3 border-t border-gray-100 dark:border-dark-border">
-                <span className="text-xs text-gray-400 dark:text-dark-muted">
+              <div className="flex items-center justify-between pt-3 border-t" style={{ borderColor: 'var(--card-divider)' }}>
+                <span className="text-xs" style={{ color: 'var(--card-meta)' }}>
                   {restaurante.requiere_reserva ? (
                     <span className="text-amber-600 font-medium">⚠️ Requiere reserva</span>
                   ) : restaurante.acepta_reservas ? (
@@ -277,7 +315,7 @@ function Explorar({ restaurantes, loading }) {
                     'Sin reservas'
                   )}
                 </span>
-                <span className="text-xs text-gray-400 dark:text-dark-muted group-hover:text-gray-600 dark:group-hover:text-dark-text transition-colors">
+                <span className="text-xs transition-colors" style={{ color: 'var(--card-meta)' }}>
                   Ver más →
                 </span>
               </div>

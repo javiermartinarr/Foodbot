@@ -32,22 +32,58 @@
   --color-cream-light: #FFF7ED;
   
   /* ===== ANTHROPIC-INSPIRED DARK MODE PALETTE ===== */
-  /* Background layers */
   --color-dark-bg: #1a1a1a;
   --color-dark-card: #2d2d2d;
   --color-dark-elevated: #363636;
   --color-dark-border: #404040;
   --color-dark-hover: #4a4a4a;
-  
-  /* Text colors */
   --color-dark-text: #F5E6D3;
   --color-dark-muted: #C4A584;
-  
-  /* Accent */
   --color-dark-accent: #E67D22;
 }
 
-/* Estilos para el popup de Leaflet - botón cerrar estilo Explorar */
+/* ===== SOLUCIÓN: CSS Variables que cambian con el modo ===== */
+:root {
+  /* Colores para MODO CLARO */
+  --card-bg: #FFFFFF;
+  --card-border: #E5E7EB;
+  --card-divider: #F3F4F6;
+  --card-title: #1F2937;
+  --card-subtitle: #6B7280;
+  --card-meta: #9CA3AF;
+  
+  --filter-bg: #FFFFFF;
+  --filter-border: #E5E7EB;
+  
+  --input-bg: #F9FAFB;
+  --input-border: #E5E7EB;
+  --input-text: #1F2937;
+  
+  --badge-bg: #F3F4F6;
+  --badge-text: #374151;
+}
+
+/* Colores para MODO OSCURO - Se activan cuando <html> tiene clase "dark" */
+.dark {
+  --card-bg: #2d2d2d;
+  --card-border: #404040;
+  --card-divider: #404040;
+  --card-title: #F5E6D3;
+  --card-subtitle: #C4A584;
+  --card-meta: #C4A584;
+  
+  --filter-bg: #2d2d2d;
+  --filter-border: #404040;
+  
+  --input-bg: #1a1a1a;
+  --input-border: #404040;
+  --input-text: #F5E6D3;
+  
+  --badge-bg: #363636;
+  --badge-text: #F5E6D3;
+}
+
+/* Estilos para el popup de Leaflet */
 .leaflet-popup-close-button {
   width: 32px !important;
   height: 32px !important;
@@ -68,7 +104,6 @@
   color: #1F2937 !important;
 }
 
-/* Quitar el borde y sombra por defecto del popup */
 .leaflet-popup-content-wrapper {
   border-radius: 16px !important;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
@@ -76,4 +111,23 @@
 
 .leaflet-popup-tip {
   background: white !important;
+}
+
+/* Dark mode para popups de Leaflet */
+.dark .leaflet-popup-content-wrapper {
+  background: #2d2d2d !important;
+  color: #F5E6D3 !important;
+}
+
+.dark .leaflet-popup-tip {
+  background: #2d2d2d !important;
+}
+
+.dark .leaflet-popup-close-button {
+  background: #404040 !important;
+  color: #F5E6D3 !important;
+}
+
+.dark .leaflet-popup-close-button:hover {
+  background: #4a4a4a !important;
 }
