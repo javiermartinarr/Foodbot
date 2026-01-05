@@ -21,7 +21,7 @@ function DarkModeToggle() {
     
     if (isDark) {
       html.classList.add('dark')
-      html.style.setProperty('--bg-gradient', '#191918')
+      html.style.setProperty('--bg-gradient', '#1a1a1a')
     } else {
       html.classList.remove('dark')
       html.style.setProperty('--bg-gradient', 'linear-gradient(to bottom, #fef3e7, #fde8d4, #fce4c4)')
@@ -55,7 +55,7 @@ function DarkModeToggle() {
       <span
         className={`absolute top-0.5 left-0.5 w-6 h-6 rounded-full shadow-md transform transition-transform duration-300 flex items-center justify-center ${
           darkMode 
-            ? 'translate-x-7 bg-dark-card text-dark-text' 
+            ? 'translate-x-7 bg-dark-bg text-dark-text' 
             : 'translate-x-0 bg-white text-gray-900'
         }`}
       >

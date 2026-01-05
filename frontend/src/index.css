@@ -1,6 +1,16 @@
 @import "tailwindcss";
 @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap');
 
+/* Default background gradient for light mode */
+:root {
+  --bg-gradient: linear-gradient(to bottom, #fef3e7, #fde8d4, #fce4c4);
+}
+
+/* Dark mode background */
+.dark {
+  --bg-gradient: #1a1a1a;
+}
+
 @theme {
   /* Soft pastel food-themed palette - Olive Green */
   --color-pastel-olive-50: #f5f7f2;

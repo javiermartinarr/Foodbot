@@ -6,7 +6,7 @@ function Destacados({ restaurantes }) {
   
     return (
       <div className="max-w-7xl mx-auto px-6 py-8">
-        <div className="bg-white dark:bg-dark-card rounded-3xl shadow-sm border border-gray-200/50 dark:border-dark-border p-8">
+        <div className="bg-white dark:bg-dark-bg rounded-3xl shadow-sm border border-gray-200/50 dark:border-dark-border p-8">
           <h2 className="text-2xl font-semibold text-gray-900 dark:text-dark-text mb-6" style={{ fontFamily: 'Merriweather, serif' }}>⭐ Mis Top 5</h2>
           
           <div className="space-y-4">

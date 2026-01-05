@@ -42,11 +42,11 @@ function App() {
     <div 
       className="min-h-screen bg-gray-50 dark:bg-dark-bg transition-colors duration-300"
       style={{
-        background: 'var(--bg-gradient, linear-gradient(to bottom, #fef3e7, #fde8d4, #fce4c4))'
+        background: 'var(--bg-gradient)'
       }}
     >
       {/* Header con navegación */}
-      <header className="bg-white/80 dark:bg-dark-card/90 backdrop-blur-lg border-b border-gray-200/50 dark:border-dark-border sticky top-0 z-40">
+      <header className="bg-white/80 dark:bg-dark-bg/90 backdrop-blur-lg border-b border-gray-200/50 dark:border-dark-border sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-6">
           {/* Título y estado */}
           <div className="flex items-center justify-between py-4">

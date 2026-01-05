@@ -9,14 +9,19 @@ export default {
     extend: {
       colors: {
         dark: {
-          // Anthropic Style: Tonos cálidos/tierra muy oscuros
-          bg: '#191918',       // Fondo principal (Casi negro, pero con un toque marrón/cálido)
-          card: '#242423',     // Fondo de tarjetas/inputs (Ligeramente más claro)
-          border: '#3A3A38',   // Bordes sutiles cálidos
-          text: '#F3F2EF',     // Texto principal (No es blanco puro #FFF, es crema/marfil)
-          muted: '#A1A19D',    // Texto secundario cálido
-          hover: '#2E2E2D',    // Estados hover
-          accent: '#D97706',   // Tu color ámbar actual encaja perfecto aquí
+          // Anthropic-inspired palette (based on Claude interface)
+          // Background colors
+          bg: '#1a1a1a',       // Main background - almost black
+          card: '#2d2d2d',     // Card/surface background - slightly lighter
+          border: '#404040',   // Subtle borders
+          hover: '#3a3a3a',    // Hover states
+          
+          // Text colors
+          text: '#e5e5e5',     // Primary text - off-white
+          muted: '#999999',     // Secondary/muted text
+          
+          // Accent
+          accent: '#D97706',   // Your amber brand color
         }
       }
     },

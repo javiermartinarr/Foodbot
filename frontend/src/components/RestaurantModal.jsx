@@ -41,11 +41,11 @@ function RestaurantModal({ restaurante, onClose }) {
       onClick={onClose}
     >
       <div 
-        className="bg-white dark:bg-dark-card rounded-3xl shadow-2xl max-w-lg w-full max-h-[85vh] overflow-y-auto"
+        className="bg-white dark:bg-dark-bg rounded-3xl shadow-2xl max-w-lg w-full max-h-[85vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="sticky top-0 bg-white dark:bg-dark-card rounded-t-3xl border-b border-gray-100 dark:border-dark-border p-6 flex justify-between items-start">
+        <div className="sticky top-0 bg-white dark:bg-dark-bg rounded-t-3xl border-b border-gray-100 dark:border-dark-border p-6 flex justify-between items-start">
           <div>
             <div className="flex items-center gap-2">
               <h2 className="text-2xl font-semibold text-[#1F2937] dark:text-dark-text" style={{ fontFamily: 'Merriweather, serif' }}>
@@ -121,9 +121,9 @@ function RestaurantModal({ restaurante, onClose }) {
           {/* Plato y ambiente */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {restaurante.plato_recomendado ? (
-              <div className="bg-amber-50 dark:bg-amber-900/30 rounded-2xl p-4">
-                <p className="text-xs text-amber-600 dark:text-amber-400 font-medium mb-0.5">⭐ Recomendación</p>
-                <p className="text-xs text-amber-900 dark:text-amber-200 font-medium">{restaurante.plato_recomendado}</p>
+              <div className="bg-amber-50 dark:bg-amber-900/20 dark:border dark:border-amber-800/30 rounded-2xl p-4">
+                <p className="text-xs text-amber-600 dark:text-amber-300 font-medium mb-0.5">⭐ Recomendación</p>
+                <p className="text-xs text-amber-900 dark:text-amber-100 font-medium">{restaurante.plato_recomendado}</p>
               </div>
             ) : (
               <div></div>

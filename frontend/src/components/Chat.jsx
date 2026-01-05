@@ -67,7 +67,7 @@ function Chat({ restaurantes }) {
 
   return (
     <div className="max-w-3xl mx-auto px-6 py-8">
-      <div className="bg-white dark:bg-dark-card rounded-3xl shadow-sm border border-gray-200/50 dark:border-dark-border overflow-hidden flex flex-col" style={{ height: '70vh' }}>
+      <div className="bg-white dark:bg-dark-bg rounded-3xl shadow-sm border border-gray-200/50 dark:border-dark-border overflow-hidden flex flex-col" style={{ height: '70vh' }}>
         
         {/* Header */}
         <div className="bg-gray-50 dark:bg-dark-bg border-b border-gray-200/50 dark:border-dark-border px-6 py-4">
