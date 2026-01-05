@@ -61,6 +61,8 @@
   
   --badge-bg: #F3F4F6;
   --badge-text: #374151;
+  
+  --color-black: #1F2937;
 }
 
 /* Colores para MODO OSCURO - Se activan cuando <html> tiene clase "dark" */
@@ -81,6 +83,8 @@
   
   --badge-bg: #363636;
   --badge-text: #F5E6D3;
+  
+  --color-black: #1F2937;
 }
 
 /* Estilos para el popup de Leaflet */
