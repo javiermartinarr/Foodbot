@@ -1,37 +1,22 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>frontend</title>
+    <title>Foodbot - by Alba and Javi</title>
+    
+    <!-- Script para aplicar dark mode ANTES de que cargue React (evita flash) -->
     <script>
-      // Apply dark mode before React hydrates to prevent FOUC
-      // This script runs synchronously before any CSS loads
       (function() {
-        try {
-          const saved = localStorage.getItem('darkMode');
-          let isDark = false;
-          
-          if (saved !== null) {
-            isDark = JSON.parse(saved);
-          } else {
-            // Only check system preference if no saved preference
-            isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-          }
-          
-          const html = document.documentElement;
-          
-          if (isDark) {
-            html.classList.add('dark');
-            html.style.setProperty('--bg-gradient', '#1a1a1a');
-          } else {
-            // Explicitly remove dark class and set light gradient
-            html.classList.remove('dark');
-            html.style.setProperty('--bg-gradient', 'linear-gradient(to bottom, #fef3e7, #fde8d4, #fce4c4)');
-          }
-        } catch (e) {
-          // If there's any error, default to light mode
+        const saved = localStorage.getItem('darkMode');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const isDark = saved !== null ? JSON.parse(saved) : prefersDark;
+        
+        if (isDark) {
+          document.documentElement.classList.add('dark');
+          document.documentElement.style.setProperty('--bg-gradient', '#1a1a1a');
+        } else {
           document.documentElement.classList.remove('dark');
           document.documentElement.style.setProperty('--bg-gradient', 'linear-gradient(to bottom, #fef3e7, #fde8d4, #fce4c4)');
         }

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import RestaurantModal from './RestaurantModal'
 
-// Score gradient - MANTENER COLORES CLAROS ORIGINALES (sin dark mode en badges de puntuación)
+// Score gradient - Colores claros fijos para ambos modos (indicador visual consistente)
 function getScoreGradient(score) {
   if (!score) return 'bg-gray-300 border-[0.5px] border-gray-400'
   
@@ -79,8 +79,8 @@ function Explorar({ restaurantes, loading }) {
 
   return (
     <div className="max-w-7xl mx-auto px-6 py-8">
-      {/* Filtros */}
-      <div className="bg-white dark:bg-dark-card rounded-3xl shadow-sm border border-gray-200/50 dark:border-dark-border p-6 mb-8">
+      {/* Filtros - Fondo blanco en modo claro, dark-card en oscuro */}
+      <div className="bg-white dark:bg-dark-card rounded-3xl shadow-sm border border-gray-200 dark:border-dark-border p-6 mb-8">
         {/* Buscador */}
         <div className="mb-6">
           <div className="relative">
@@ -90,7 +90,7 @@ function Explorar({ restaurantes, loading }) {
             <input
               type="text"
               placeholder="Buscar restaurante..."
-              className="w-full pl-12 pr-4 py-3.5 bg-gray-50 dark:bg-dark-bg border-0 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#D97706]/20 transition-all text-[#1F2937] dark:text-dark-text placeholder-gray-400 dark:placeholder-dark-muted"
+              className="w-full pl-12 pr-4 py-3.5 bg-gray-50 dark:bg-dark-bg border border-gray-200 dark:border-dark-border rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#D97706]/20 transition-all text-[#1F2937] dark:text-dark-text placeholder-gray-400 dark:placeholder-dark-muted"
               value={filtros.busqueda}
               onChange={(e) => setFiltros({...filtros, busqueda: e.target.value})}
             />
@@ -100,7 +100,7 @@ function Explorar({ restaurantes, loading }) {
         {/* Filtros grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
           <select
-            className="px-4 py-3 bg-gray-50 dark:bg-dark-bg border-[0.5px] border-[#D97706]/30 dark:border-dark-border rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#D97706]/20 transition-all text-[#1F2937] dark:text-dark-text text-sm font-medium cursor-pointer hover:bg-[#FFF7ED] dark:hover:bg-dark-hover"
+            className="px-4 py-3 bg-gray-50 dark:bg-dark-bg border border-gray-200 dark:border-dark-border rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#D97706]/20 transition-all text-[#1F2937] dark:text-dark-text text-sm font-medium cursor-pointer hover:bg-gray-100 dark:hover:bg-dark-hover"
             value={filtros.tipo_comida}
             onChange={(e) => setFiltros({...filtros, tipo_comida: e.target.value})}
           >
@@ -111,7 +111,7 @@ function Explorar({ restaurantes, loading }) {
           </select>
 
           <select
-            className="px-4 py-3 bg-gray-50 dark:bg-dark-bg border-[0.5px] border-[#D97706]/30 dark:border-dark-border rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#D97706]/20 transition-all text-[#1F2937] dark:text-dark-text text-sm font-medium cursor-pointer hover:bg-[#FFF7ED] dark:hover:bg-dark-hover"
+            className="px-4 py-3 bg-gray-50 dark:bg-dark-bg border border-gray-200 dark:border-dark-border rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#D97706]/20 transition-all text-[#1F2937] dark:text-dark-text text-sm font-medium cursor-pointer hover:bg-gray-100 dark:hover:bg-dark-hover"
             value={filtros.barrio}
             onChange={(e) => setFiltros({...filtros, barrio: e.target.value})}
           >
@@ -122,7 +122,7 @@ function Explorar({ restaurantes, loading }) {
           </select>
 
           <select
-            className="px-4 py-3 bg-gray-50 dark:bg-dark-bg border-[0.5px] border-[#D97706]/30 dark:border-dark-border rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#D97706]/20 transition-all text-[#1F2937] dark:text-dark-text text-sm font-medium cursor-pointer hover:bg-[#FFF7ED] dark:hover:bg-dark-hover"
+            className="px-4 py-3 bg-gray-50 dark:bg-dark-bg border border-gray-200 dark:border-dark-border rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#D97706]/20 transition-all text-[#1F2937] dark:text-dark-text text-sm font-medium cursor-pointer hover:bg-gray-100 dark:hover:bg-dark-hover"
             value={filtros.precio_categoria}
             onChange={(e) => setFiltros({...filtros, precio_categoria: e.target.value})}
           >
@@ -133,7 +133,7 @@ function Explorar({ restaurantes, loading }) {
           </select>
 
           <select
-            className="px-4 py-3 bg-gray-50 dark:bg-dark-bg border-[0.5px] border-[#D97706]/30 dark:border-dark-border rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#D97706]/20 transition-all text-[#1F2937] dark:text-dark-text text-sm font-medium cursor-pointer hover:bg-[#FFF7ED] dark:hover:bg-dark-hover"
+            className="px-4 py-3 bg-gray-50 dark:bg-dark-bg border border-gray-200 dark:border-dark-border rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#D97706]/20 transition-all text-[#1F2937] dark:text-dark-text text-sm font-medium cursor-pointer hover:bg-gray-100 dark:hover:bg-dark-hover"
             value={filtros.puntuacion_min}
             onChange={(e) => setFiltros({...filtros, puntuacion_min: e.target.value})}
           >
@@ -145,7 +145,7 @@ function Explorar({ restaurantes, loading }) {
           </select>
 
           <select
-            className="px-4 py-3 bg-gray-50 dark:bg-dark-bg border-[0.5px] border-[#D97706]/30 dark:border-dark-border rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#D97706]/20 transition-all text-[#1F2937] dark:text-dark-text text-sm font-medium cursor-pointer hover:bg-[#FFF7ED] dark:hover:bg-dark-hover"
+            className="px-4 py-3 bg-gray-50 dark:bg-dark-bg border border-gray-200 dark:border-dark-border rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#D97706]/20 transition-all text-[#1F2937] dark:text-dark-text text-sm font-medium cursor-pointer hover:bg-gray-100 dark:hover:bg-dark-hover"
             value={filtros.ordenar}
             onChange={(e) => setFiltros({...filtros, ordenar: e.target.value})}
           >
@@ -193,14 +193,14 @@ function Explorar({ restaurantes, loading }) {
             <article
               key={restaurante.id}
               onClick={() => setSelectedRestaurante(restaurante)}
-              className="group bg-white dark:bg-dark-card rounded-2xl shadow-sm border border-gray-200/50 dark:border-dark-border p-4 cursor-pointer hover:shadow-xl hover:shadow-gray-200/50 dark:hover:shadow-black/20 hover:-translate-y-1 active:scale-[0.98] transition-all duration-300 relative"
+              className="group bg-white dark:bg-dark-card rounded-2xl shadow-sm border border-gray-200 dark:border-dark-border p-4 cursor-pointer hover:shadow-xl hover:shadow-gray-200/50 dark:hover:shadow-black/20 hover:-translate-y-1 active:scale-[0.98] transition-all duration-300 relative"
             >
               <div className="flex justify-between items-start mb-3">
                 <div className="flex-1 min-w-0">
                   <h3 className="font-semibold text-[#1F2937] dark:text-dark-text text-base truncate group-hover:text-gray-700 dark:group-hover:text-white transition-colors" style={{ fontFamily: 'Merriweather, serif' }}>
                     {restaurante.nombre}
                   </h3>
-                  <p className="text-xs text-[#1F2937] dark:text-dark-muted mt-0.5">
+                  <p className="text-xs text-gray-500 dark:text-dark-muted mt-0.5">
                     {restaurante.tipo_comida} {restaurante.subtipo_comida && `· ${restaurante.subtipo_comida}`}
                   </p>
                 </div>
@@ -210,7 +210,7 @@ function Explorar({ restaurantes, loading }) {
                       ⭐ Top Pick
                     </div>
                   )}
-                  {/* Badge de puntuación - SIEMPRE colores claros */}
+                  {/* Badge de puntuación - Colores claros fijos */}
                   <div className={`flex items-center gap-1 ${getScoreGradient(restaurante.puntuacion)} text-[#1F2937] px-2.5 py-1 rounded-lg`}>
                     {restaurante.destacado ? (
                       <TopChoiceIcon className="w-3 h-3 text-[#D97706]" />
@@ -223,10 +223,10 @@ function Explorar({ restaurantes, loading }) {
               </div>
 
               <div className="flex flex-wrap gap-1.5 mb-3">
-                <span className="inline-flex items-center gap-1 bg-gray-100 dark:bg-dark-elevated text-[#1F2937] dark:text-dark-text text-xs px-2 py-1 rounded-full font-medium">
+                <span className="inline-flex items-center gap-1 bg-gray-100 dark:bg-dark-elevated text-gray-700 dark:text-dark-text text-xs px-2 py-1 rounded-full font-medium">
                   📍 {restaurante.barrio}
                 </span>
-                <span className="inline-flex items-center gap-1 bg-gray-100 dark:bg-dark-elevated text-[#1F2937] dark:text-dark-text text-xs px-2 py-1 rounded-full font-medium">
+                <span className="inline-flex items-center gap-1 bg-gray-100 dark:bg-dark-elevated text-gray-700 dark:text-dark-text text-xs px-2 py-1 rounded-full font-medium">
                   {restaurante.precio_categoria}
                   {restaurante.precio_min && restaurante.precio_max && (
                     <span className="ml-1">
@@ -234,7 +234,7 @@ function Explorar({ restaurantes, loading }) {
                     </span>
                   )}
                 </span>
-                <span className="inline-flex items-center gap-1 bg-gray-100 dark:bg-dark-elevated text-[#1F2937] dark:text-dark-text text-xs px-2 py-1 rounded-full font-medium">
+                <span className="inline-flex items-center gap-1 bg-gray-100 dark:bg-dark-elevated text-gray-700 dark:text-dark-text text-xs px-2 py-1 rounded-full font-medium">
                   {restaurante.ambiente}
                 </span>
               </div>
@@ -259,7 +259,7 @@ function Explorar({ restaurantes, loading }) {
                 </div>
               )}
 
-              {/* Sección de recomendación - SIEMPRE colores claros (amber) */}
+              {/* Sección de recomendación - Colores amber fijos */}
               {restaurante.plato_recomendado && (
                 <div className="bg-amber-50 rounded-xl p-2 mb-3">
                   <p className="text-xs text-amber-600 font-medium mb-0.5">Recomendación</p>
