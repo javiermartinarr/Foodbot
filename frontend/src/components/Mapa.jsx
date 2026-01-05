@@ -86,14 +86,14 @@ function Mapa({ restaurantes }) {
       <div className="mb-4 flex items-center justify-between">
         <p 
           className="text-sm font-medium flex items-center gap-2"
-          style={{ color: 'var(--card-subtitle)' }} // CAMBIO: Forzamos variable CSS
+          style={{ color: 'var(--card-subtitle)' }}
         >
           <span style={{ color: '#D97706' }}>📍</span> 
           {restaurantesConCoordenadas.length} restaurantes en el mapa
         </p>
         <p 
           className="text-xs"
-          style={{ color: 'var(--card-meta)' }} // CAMBIO: Forzamos variable CSS
+          style={{ color: 'var(--card-meta)' }}
         >
           Click en un marcador para ver detalles
         </p>
@@ -119,12 +119,21 @@ function Mapa({ restaurantes }) {
               icon={createCustomIcon(restaurante)}
             >
               <Popup>
-                <div style={{ minWidth: '220px', padding: '4px' }}>
+                {/* CAMBIO CLAVE: Estilos del Popup usando Variables CSS 
+                   para que cambie automáticamente con el tema 
+                */}
+                <div style={{ 
+                    minWidth: '220px', 
+                    padding: '8px',
+                    backgroundColor: 'var(--card-bg)', // Fondo adaptativo
+                    color: 'var(--card-title)', // Texto principal adaptativo
+                    borderRadius: '12px'
+                }}>
                   {/* Nombre */}
                   <h3 style={{ 
                     fontFamily: 'Merriweather, serif', 
                     fontWeight: 600, 
-                    color: '#1F2937', 
+                    color: 'var(--card-title)', // Color Título Adaptativo
                     fontSize: '16px',
                     marginBottom: '4px',
                     lineHeight: '1.3'
@@ -135,7 +144,7 @@ function Mapa({ restaurantes }) {
                   {/* Tipo y subtipo */}
                   <p style={{ 
                     fontSize: '13px', 
-                    color: '#6B7280', 
+                    color: 'var(--card-subtitle)', // Color Subtítulo Adaptativo
                     marginBottom: '10px' 
                   }}>
                     {restaurante.tipo_comida}
@@ -150,12 +159,13 @@ function Mapa({ restaurantes }) {
                     marginBottom: '10px'
                   }}>
                     <span style={{
-                      background: '#F3F4F6',
+                      background: 'var(--filter-bg)', // Fondo filtro adaptativo
+                      border: '1px solid var(--card-border)',
                       padding: '4px 10px',
                       borderRadius: '8px',
                       fontSize: '13px',
                       fontWeight: 600,
-                      color: '#1F2937',
+                      color: 'var(--card-title)',
                       display: 'inline-flex',
                       alignItems: 'center',
                       gap: '4px'
@@ -165,12 +175,12 @@ function Mapa({ restaurantes }) {
                     </span>
                     <span style={{ 
                       fontSize: '13px', 
-                      color: '#1F2937',
+                      color: 'var(--card-title)',
                       fontWeight: 500
                     }}>
                       {restaurante.precio_categoria}
                       {restaurante.precio_min && restaurante.precio_max && (
-                        <span style={{ color: '#6B7280', fontWeight: 400 }}>
+                        <span style={{ color: 'var(--card-meta)', fontWeight: 400 }}>
                           {' '}({restaurante.precio_min}-{restaurante.precio_max}€)
                         </span>
                       )}
@@ -180,7 +190,7 @@ function Mapa({ restaurantes }) {
                   {/* Barrio */}
                   <p style={{ 
                     fontSize: '12px', 
-                    color: '#6B7280',
+                    color: 'var(--card-subtitle)',
                     display: 'flex',
                     alignItems: 'center',
                     gap: '4px',
@@ -218,12 +228,13 @@ function Mapa({ restaurantes }) {
                         style={{
                           flex: 1,
                           padding: '8px 12px',
-                          background: '#F3F4F6',
+                          background: 'var(--filter-bg)', // Fondo adaptativo
+                          border: '1px solid var(--card-border)',
                           borderRadius: '10px',
                           textAlign: 'center',
                           fontSize: '13px',
                           fontWeight: 500,
-                          color: '#1F2937',
+                          color: 'var(--card-title)',
                           textDecoration: 'none'
                         }}
                       >
