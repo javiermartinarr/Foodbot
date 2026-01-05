@@ -37,7 +37,7 @@ function DarkModeToggle() {
   return (
     <button
       onClick={() => setDarkMode(!darkMode)}
-      className="relative flex items-center w-14 h-8 rounded-full transition-colors duration-300 focus:outline-none border-2 border-[#E17100]"
+      className="relative flex items-center w-14 h-8 rounded-full transition-colors duration-300 focus:outline-none border-2 border-[#E9B053]"
       style={{
         backgroundColor: darkMode ? '#404040' : '#FFFCFA'
       }}
