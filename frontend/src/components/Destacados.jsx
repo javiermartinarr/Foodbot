@@ -6,14 +6,14 @@ function Destacados({ restaurantes }) {
   
     return (
       <div className="max-w-7xl mx-auto px-6 py-8">
-        <div className="bg-white dark:bg-dark-bg rounded-3xl shadow-sm border border-gray-200/50 dark:border-dark-border p-8">
+        <div className="bg-white dark:bg-dark-card rounded-3xl shadow-sm border border-gray-200/50 dark:border-dark-border p-8">
           <h2 className="text-2xl font-semibold text-gray-900 dark:text-dark-text mb-6" style={{ fontFamily: 'Merriweather, serif' }}>⭐ Mis Top 5</h2>
           
           <div className="space-y-4">
             {top5.map((restaurante, index) => (
               <div 
                 key={restaurante.id}
-                className="flex items-center gap-4 p-4 bg-gray-50 dark:bg-dark-bg rounded-2xl border border-gray-200/50 dark:border-dark-border"
+                className="flex items-center gap-4 p-4 bg-gray-50 dark:bg-dark-card rounded-2xl border border-gray-200/50 dark:border-dark-border"
               >
                 <span className="text-3xl font-bold text-gray-300 dark:text-dark-muted w-10">
                   {index + 1}

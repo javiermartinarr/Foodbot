@@ -67,10 +67,10 @@ function Chat({ restaurantes }) {
 
   return (
     <div className="max-w-3xl mx-auto px-6 py-8">
-      <div className="bg-white dark:bg-dark-bg rounded-3xl shadow-sm border border-gray-200/50 dark:border-dark-border overflow-hidden flex flex-col" style={{ height: '70vh' }}>
+      <div className="bg-white dark:bg-dark-card rounded-3xl shadow-sm border border-gray-200/50 dark:border-dark-border overflow-hidden flex flex-col" style={{ height: '70vh' }}>
         
         {/* Header */}
-        <div className="bg-gray-50 dark:bg-dark-bg border-b border-gray-200/50 dark:border-dark-border px-6 py-4">
+        <div className="bg-gray-50 dark:bg-dark-card border-b border-gray-200/50 dark:border-dark-border px-6 py-4">
           <h2 className="font-semibold text-gray-900 dark:text-dark-text" style={{ fontFamily: 'Merriweather, serif' }}>
             💬 Pregúntame
           </h2>
@@ -142,7 +142,7 @@ function Chat({ restaurantes }) {
               onChange={(e) => setInput(e.target.value)}
               placeholder="Escribe tu pregunta..."
               disabled={loading}
-              className="flex-1 px-4 py-3 bg-gray-50 dark:bg-dark-bg border-0 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#D97706]/20 focus:bg-white dark:focus:bg-dark-border transition-all text-gray-900 dark:text-dark-text placeholder-gray-400 dark:placeholder-dark-muted disabled:opacity-50"
+              className="flex-1 px-4 py-3 bg-gray-50 dark:bg-dark-card border-0 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#D97706]/20 focus:bg-white dark:focus:bg-dark-hover transition-all text-gray-900 dark:text-dark-text placeholder-gray-400 dark:placeholder-dark-muted disabled:opacity-50"
             />
             <button
               type="submit"
