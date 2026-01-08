@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Routes, Route, NavLink, Navigate } from 'react-router-dom'
 import { supabase } from './lib/supabase'
 import Explorar from './components/Explorar'
 import Mapa from './components/Mapa'
@@ -7,7 +8,6 @@ import Destacados from './components/Destacados'
 import DarkModeToggle from './components/DarkModeToggle'
 
 function App() {
-  const [pestanaActiva, setPestanaActiva] = useState('explorar')
   const [restaurantes, setRestaurantes] = useState([])
   const [loading, setLoading] = useState(true)
 
@@ -32,10 +32,10 @@ function App() {
   }
 
   const pestanas = [
-    { id: 'explorar', nombre: 'Explorar', icono: '🍽️' },
-    { id: 'mapa', nombre: 'Mapa', icono: '🗺️' },
-    { id: 'chat', nombre: 'Pregúntame', icono: '💬' },
-    { id: 'destacados', nombre: 'Top Picks', icono: '⭐' },
+    { id: 'explorar', nombre: 'Explorar', path: '/' },
+    { id: 'mapa', nombre: 'Mapa', path: '/mapa' },
+    { id: 'chat', nombre: 'Pregúntame', path: '/chat' },
+    { id: 'destacados', nombre: 'Top Picks', path: '/top-picks' },
   ]
 
   return (
@@ -81,40 +81,35 @@ function App() {
           {/* Pestañas de navegación */}
           <nav className="flex gap-1 -mb-px justify-center">
             {pestanas.map(pestana => (
-                <button
-                  key={pestana.id}
-                  onClick={() => setPestanaActiva(pestana.id)}
-                  className="px-5 py-3 text-sm font-medium rounded-t-xl transition-all text-center"
-                  style={{
-                    // CAMBIO AQUÍ: Fondo transparente para evitar el corte feo
-                    backgroundColor: 'transparent',
-                    // Añadimos una línea inferior sutil o sombra para marcar la activa
-                    boxShadow: pestanaActiva === pestana.id ? 'inset 0 -2px 0 0 var(--card-title)' : 'none',
-                    color: pestanaActiva === pestana.id ? 'var(--card-title)' : 'var(--card-subtitle)',
-                    opacity: pestanaActiva === pestana.id ? 1 : 0.7
-                  }}
-                >
-                  {pestana.nombre}
-                </button>
-              ))}
+              <NavLink
+                key={pestana.id}
+                to={pestana.path}
+                end={pestana.path === '/'}
+                className="px-5 py-3 text-sm font-medium rounded-t-xl transition-all text-center"
+                style={({ isActive }) => ({
+                  backgroundColor: 'transparent',
+                  boxShadow: isActive ? 'inset 0 -2px 0 0 var(--card-title)' : 'none',
+                  color: isActive ? 'var(--card-title)' : 'var(--card-subtitle)',
+                  opacity: isActive ? 1 : 0.7
+                })}
+              >
+                {pestana.nombre}
+              </NavLink>
+            ))}
           </nav>
         </div>
       </header>
 
-      {/* Contenido de la pestaña activa */}
+      {/* Contenido - Rutas */}
       <main>
-        {pestanaActiva === 'explorar' && (
-          <Explorar restaurantes={restaurantes} loading={loading} />
-        )}
-        {pestanaActiva === 'mapa' && (
-          <Mapa restaurantes={restaurantes} />
-        )}
-        {pestanaActiva === 'chat' && (
-          <Chat restaurantes={restaurantes} />
-        )}
-        {pestanaActiva === 'destacados' && (
-          <Destacados restaurantes={restaurantes} />
-        )}
+        <Routes>
+          <Route path="/" element={<Explorar restaurantes={restaurantes} loading={loading} />} />
+          <Route path="/mapa" element={<Mapa restaurantes={restaurantes} />} />
+          <Route path="/chat" element={<Chat restaurantes={restaurantes} />} />
+          <Route path="/top-picks" element={<Destacados restaurantes={restaurantes} />} />
+          {/* Redirigir rutas desconocidas a Explorar */}
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
       </main>
     </div>
   )
