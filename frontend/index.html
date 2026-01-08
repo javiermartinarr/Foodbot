@@ -2,21 +2,43 @@
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="manifest" href="/site.webmanifest">
+    
+    <!-- Meta tags -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Foodbot - by Alba and Javi</title>
+    <meta name="description" content="Recomendaciones gastronómicas personales en Madrid por Alba y Javi. Descubre los mejores restaurantes, bares y cafeterías." />
+    <meta name="theme-color" content="#D97706" />
+    
+    <!-- Título -->
+    <title>Foodbot - Recomendaciones gastronómicas</title>
     
     <!-- Script para aplicar dark mode ANTES de que cargue React (evita flash) -->
     <script>
       (function() {
-        const saved = localStorage.getItem('darkMode');
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        const isDark = saved !== null ? JSON.parse(saved) : prefersDark;
-        
-        if (isDark) {
-          document.documentElement.classList.add('dark');
-          document.documentElement.style.setProperty('--bg-gradient', '#1a1a1a');
-        } else {
+        try {
+          var saved = localStorage.getItem('darkMode');
+          var isDark = false;
+          
+          if (saved !== null) {
+            isDark = JSON.parse(saved);
+          } else {
+            isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          }
+          
+          if (isDark) {
+            document.documentElement.classList.add('dark');
+            document.documentElement.style.setProperty('--bg-gradient', '#1a1a1a');
+          } else {
+            document.documentElement.classList.remove('dark');
+            document.documentElement.style.setProperty('--bg-gradient', 'linear-gradient(to bottom, #fef3e7, #fde8d4, #fce4c4)');
+          }
+        } catch (e) {
           document.documentElement.classList.remove('dark');
           document.documentElement.style.setProperty('--bg-gradient', 'linear-gradient(to bottom, #fef3e7, #fde8d4, #fce4c4)');
         }
