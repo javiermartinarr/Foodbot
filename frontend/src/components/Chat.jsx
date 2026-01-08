@@ -1,16 +1,43 @@
 import { useState, useRef, useEffect } from 'react'
 import ReactMarkdown from 'react-markdown'
 
+const STORAGE_KEY = 'foodbot-chat-history'
+
+const MENSAJE_INICIAL = {
+  tipo: 'bot',
+  texto: '¡Hola! Soy Javi, tu amigo y guía gastronómico por Madrid. Pregúntame lo que quieras: dónde comer, qué pedir, sitios para una cita... ¡Fiaos de mis recomendaciones!'
+}
+
 function Chat({ restaurantes }) {
-  const [mensajes, setMensajes] = useState([
-    {
-      tipo: 'bot',
-      texto: '¡Hola! Soy Javi, tu amigo y guía gastronómico por Madrid. Pregúntame lo que quieras: dónde comer, qué pedir, sitios para una cita... ¡Fiaos de mis recomendaciones!'
+  // Cargar mensajes desde localStorage al iniciar
+  const [mensajes, setMensajes] = useState(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY)
+      if (saved) {
+        const parsed = JSON.parse(saved)
+        // Verificar que es un array válido con mensajes
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          return parsed
+        }
+      }
+    } catch (e) {
+      console.error('Error cargando historial:', e)
     }
-  ])
+    return [MENSAJE_INICIAL]
+  })
+  
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
   const messagesEndRef = useRef(null)
+
+  // Guardar mensajes en localStorage cada vez que cambien
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(mensajes))
+    } catch (e) {
+      console.error('Error guardando historial:', e)
+    }
+  }, [mensajes])
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -20,6 +47,12 @@ function Chat({ restaurantes }) {
     scrollToBottom()
   }, [mensajes])
 
+  // Función para limpiar el chat
+  const limpiarChat = () => {
+    setMensajes([MENSAJE_INICIAL])
+    localStorage.removeItem(STORAGE_KEY)
+  }
+
   const enviarMensaje = async (e) => {
     e.preventDefault()
     if (!input.trim() || loading) return
@@ -27,15 +60,26 @@ function Chat({ restaurantes }) {
     const mensajeUsuario = input.trim()
     setInput('')
     
-    setMensajes(prev => [...prev, { tipo: 'user', texto: mensajeUsuario }])
+    // Añadir mensaje del usuario
+    const nuevosMensajes = [...mensajes, { tipo: 'user', texto: mensajeUsuario }]
+    setMensajes(nuevosMensajes)
     setLoading(true)
 
     try {
+      // Preparar historial para el LLM (excluir mensaje inicial de bienvenida)
+      const historialParaLLM = nuevosMensajes
+        .slice(1) // Quitar mensaje de bienvenida
+        .map(m => ({
+          role: m.tipo === 'user' ? 'user' : 'assistant',
+          content: m.texto
+        }))
+
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
           mensaje: mensajeUsuario,
+          historial: historialParaLLM, // ← Enviamos el historial
           restaurantes: restaurantes 
         })
       })
@@ -73,16 +117,16 @@ function Chat({ restaurantes }) {
 
   const headerStyle = {
     borderBottomColor: 'var(--card-divider)',
-    backgroundColor: 'var(--filter-bg)' // Ligeramente distinto al card base
+    backgroundColor: 'var(--filter-bg)'
   }
 
   const botBubbleStyle = {
-    backgroundColor: 'var(--badge-bg)', // Usamos el color de badges para el bot
+    backgroundColor: 'var(--badge-bg)',
     color: 'var(--card-title)'
   }
 
   const userBubbleStyle = {
-    backgroundColor: 'var(--color-amber-brand)', // Tu color de marca
+    backgroundColor: 'var(--color-amber-brand)',
     color: '#FFFFFF'
   }
 
@@ -91,6 +135,9 @@ function Chat({ restaurantes }) {
     borderColor: 'var(--input-border)',
     color: 'var(--input-text)'
   }
+
+  // Verificar si hay conversación más allá del mensaje inicial
+  const hayConversacion = mensajes.length > 1
 
   return (
     <div className="max-w-3xl mx-auto px-6 py-8">
@@ -101,13 +148,30 @@ function Chat({ restaurantes }) {
       >
         
         {/* Header */}
-        <div className="border-b px-6 py-4" style={headerStyle}>
-          <h2 className="font-semibold" style={{ fontFamily: 'Merriweather, serif', color: 'var(--card-title)' }}>
-            💬 Pregúntame
-          </h2>
-          <p className="text-sm" style={{ color: 'var(--card-subtitle)' }}>
-            Tu asistente gastronómico personal · {restaurantes.length} restaurantes en mi base de datos
-          </p>
+        <div className="border-b px-6 py-4 flex justify-between items-start" style={headerStyle}>
+          <div>
+            <h2 className="font-semibold" style={{ fontFamily: 'Merriweather, serif', color: 'var(--card-title)' }}>
+              💬 Pregúntame
+            </h2>
+            <p className="text-sm" style={{ color: 'var(--card-subtitle)' }}>
+              Tu asistente gastronómico personal · {restaurantes.length} restaurantes en mi base de datos
+            </p>
+          </div>
+          {/* Botón Nueva Conversación */}
+          {hayConversacion && (
+            <button
+              onClick={limpiarChat}
+              className="text-xs px-3 py-1.5 rounded-full transition-all hover:opacity-80 active:scale-95 border flex items-center gap-1"
+              style={{ 
+                backgroundColor: 'var(--input-bg)', 
+                color: 'var(--card-subtitle)',
+                borderColor: 'var(--card-border)'
+              }}
+              title="Iniciar nueva conversación"
+            >
+              🔄 Nueva conversación
+            </button>
+          )}
         </div>
 
         {/* Área de Mensajes */}
@@ -150,8 +214,8 @@ function Chat({ restaurantes }) {
           <div ref={messagesEndRef} />
         </div>
 
-        {/* Sugerencias */}
-        {mensajes.length === 1 && (
+        {/* Sugerencias - solo si no hay conversación */}
+        {!hayConversacion && (
           <div className="px-6 pb-4">
             <p className="text-xs mb-2" style={{ color: 'var(--card-meta)' }}>Prueba a preguntar:</p>
             <div className="flex flex-wrap gap-2">
