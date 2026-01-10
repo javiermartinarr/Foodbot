@@ -39,6 +39,7 @@ function TopChoiceIcon({ className }) {
 function Explorar({ restaurantes, loading }) {
   const [selectedRestaurante, setSelectedRestaurante] = useState(null)
   const [filtros, setFiltros] = useState({
+    ciudad: '',
     tipo_comida: '',
     barrio: '',
     precio_categoria: '',
@@ -49,6 +50,7 @@ function Explorar({ restaurantes, loading }) {
 
   const restaurantesFiltrados = restaurantes
     .filter(r => {
+      if (filtros.ciudad && r.ciudad !== filtros.ciudad) return false
       if (filtros.tipo_comida && r.tipo_comida !== filtros.tipo_comida) return false
       if (filtros.barrio && r.barrio !== filtros.barrio) return false
       if (filtros.precio_categoria && r.precio_categoria !== filtros.precio_categoria) return false
@@ -71,11 +73,17 @@ function Explorar({ restaurantes, loading }) {
       }
     })
 
+  const ciudades = [...new Set(restaurantes.map(r => r.ciudad))].filter(Boolean).sort()
   const tiposComida = [...new Set(restaurantes.map(r => r.tipo_comida))].filter(Boolean).sort()
-  const barrios = [...new Set(restaurantes.map(r => r.barrio))].filter(Boolean).sort()
+  // Filtrar barrios según ciudad seleccionada
+  const barrios = [...new Set(
+    restaurantes
+      .filter(r => !filtros.ciudad || r.ciudad === filtros.ciudad)
+      .map(r => r.barrio)
+  )].filter(Boolean).sort()
   const precios = ['$', '$$', '$$$', '$$$$']
 
-  const hayFiltrosActivos = filtros.tipo_comida || filtros.barrio || filtros.precio_categoria || filtros.busqueda || filtros.puntuacion_min
+  const hayFiltrosActivos = filtros.ciudad || filtros.tipo_comida || filtros.barrio || filtros.precio_categoria || filtros.busqueda || filtros.puntuacion_min
 
   // Estilos comunes usando CSS variables (cambian automáticamente con dark mode)
   const filterContainerStyle = {
@@ -103,14 +111,14 @@ function Explorar({ restaurantes, loading }) {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-6 py-8">
+    <div className="max-w-7xl mx-auto px-4 md:px-6 py-6 md:py-8">
       {/* Filtros */}
       <div 
-        className="rounded-3xl shadow-sm p-6 mb-8"
+        className="rounded-3xl shadow-sm p-4 md:p-6 mb-6 md:mb-8"
         style={filterContainerStyle}
       >
         {/* Buscador */}
-        <div className="mb-6">
+        <div className="mb-4 md:mb-6">
           <div className="relative">
             <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5" style={{ color: 'var(--card-meta)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -118,7 +126,7 @@ function Explorar({ restaurantes, loading }) {
             <input
               type="text"
               placeholder="Buscar restaurante..."
-              className="w-full pl-12 pr-4 py-3.5 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#D97706]/20 transition-all placeholder-gray-400"
+              className="w-full pl-12 pr-4 py-3 md:py-3.5 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#D97706]/20 transition-all placeholder-gray-400"
               style={inputStyle}
               value={filtros.busqueda}
               onChange={(e) => setFiltros({...filtros, busqueda: e.target.value})}
@@ -127,21 +135,33 @@ function Explorar({ restaurantes, loading }) {
         </div>
 
         {/* Filtros grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-2 md:gap-3">
           <select
-            className="px-4 py-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#D97706]/20 transition-all text-sm font-medium cursor-pointer"
+            className="px-3 md:px-4 py-2.5 md:py-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#D97706]/20 transition-all text-xs md:text-sm font-medium cursor-pointer"
+            style={inputStyle}
+            value={filtros.ciudad}
+            onChange={(e) => setFiltros({...filtros, ciudad: e.target.value, barrio: ''})}
+          >
+            <option value="">🌍 Ciudad</option>
+            {ciudades.map(ciudad => (
+              <option key={ciudad} value={ciudad}>{ciudad}</option>
+            ))}
+          </select>
+
+          <select
+            className="px-3 md:px-4 py-2.5 md:py-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#D97706]/20 transition-all text-xs md:text-sm font-medium cursor-pointer"
             style={inputStyle}
             value={filtros.tipo_comida}
             onChange={(e) => setFiltros({...filtros, tipo_comida: e.target.value})}
           >
-            <option value="">🍽️ Tipo de comida</option>
+            <option value="">🍽️ Tipo de c...</option>
             {tiposComida.map(tipo => (
               <option key={tipo} value={tipo}>{tipo}</option>
             ))}
           </select>
 
           <select
-            className="px-4 py-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#D97706]/20 transition-all text-sm font-medium cursor-pointer"
+            className="px-3 md:px-4 py-2.5 md:py-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#D97706]/20 transition-all text-xs md:text-sm font-medium cursor-pointer"
             style={inputStyle}
             value={filtros.barrio}
             onChange={(e) => setFiltros({...filtros, barrio: e.target.value})}
@@ -153,7 +173,7 @@ function Explorar({ restaurantes, loading }) {
           </select>
 
           <select
-            className="px-4 py-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#D97706]/20 transition-all text-sm font-medium cursor-pointer"
+            className="px-3 md:px-4 py-2.5 md:py-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#D97706]/20 transition-all text-xs md:text-sm font-medium cursor-pointer"
             style={inputStyle}
             value={filtros.precio_categoria}
             onChange={(e) => setFiltros({...filtros, precio_categoria: e.target.value})}
@@ -165,7 +185,7 @@ function Explorar({ restaurantes, loading }) {
           </select>
 
           <select
-            className="px-4 py-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#D97706]/20 transition-all text-sm font-medium cursor-pointer"
+            className="px-3 md:px-4 py-2.5 md:py-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#D97706]/20 transition-all text-xs md:text-sm font-medium cursor-pointer"
             style={inputStyle}
             value={filtros.puntuacion_min}
             onChange={(e) => setFiltros({...filtros, puntuacion_min: e.target.value})}
@@ -178,12 +198,12 @@ function Explorar({ restaurantes, loading }) {
           </select>
 
           <select
-            className="px-4 py-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#D97706]/20 transition-all text-sm font-medium cursor-pointer"
+            className="px-3 md:px-4 py-2.5 md:py-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#D97706]/20 transition-all text-xs md:text-sm font-medium cursor-pointer"
             style={inputStyle}
             value={filtros.ordenar}
             onChange={(e) => setFiltros({...filtros, ordenar: e.target.value})}
           >
-            <option value="puntuacion">↓ Mejor valorados</option>
+            <option value="puntuacion">↓ Mejor valor...</option>
             <option value="nombre">A-Z Nombre</option>
             <option value="precio_asc">↑ Precio: menor</option>
             <option value="precio_desc">↓ Precio: mayor</option>
@@ -191,8 +211,8 @@ function Explorar({ restaurantes, loading }) {
 
           {hayFiltrosActivos && (
             <button
-              onClick={() => setFiltros({ tipo_comida: '', barrio: '', precio_categoria: '', busqueda: '', puntuacion_min: '', ordenar: 'puntuacion' })}
-              className="px-4 py-3 bg-[#D97706] text-white rounded-2xl text-sm font-medium hover:bg-[#D97706]/90 active:scale-95 transition-all"
+              onClick={() => setFiltros({ ciudad: '', tipo_comida: '', barrio: '', precio_categoria: '', busqueda: '', puntuacion_min: '', ordenar: 'puntuacion' })}
+              className="px-3 md:px-4 py-2.5 md:py-3 bg-[#D97706] text-white rounded-2xl text-xs md:text-sm font-medium hover:bg-[#D97706]/90 active:scale-95 transition-all"
             >
               ✕ Limpiar
             </button>
@@ -215,7 +235,7 @@ function Explorar({ restaurantes, loading }) {
           <div className="text-6xl mb-4">🍽️</div>
           <p className="text-lg" style={{ color: 'var(--card-subtitle)' }}>No hay restaurantes que coincidan</p>
           <button
-            onClick={() => setFiltros({ tipo_comida: '', barrio: '', precio_categoria: '', busqueda: '', puntuacion_min: '', ordenar: 'puntuacion' })}
+            onClick={() => setFiltros({ ciudad: '', tipo_comida: '', barrio: '', precio_categoria: '', busqueda: '', puntuacion_min: '', ordenar: 'puntuacion' })}
             className="mt-4 font-medium hover:underline"
             style={{ color: 'var(--card-title)' }}
           >
