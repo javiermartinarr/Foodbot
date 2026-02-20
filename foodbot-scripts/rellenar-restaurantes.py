@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Script para rellenar automáticamente datos de restaurantes desde Google Places API (New)
-Versión 2.0 - Busca con barrio para mayor precisión + campos adicionales
+Versión 2.1 - Busca con barrio + detecta URL de carta/menú
 """
 
 import requests
@@ -23,35 +23,23 @@ SUPABASE_HEADERS = {
     "Prefer": "return=minimal"
 }
 
+# Posibles rutas de carta/menú
+CARTA_PATHS = [
+    "/carta",
+    "/menu",
+    "/carta/",
+    "/menu/",
+    "/la-carta",
+    "/nuestra-carta",
+    "/our-menu",
+    "/menus",
+    "/carta.pdf",
+    "/menu.pdf"
+]
+
 # ============================================
 # CAMPOS QUE PEDIMOS A GOOGLE PLACES
 # ============================================
-# Documentación: https://developers.google.com/maps/documentation/places/web-service/place-details
-#
-# Campos disponibles interesantes:
-# - displayName: Nombre del lugar
-# - formattedAddress: Dirección completa
-# - location: Coordenadas (lat/lng)
-# - nationalPhoneNumber: Teléfono
-# - websiteUri: Web oficial
-# - googleMapsUri: Link a Google Maps
-# - addressComponents: Componentes de dirección (CP, barrio, etc.)
-# - rating: Puntuación de Google (1-5)
-# - userRatingCount: Número de reseñas en Google
-# - priceLevel: Nivel de precio (PRICE_LEVEL_INEXPENSIVE, MODERATE, EXPENSIVE, VERY_EXPENSIVE)
-# - currentOpeningHours: Horarios de apertura
-# - regularOpeningHours: Horarios regulares
-# - photos: Fotos del lugar (requiere otra llamada para obtener la imagen)
-# - reviews: Reseñas de usuarios
-# - types: Tipos de lugar (restaurant, cafe, bar, etc.)
-# - servesBreakfast, servesLunch, servesDinner: Qué comidas sirve
-# - servesBeer, servesWine: Si sirve alcohol
-# - servesVegetarianFood: Si tiene opciones vegetarianas
-# - outdoorSeating: Si tiene terraza
-# - reservable: Si acepta reservas
-# - delivery: Si hace delivery
-# - takeout: Si hace takeaway
-# - parkingOptions: Opciones de parking
 
 GOOGLE_FIELDS = ",".join([
     "places.displayName",
@@ -179,6 +167,39 @@ def extraer_codigo_postal(address_components):
     return None
 
 
+# ============================================
+# DETECCIÓN DE CARTA/MENÚ
+# ============================================
+
+def buscar_url_carta(url_web):
+    """Intenta encontrar la URL de la carta probando rutas comunes."""
+    if not url_web:
+        return None
+    
+    # Limpiar URL base
+    base_url = url_web.rstrip("/")
+    
+    for path in CARTA_PATHS:
+        url_carta = base_url + path
+        try:
+            # Hacer HEAD request (más rápido que GET)
+            response = requests.head(url_carta, timeout=3, allow_redirects=True)
+            
+            # Si devuelve 200, la página existe
+            if response.status_code == 200:
+                return url_carta
+                
+        except requests.exceptions.RequestException:
+            # Timeout o error de conexión, probar siguiente
+            continue
+    
+    return None
+
+
+# ============================================
+# EXTRACCIÓN DE DATOS
+# ============================================
+
 def extraer_datos_de_google(place_data):
     """Extrae los campos relevantes del resultado de Google Places."""
     datos = {}
@@ -216,7 +237,6 @@ def extraer_datos_de_google(place_data):
         datos_extra["google_reviews"] = place_data["userRatingCount"]
     
     if "priceLevel" in place_data:
-        # Convertir PRICE_LEVEL_MODERATE -> $$
         price_map = {
             "PRICE_LEVEL_FREE": "Gratis",
             "PRICE_LEVEL_INEXPENSIVE": "$",
@@ -277,11 +297,22 @@ def procesar_restaurante(restaurante, mostrar_extra=True):
         print(f"  ⚠️  No se extrajeron datos para {nombre}")
         return False
     
+    # Buscar URL de carta si tenemos web
+    if datos.get("url_web"):
+        print(f"  🔎 Buscando carta en {datos['url_web']}...")
+        url_carta = buscar_url_carta(datos["url_web"])
+        if url_carta:
+            datos["url_carta"] = url_carta
+            print(f"  📋 ¡Carta encontrada!")
+        else:
+            print(f"  📋 Carta no encontrada en rutas comunes")
+    
     # Mostrar datos que se van a guardar
     print(f"  📍 Dirección: {datos.get('direccion', 'N/A')}")
     print(f"  🗺️  Coords: {datos.get('latitud', 'N/A')}, {datos.get('longitud', 'N/A')}")
     print(f"  📞 Teléfono: {datos.get('telefono', 'N/A')}")
     print(f"  🌐 Web: {datos.get('url_web', 'N/A')}")
+    print(f"  📋 Carta: {datos.get('url_carta', 'N/A')}")
     
     # Mostrar datos extra (informativos)
     if mostrar_extra and datos_extra:
@@ -292,8 +323,6 @@ def procesar_restaurante(restaurante, mostrar_extra=True):
             print(f"  💰 Precio Google: {datos_extra['google_price']}")
         if "caracteristicas" in datos_extra:
             print(f"  🏷️  Características: {', '.join(datos_extra['caracteristicas'])}")
-        if "horarios" in datos_extra:
-            print(f"  🕐 Horarios disponibles (no mostrados)")
     
     # Actualizar en Supabase (solo datos básicos)
     if actualizar_restaurante(restaurante["id"], datos):
@@ -310,9 +339,9 @@ def procesar_restaurante(restaurante, mostrar_extra=True):
 
 def main():
     print("=" * 60)
-    print("🍽️  FOODBOT - Rellenador automático de datos v2.0")
+    print("🍽️  FOODBOT - Rellenador automático de datos v2.1")
     print("=" * 60)
-    print("📌 Ahora busca con BARRIO para mayor precisión")
+    print("📌 Busca con BARRIO + detecta URL de CARTA")
     
     # Obtener restaurantes sin coordenadas
     print("\n📋 Buscando restaurantes sin coordenadas...")
@@ -386,6 +415,16 @@ def probar_un_restaurante(nombre, ciudad="Madrid", barrio=None):
     
     if place_data:
         datos, datos_extra = extraer_datos_de_google(place_data)
+        
+        # Buscar carta
+        if datos.get("url_web"):
+            print(f"\n🔎 Buscando carta en {datos['url_web']}...")
+            url_carta = buscar_url_carta(datos["url_web"])
+            if url_carta:
+                datos["url_carta"] = url_carta
+                print(f"📋 ¡Carta encontrada!")
+            else:
+                print(f"📋 Carta no encontrada en rutas comunes")
         
         print("\n📋 Datos que se guardarían en Supabase:")
         for key, value in datos.items():
