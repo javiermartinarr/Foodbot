@@ -10,9 +10,8 @@ import time
 # ============================================
 # CONFIGURACIÓN
 # ============================================
-
-SUPABASE_URL = "https://ulloigptbpjgblqffiyc.supabase.co"
-SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVsbG9pZ3B0YnBqZ2JscWZmaXljIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2NTczMzI3NywiZXhwIjoyMDgxMzA5Mjc3fQ.c-FnR6gkHi8zN42Lgp1dKgUv4ZiyobmTIQjA-15Jg1A"
+SUPABASE_URL = "https://fgczzsdwgvkwxwbakesi.supabase.co"
+SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZnY3p6c2R3Z3Zrd3h3YmFrZXNpIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4MTQyNjIwNSwiZXhwIjoyMDk3MDAyMjA1fQ.iTxPUdj0DHZu5bMdxaqSFkw3mvk3jWjzyiaZYk5qKpo"
 GOOGLE_PLACES_API_KEY = "AIzaSyCyCsXTUKf6_GSijUVI3C-WxeB4cfr-OBM"
 
 # Headers para Supabase

@@ -45,7 +45,7 @@ function Explorar({ restaurantes, loading }) {
   return (
     <div className="max-w-7xl mx-auto px-6 py-8">
       {/* Filtros */}
-      <div className="bg-white rounded-3xl shadow-sm border border-gray-200/50 p-6 mb-8">
+      <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-sm border border-gray-200/50 dark:border-gray-700 p-6 mb-8">
         {/* Buscador grande */}
         <div className="mb-6">
           <div className="relative">
@@ -55,7 +55,7 @@ function Explorar({ restaurantes, loading }) {
             <input
               type="text"
               placeholder="Buscar restaurante..."
-              className="w-full pl-12 pr-4 py-3.5 bg-gray-50 border-0 rounded-2xl focus:outline-none focus:ring-2 focus:ring-gray-900 focus:bg-white transition-all text-gray-900 placeholder-gray-400"
+              className="w-full pl-12 pr-4 py-3.5 bg-gray-50 dark:bg-gray-700 border-0 rounded-2xl focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-400 focus:bg-white dark:focus:bg-gray-600 transition-all text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
               value={filtros.busqueda}
               onChange={(e) => setFiltros({...filtros, busqueda: e.target.value})}
             />
@@ -65,7 +65,7 @@ function Explorar({ restaurantes, loading }) {
         {/* Filtros en grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
           <select
-            className="px-4 py-3 bg-gray-50 border-0 rounded-2xl focus:outline-none focus:ring-2 focus:ring-gray-900 transition-all text-gray-700 text-sm font-medium cursor-pointer hover:bg-gray-100"
+            className="px-4 py-3 bg-gray-50 dark:bg-gray-700 border-0 rounded-2xl focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-400 transition-all text-gray-700 dark:text-gray-200 text-sm font-medium cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600"
             value={filtros.tipo_comida}
             onChange={(e) => setFiltros({...filtros, tipo_comida: e.target.value})}
           >
@@ -76,7 +76,7 @@ function Explorar({ restaurantes, loading }) {
           </select>
 
           <select
-            className="px-4 py-3 bg-gray-50 border-0 rounded-2xl focus:outline-none focus:ring-2 focus:ring-gray-900 transition-all text-gray-700 text-sm font-medium cursor-pointer hover:bg-gray-100"
+            className="px-4 py-3 bg-gray-50 dark:bg-gray-700 border-0 rounded-2xl focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-400 transition-all text-gray-700 dark:text-gray-200 text-sm font-medium cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600"
             value={filtros.barrio}
             onChange={(e) => setFiltros({...filtros, barrio: e.target.value})}
           >
@@ -87,7 +87,7 @@ function Explorar({ restaurantes, loading }) {
           </select>
 
           <select
-            className="px-4 py-3 bg-gray-50 border-0 rounded-2xl focus:outline-none focus:ring-2 focus:ring-gray-900 transition-all text-gray-700 text-sm font-medium cursor-pointer hover:bg-gray-100"
+            className="px-4 py-3 bg-gray-50 dark:bg-gray-700 border-0 rounded-2xl focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-400 transition-all text-gray-700 dark:text-gray-200 text-sm font-medium cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600"
             value={filtros.precio_categoria}
             onChange={(e) => setFiltros({...filtros, precio_categoria: e.target.value})}
           >
@@ -98,7 +98,7 @@ function Explorar({ restaurantes, loading }) {
           </select>
 
           <select
-            className="px-4 py-3 bg-gray-50 border-0 rounded-2xl focus:outline-none focus:ring-2 focus:ring-gray-900 transition-all text-gray-700 text-sm font-medium cursor-pointer hover:bg-gray-100"
+            className="px-4 py-3 bg-gray-50 dark:bg-gray-700 border-0 rounded-2xl focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-400 transition-all text-gray-700 dark:text-gray-200 text-sm font-medium cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600"
             value={filtros.puntuacion_min}
             onChange={(e) => setFiltros({...filtros, puntuacion_min: e.target.value})}
           >
@@ -110,7 +110,7 @@ function Explorar({ restaurantes, loading }) {
           </select>
 
           <select
-            className="px-4 py-3 bg-gray-50 border-0 rounded-2xl focus:outline-none focus:ring-2 focus:ring-gray-900 transition-all text-gray-700 text-sm font-medium cursor-pointer hover:bg-gray-100"
+            className="px-4 py-3 bg-gray-50 dark:bg-gray-700 border-0 rounded-2xl focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-400 transition-all text-gray-700 dark:text-gray-200 text-sm font-medium cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600"
             value={filtros.ordenar}
             onChange={(e) => setFiltros({...filtros, ordenar: e.target.value})}
           >
@@ -158,14 +158,14 @@ function Explorar({ restaurantes, loading }) {
             <article
               key={restaurante.id}
               onClick={() => setSelectedRestaurante(restaurante)}
-              className="group bg-white rounded-3xl shadow-sm border border-gray-200/50 p-6 cursor-pointer hover:shadow-xl hover:shadow-gray-200/50 hover:-translate-y-1 active:scale-[0.98] transition-all duration-300"
+              className="group bg-white dark:bg-gray-800 rounded-3xl shadow-sm border border-gray-200/50 dark:border-gray-700 p-6 cursor-pointer hover:shadow-xl hover:shadow-gray-200/50 hover:-translate-y-1 active:scale-[0.98] transition-all duration-300"
             >
               <div className="flex justify-between items-start mb-4">
                 <div className="flex-1 min-w-0">
-                  <h3 className="font-semibold text-gray-900 text-lg truncate group-hover:text-gray-700 transition-colors">
+                  <h3 className="font-semibold text-gray-900 dark:text-white text-lg truncate group-hover:text-gray-700 dark:group-hover:text-gray-300 transition-colors">
                     {restaurante.nombre}
                   </h3>
-                  <p className="text-sm text-gray-500 mt-0.5">
+                  <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5">
                     {restaurante.tipo_comida} {restaurante.subtipo_comida && `· ${restaurante.subtipo_comida}`}
                   </p>
                 </div>
@@ -176,29 +176,29 @@ function Explorar({ restaurantes, loading }) {
               </div>
 
               <div className="flex flex-wrap gap-2 mb-4">
-                <span className="inline-flex items-center gap-1.5 bg-gray-100 text-gray-700 text-xs px-3 py-1.5 rounded-full font-medium">
+                <span className="inline-flex items-center gap-1.5 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs px-3 py-1.5 rounded-full font-medium">
                   📍 {restaurante.barrio}
                 </span>
-                <span className="inline-flex items-center gap-1.5 bg-gray-100 text-gray-700 text-xs px-3 py-1.5 rounded-full font-medium">
+                <span className="inline-flex items-center gap-1.5 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs px-3 py-1.5 rounded-full font-medium">
                   {restaurante.precio_categoria}
                 </span>
-                <span className="inline-flex items-center gap-1.5 bg-gray-100 text-gray-700 text-xs px-3 py-1.5 rounded-full font-medium">
+                <span className="inline-flex items-center gap-1.5 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs px-3 py-1.5 rounded-full font-medium">
                   {restaurante.ambiente}
                 </span>
               </div>
 
               {restaurante.plato_recomendado && (
-                <div className="bg-amber-50 rounded-2xl p-3 mb-4">
-                  <p className="text-xs text-amber-600 font-medium mb-0.5">Pedir sí o sí</p>
-                  <p className="text-sm text-amber-900 font-medium">{restaurante.plato_recomendado}</p>
+                <div className="bg-amber-50 dark:bg-amber-900/20 rounded-2xl p-3 mb-4">
+                  <p className="text-xs text-amber-600 dark:text-amber-400 font-medium mb-0.5">Pedir sí o sí</p>
+                  <p className="text-sm text-amber-900 dark:text-amber-200 font-medium">{restaurante.plato_recomendado}</p>
                 </div>
               )}
 
-              <div className="flex items-center justify-between pt-4 border-t border-gray-100">
-                <span className="text-xs text-gray-400">
+              <div className="flex items-center justify-between pt-4 border-t border-gray-100 dark:border-gray-700">
+                <span className="text-xs text-gray-400 dark:text-gray-500">
                   {restaurante.acepta_reservas ? '✓ Acepta reservas' : 'Sin reservas'}
                 </span>
-                <span className="text-xs text-gray-400 group-hover:text-gray-600 transition-colors">
+                <span className="text-xs text-gray-400 dark:text-gray-500 group-hover:text-gray-600 dark:group-hover:text-gray-300 transition-colors">
                   Ver más →
                 </span>
               </div>
@@ -214,19 +214,19 @@ function Explorar({ restaurantes, loading }) {
           onClick={() => setSelectedRestaurante(null)}
         >
           <div 
-            className="bg-white rounded-3xl shadow-2xl max-w-lg w-full max-h-[85vh] overflow-y-auto"
+            className="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl max-w-lg w-full max-h-[85vh] overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="sticky top-0 bg-white rounded-t-3xl border-b border-gray-100 p-6 flex justify-between items-start">
+            <div className="sticky top-0 bg-white dark:bg-gray-800 rounded-t-3xl border-b border-gray-100 dark:border-gray-700 p-6 flex justify-between items-start">
               <div>
-                <h2 className="text-2xl font-semibold text-gray-900">{selectedRestaurante.nombre}</h2>
-                <p className="text-gray-500 mt-1">
+                <h2 className="text-2xl font-semibold text-gray-900 dark:text-white">{selectedRestaurante.nombre}</h2>
+                <p className="text-gray-500 dark:text-gray-400 mt-1">
                   {selectedRestaurante.tipo_comida} {selectedRestaurante.subtipo_comida && `· ${selectedRestaurante.subtipo_comida}`}
                 </p>
               </div>
               <button 
                 onClick={() => setSelectedRestaurante(null)}
-                className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors"
+                className="w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors dark:text-white"
               >
                 ✕
               </button>
@@ -239,8 +239,8 @@ function Explorar({ restaurantes, loading }) {
                   <span className="text-gray-400 text-sm ml-1">/ 5</span>
                 </div>
                 <div>
-                  <p className="font-medium text-gray-900">{selectedRestaurante.precio_categoria}</p>
-                  <p className="text-sm text-gray-500">
+                  <p className="font-medium text-gray-900 dark:text-white">{selectedRestaurante.precio_categoria}</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">
                     {selectedRestaurante.precio_min && selectedRestaurante.precio_max 
                       ? `${selectedRestaurante.precio_min}-${selectedRestaurante.precio_max}€ por persona`
                       : 'Precio no especificado'}
@@ -249,28 +249,28 @@ function Explorar({ restaurantes, loading }) {
               </div>
 
               {selectedRestaurante.plato_recomendado && (
-                <div className="bg-amber-50 rounded-2xl p-4">
-                  <p className="text-sm text-amber-600 font-medium mb-1">⭐ Plato recomendado</p>
-                  <p className="text-amber-900 font-semibold">{selectedRestaurante.plato_recomendado}</p>
+                <div className="bg-amber-50 dark:bg-amber-900/20 rounded-2xl p-4">
+                  <p className="text-sm text-amber-600 dark:text-amber-400 font-medium mb-1">⭐ Plato recomendado</p>
+                  <p className="text-amber-900 dark:text-amber-200 font-semibold">{selectedRestaurante.plato_recomendado}</p>
                 </div>
               )}
 
               {selectedRestaurante.descripcion_personal && (
                 <div>
-                  <p className="text-sm text-gray-500 font-medium mb-2">Mi opinión</p>
-                  <p className="text-gray-700 leading-relaxed">{selectedRestaurante.descripcion_personal}</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400 font-medium mb-2">Mi opinión</p>
+                  <p className="text-gray-700 dark:text-gray-300 leading-relaxed">{selectedRestaurante.descripcion_personal}</p>
                 </div>
               )}
 
               <div className="grid grid-cols-2 gap-4">
-                <div className="bg-gray-50 rounded-2xl p-4">
-                  <p className="text-xs text-gray-500 mb-1">📍 Ubicación</p>
-                  <p className="text-sm font-medium text-gray-900">{selectedRestaurante.barrio}</p>
+                <div className="bg-gray-50 dark:bg-gray-700 rounded-2xl p-4">
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">📍 Ubicación</p>
+                  <p className="text-sm font-medium text-gray-900 dark:text-white">{selectedRestaurante.barrio}</p>
                   <p className="text-xs text-gray-500 mt-1">{selectedRestaurante.direccion}</p>
                 </div>
-                <div className="bg-gray-50 rounded-2xl p-4">
-                  <p className="text-xs text-gray-500 mb-1">✨ Ambiente</p>
-                  <p className="text-sm font-medium text-gray-900">{selectedRestaurante.ambiente}</p>
+                <div className="bg-gray-50 dark:bg-gray-700 rounded-2xl p-4">
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">✨ Ambiente</p>
+                  <p className="text-sm font-medium text-gray-900 dark:text-white">{selectedRestaurante.ambiente}</p>
                 </div>
               </div>
 
@@ -287,7 +287,7 @@ function Explorar({ restaurantes, loading }) {
 
               {selectedRestaurante.mejor_para && selectedRestaurante.mejor_para.length > 0 && (
                 <div>
-                  <p className="text-sm text-gray-500 font-medium mb-2">Ideal para</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400 font-medium mb-2">Ideal para</p>
                   <div className="flex flex-wrap gap-2">
                     {selectedRestaurante.mejor_para.map(ocasion => (
                       <span key={ocasion} className="bg-blue-50 text-blue-700 text-sm px-3 py-1.5 rounded-full font-medium">
@@ -305,7 +305,7 @@ function Explorar({ restaurantes, loading }) {
                   </a>
                 )}
                 {selectedRestaurante.google_maps_url && (
-                  <a href={selectedRestaurante.google_maps_url} target="_blank" rel="noopener noreferrer" className="flex-1 bg-gray-100 text-gray-900 text-center py-3.5 rounded-2xl font-medium hover:bg-gray-200 active:scale-[0.98] transition-all">
+                  <a href={selectedRestaurante.google_maps_url} target="_blank" rel="noopener noreferrer" className="flex-1 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white text-center py-3.5 rounded-2xl font-medium hover:bg-gray-200 dark:hover:bg-gray-600 active:scale-[0.98] transition-all">
                     Cómo llegar
                   </a>
                 )}
