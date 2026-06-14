@@ -1,6 +1,8 @@
 @import "tailwindcss";
 @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap');
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   /* Soft pastel food-themed palette - Olive Green */
   --color-pastel-olive-50: #f5f7f2;

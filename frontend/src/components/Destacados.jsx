@@ -6,21 +6,22 @@ function Destacados({ restaurantes }) {
 
   return (
     <div className="max-w-7xl mx-auto px-6 py-8">
-      <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-sm border border-gray-200/50 dark:border-gray-700 p-8">
-        <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-6">⭐ Mis Top 5</h2>
+      <div className="rounded-3xl shadow-sm p-8" style={{ backgroundColor: 'var(--card-bg)', border: '1px solid var(--card-border)' }}>
+        <h2 className="text-2xl font-semibold mb-6" style={{ color: 'var(--card-title)' }}>⭐ Mis Top 5</h2>
 
         <div className="space-y-4">
           {top5.map((restaurante, index) => (
             <div
               key={restaurante.id}
-              className="flex items-center gap-4 p-4 bg-gray-50 dark:bg-gray-700 rounded-2xl"
+              className="flex items-center gap-4 p-4 rounded-2xl"
+              style={{ backgroundColor: 'var(--input-bg)' }}
             >
-              <span className="text-3xl font-bold text-gray-300 dark:text-gray-500 w-10">
+              <span className="text-3xl font-bold w-10" style={{ color: 'var(--card-meta)' }}>
                 {index + 1}
               </span>
               <div className="flex-1">
-                <h3 className="font-semibold text-gray-900 dark:text-white">{restaurante.nombre}</h3>
-                <p className="text-sm text-gray-500 dark:text-gray-400">
+                <h3 className="font-semibold" style={{ color: 'var(--card-title)' }}>{restaurante.nombre}</h3>
+                <p className="text-sm" style={{ color: 'var(--card-subtitle)' }}>
                   {restaurante.tipo_comida} · {restaurante.barrio}
                 </p>
               </div>

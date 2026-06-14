@@ -45,7 +45,7 @@ function Explorar({ restaurantes, loading }) {
   return (
     <div className="max-w-7xl mx-auto px-6 py-8">
       {/* Filtros */}
-      <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-sm border border-gray-200/50 dark:border-gray-700 p-6 mb-8">
+      <div className="rounded-3xl shadow-sm p-6 mb-8" style={{ backgroundColor: 'var(--filter-bg)', border: '1px solid var(--filter-border)' }}>
         {/* Buscador grande */}
         <div className="mb-6">
           <div className="relative">
@@ -55,7 +55,8 @@ function Explorar({ restaurantes, loading }) {
             <input
               type="text"
               placeholder="Buscar restaurante..."
-              className="w-full pl-12 pr-4 py-3.5 bg-gray-50 dark:bg-gray-700 border-0 rounded-2xl focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-400 focus:bg-white dark:focus:bg-gray-600 transition-all text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
+              className="w-full pl-12 pr-4 py-3.5 border-0 rounded-2xl focus:outline-none focus:ring-2 transition-all"
+              style={{ backgroundColor: 'var(--input-bg)', color: 'var(--input-text)' }}
               value={filtros.busqueda}
               onChange={(e) => setFiltros({...filtros, busqueda: e.target.value})}
             />
@@ -65,44 +66,48 @@ function Explorar({ restaurantes, loading }) {
         {/* Filtros en grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
           <select
-            className="px-4 py-3 bg-gray-50 dark:bg-gray-700 border-0 rounded-2xl focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-400 transition-all text-gray-700 dark:text-gray-200 text-sm font-medium cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600"
+            className="px-4 py-3 border-0 rounded-2xl focus:outline-none focus:ring-2 transition-all text-sm font-medium cursor-pointer"
+            style={{ backgroundColor: 'var(--input-bg)', color: 'var(--input-text)' }}
             value={filtros.tipo_comida}
             onChange={(e) => setFiltros({...filtros, tipo_comida: e.target.value})}
           >
-            <option value="">🍽️ Tipo de comida</option>
+            <option value="">Tipo de comida</option>
             {tiposComida.map(tipo => (
               <option key={tipo} value={tipo}>{tipo}</option>
             ))}
           </select>
 
           <select
-            className="px-4 py-3 bg-gray-50 dark:bg-gray-700 border-0 rounded-2xl focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-400 transition-all text-gray-700 dark:text-gray-200 text-sm font-medium cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600"
+            className="px-4 py-3 border-0 rounded-2xl focus:outline-none focus:ring-2 transition-all text-sm font-medium cursor-pointer"
+            style={{ backgroundColor: 'var(--input-bg)', color: 'var(--input-text)' }}
             value={filtros.barrio}
             onChange={(e) => setFiltros({...filtros, barrio: e.target.value})}
           >
-            <option value="">📍 Barrio</option>
+            <option value="">Barrio</option>
             {barrios.map(barrio => (
               <option key={barrio} value={barrio}>{barrio}</option>
             ))}
           </select>
 
           <select
-            className="px-4 py-3 bg-gray-50 dark:bg-gray-700 border-0 rounded-2xl focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-400 transition-all text-gray-700 dark:text-gray-200 text-sm font-medium cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600"
+            className="px-4 py-3 border-0 rounded-2xl focus:outline-none focus:ring-2 transition-all text-sm font-medium cursor-pointer"
+            style={{ backgroundColor: 'var(--input-bg)', color: 'var(--input-text)' }}
             value={filtros.precio_categoria}
             onChange={(e) => setFiltros({...filtros, precio_categoria: e.target.value})}
           >
-            <option value="">💰 Precio</option>
+            <option value="">Precio</option>
             {precios.map(precio => (
               <option key={precio} value={precio}>{precio}</option>
             ))}
           </select>
 
           <select
-            className="px-4 py-3 bg-gray-50 dark:bg-gray-700 border-0 rounded-2xl focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-400 transition-all text-gray-700 dark:text-gray-200 text-sm font-medium cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600"
+            className="px-4 py-3 border-0 rounded-2xl focus:outline-none focus:ring-2 transition-all text-sm font-medium cursor-pointer"
+            style={{ backgroundColor: 'var(--input-bg)', color: 'var(--input-text)' }}
             value={filtros.puntuacion_min}
             onChange={(e) => setFiltros({...filtros, puntuacion_min: e.target.value})}
           >
-            <option value="">⭐ Puntuación</option>
+            <option value="">Puntuación</option>
             <option value="4.5">4.5+</option>
             <option value="4">4.0+</option>
             <option value="3.5">3.5+</option>
@@ -110,7 +115,8 @@ function Explorar({ restaurantes, loading }) {
           </select>
 
           <select
-            className="px-4 py-3 bg-gray-50 dark:bg-gray-700 border-0 rounded-2xl focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-400 transition-all text-gray-700 dark:text-gray-200 text-sm font-medium cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600"
+            className="px-4 py-3 border-0 rounded-2xl focus:outline-none focus:ring-2 transition-all text-sm font-medium cursor-pointer"
+            style={{ backgroundColor: 'var(--input-bg)', color: 'var(--input-text)' }}
             value={filtros.ordenar}
             onChange={(e) => setFiltros({...filtros, ordenar: e.target.value})}
           >
@@ -158,14 +164,15 @@ function Explorar({ restaurantes, loading }) {
             <article
               key={restaurante.id}
               onClick={() => setSelectedRestaurante(restaurante)}
-              className="group bg-white dark:bg-gray-800 rounded-3xl shadow-sm border border-gray-200/50 dark:border-gray-700 p-6 cursor-pointer hover:shadow-xl hover:shadow-gray-200/50 hover:-translate-y-1 active:scale-[0.98] transition-all duration-300"
+              className="group rounded-3xl shadow-sm p-6 cursor-pointer hover:shadow-xl hover:-translate-y-1 active:scale-[0.98] transition-all duration-300"
+              style={{ backgroundColor: 'var(--card-bg)', border: '1px solid var(--card-border)' }}
             >
               <div className="flex justify-between items-start mb-4">
                 <div className="flex-1 min-w-0">
-                  <h3 className="font-semibold text-gray-900 dark:text-white text-lg truncate group-hover:text-gray-700 dark:group-hover:text-gray-300 transition-colors">
+                  <h3 className="font-semibold text-lg truncate transition-colors" style={{ color: 'var(--card-title)' }}>
                     {restaurante.nombre}
                   </h3>
-                  <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5">
+                  <p className="text-sm mt-0.5" style={{ color: 'var(--card-subtitle)' }}>
                     {restaurante.tipo_comida} {restaurante.subtipo_comida && `· ${restaurante.subtipo_comida}`}
                   </p>
                 </div>
@@ -176,13 +183,13 @@ function Explorar({ restaurantes, loading }) {
               </div>
 
               <div className="flex flex-wrap gap-2 mb-4">
-                <span className="inline-flex items-center gap-1.5 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs px-3 py-1.5 rounded-full font-medium">
+                <span className="inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full font-medium" style={{ backgroundColor: 'var(--badge-bg)', color: 'var(--badge-text)' }}>
                   📍 {restaurante.barrio}
                 </span>
-                <span className="inline-flex items-center gap-1.5 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs px-3 py-1.5 rounded-full font-medium">
+                <span className="inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full font-medium" style={{ backgroundColor: 'var(--badge-bg)', color: 'var(--badge-text)' }}>
                   {restaurante.precio_categoria}
                 </span>
-                <span className="inline-flex items-center gap-1.5 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs px-3 py-1.5 rounded-full font-medium">
+                <span className="inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full font-medium" style={{ backgroundColor: 'var(--badge-bg)', color: 'var(--badge-text)' }}>
                   {restaurante.ambiente}
                 </span>
               </div>
@@ -214,13 +221,14 @@ function Explorar({ restaurantes, loading }) {
           onClick={() => setSelectedRestaurante(null)}
         >
           <div 
-            className="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl max-w-lg w-full max-h-[85vh] overflow-y-auto"
+            className="rounded-3xl shadow-2xl max-w-lg w-full max-h-[85vh] overflow-y-auto"
+            style={{ backgroundColor: 'var(--card-bg)' }}
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="sticky top-0 bg-white dark:bg-gray-800 rounded-t-3xl border-b border-gray-100 dark:border-gray-700 p-6 flex justify-between items-start">
+            <div className="sticky top-0 rounded-t-3xl p-6 flex justify-between items-start" style={{ backgroundColor: 'var(--card-bg)', borderBottom: '1px solid var(--card-divider)' }}>
               <div>
-                <h2 className="text-2xl font-semibold text-gray-900 dark:text-white">{selectedRestaurante.nombre}</h2>
-                <p className="text-gray-500 dark:text-gray-400 mt-1">
+                <h2 className="text-2xl font-semibold" style={{ color: 'var(--card-title)' }}>{selectedRestaurante.nombre}</h2>
+                <p className="mt-1" style={{ color: 'var(--card-subtitle)' }}>
                   {selectedRestaurante.tipo_comida} {selectedRestaurante.subtipo_comida && `· ${selectedRestaurante.subtipo_comida}`}
                 </p>
               </div>
@@ -263,14 +271,14 @@ function Explorar({ restaurantes, loading }) {
               )}
 
               <div className="grid grid-cols-2 gap-4">
-                <div className="bg-gray-50 dark:bg-gray-700 rounded-2xl p-4">
-                  <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">📍 Ubicación</p>
-                  <p className="text-sm font-medium text-gray-900 dark:text-white">{selectedRestaurante.barrio}</p>
+                <div className="rounded-2xl p-4" style={{ backgroundColor: 'var(--input-bg)' }}>
+                  <p className="text-xs mb-1" style={{ color: 'var(--card-meta)' }}>📍 Ubicación</p>
+                  <p className="text-sm font-medium" style={{ color: 'var(--card-title)' }}>{selectedRestaurante.barrio}</p>
                   <p className="text-xs text-gray-500 mt-1">{selectedRestaurante.direccion}</p>
                 </div>
-                <div className="bg-gray-50 dark:bg-gray-700 rounded-2xl p-4">
-                  <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">✨ Ambiente</p>
-                  <p className="text-sm font-medium text-gray-900 dark:text-white">{selectedRestaurante.ambiente}</p>
+                <div className="rounded-2xl p-4" style={{ backgroundColor: 'var(--input-bg)' }}>
+                  <p className="text-xs mb-1" style={{ color: 'var(--card-meta)' }}>✨ Ambiente</p>
+                  <p className="text-sm font-medium" style={{ color: 'var(--card-title)' }}>{selectedRestaurante.ambiente}</p>
                 </div>
               </div>
 

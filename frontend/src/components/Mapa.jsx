@@ -1,10 +1,10 @@
 function Mapa({ restaurantes }) {
   return (
     <div className="max-w-7xl mx-auto px-6 py-8">
-      <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-sm border border-gray-200/50 dark:border-gray-700 p-12 text-center">
+      <div className="rounded-3xl shadow-sm p-12 text-center" style={{ backgroundColor: 'var(--card-bg)', border: '1px solid var(--card-border)' }}>
         <div className="text-6xl mb-4">🗺️</div>
-        <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-2">Mapa interactivo</h2>
-        <p className="text-gray-500 dark:text-gray-400 mb-4">
+        <h2 className="text-2xl font-semibold mb-2" style={{ color: 'var(--card-title)' }}>Mapa interactivo</h2>
+        <p className="mb-4" style={{ color: 'var(--card-subtitle)' }}>
           Próximamente: explora los {restaurantes.length} restaurantes en el mapa
         </p>
         <span className="inline-block bg-amber-100 text-amber-700 text-sm px-4 py-2 rounded-full font-medium">
