@@ -26,9 +26,12 @@ function TopChoiceIcon({ className }) {
 
 function Explorar({ restaurantes, loading }) {
   const [selectedRestaurante, setSelectedRestaurante] = useState(null)
+  const limpiarFiltros = () => setFiltros({ ciudad: '', tipo_comida: '', subtipo_comida: '', barrio: '', precio_categoria: '', busqueda: '', puntuacion_min: '', ordenar: 'puntuacion' })
+
   const [filtros, setFiltros] = useState({
     ciudad: '',
     tipo_comida: '',
+    subtipo_comida: '',
     barrio: '',
     precio_categoria: '',
     busqueda: '',
@@ -40,6 +43,7 @@ function Explorar({ restaurantes, loading }) {
     .filter(r => {
       if (filtros.ciudad && r.ciudad !== filtros.ciudad) return false
       if (filtros.tipo_comida && r.tipo_comida !== filtros.tipo_comida) return false
+      if (filtros.subtipo_comida && r.subtipo_comida !== filtros.subtipo_comida) return false
       if (filtros.barrio && r.barrio !== filtros.barrio) return false
       if (filtros.precio_categoria && r.precio_categoria !== filtros.precio_categoria) return false
       if (filtros.puntuacion_min && (r.puntuacion || 0) < parseFloat(filtros.puntuacion_min)) return false
@@ -58,6 +62,11 @@ function Explorar({ restaurantes, loading }) {
 
   const ciudades = [...new Set(restaurantes.map(r => r.ciudad))].filter(Boolean).sort()
   const tiposComida = [...new Set(restaurantes.map(r => r.tipo_comida))].filter(Boolean).sort()
+  const subtiposComida = [...new Set(
+    restaurantes
+      .filter(r => !filtros.tipo_comida || r.tipo_comida === filtros.tipo_comida)
+      .map(r => r.subtipo_comida)
+  )].filter(Boolean).sort()
   const barrios = [...new Set(
     restaurantes
       .filter(r => !filtros.ciudad || r.ciudad === filtros.ciudad)
@@ -65,7 +74,7 @@ function Explorar({ restaurantes, loading }) {
   )].filter(Boolean).sort()
   const precios = ['$', '$$', '$$$', '$$$$']
 
-  const hayFiltrosActivos = filtros.ciudad || filtros.tipo_comida || filtros.barrio || filtros.precio_categoria || filtros.busqueda || filtros.puntuacion_min
+  const hayFiltrosActivos = filtros.ciudad || filtros.tipo_comida || filtros.subtipo_comida || filtros.barrio || filtros.precio_categoria || filtros.busqueda || filtros.puntuacion_min
 
   const filterContainerStyle = {
     backgroundColor: 'var(--filter-bg)',
@@ -97,23 +106,35 @@ function Explorar({ restaurantes, loading }) {
       <div className="rounded-3xl shadow-sm p-4 md:p-6 mb-6 md:mb-8" style={filterContainerStyle}>
         {/* Buscador */}
         <div className="mb-4 md:mb-6">
-          <div className="relative">
-            <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5" style={{ color: 'var(--card-meta)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
-            <input
-              type="text"
-              placeholder="Buscar restaurante..."
-              className="w-full pl-12 pr-4 py-3 md:py-3.5 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#D97706]/20 transition-all placeholder-gray-400"
-              style={inputStyle}
-              value={filtros.busqueda}
-              onChange={(e) => setFiltros({...filtros, busqueda: e.target.value})}
-            />
+          <div className="flex gap-3 items-center">
+            <div className="relative flex-1">
+              <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5" style={{ color: 'var(--card-meta)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+              <input
+                type="text"
+                placeholder="Buscar restaurante..."
+                className="w-full pl-12 pr-4 py-3 md:py-3.5 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#D97706]/20 transition-all placeholder-gray-400"
+                style={inputStyle}
+                value={filtros.busqueda}
+                onChange={(e) => setFiltros({...filtros, busqueda: e.target.value})}
+              />
+            </div>
+            {hayFiltrosActivos && (
+              <button
+                onClick={limpiarFiltros}
+                className="flex-shrink-0 w-12 h-12 rounded-2xl text-white flex items-center justify-center hover:opacity-90 active:scale-95 transition-all"
+                style={{ backgroundColor: '#D97706' }}
+                title="Limpiar filtros"
+              >
+                ✕
+              </button>
+            )}
           </div>
         </div>
 
         {/* Filtros grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-2 md:gap-3">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-2 md:gap-3 items-center">
           <select
             className="px-3 md:px-4 py-2.5 md:py-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#D97706]/20 transition-all text-xs md:text-sm font-medium cursor-pointer"
             style={inputStyle}
@@ -130,11 +151,23 @@ function Explorar({ restaurantes, loading }) {
             className="px-3 md:px-4 py-2.5 md:py-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#D97706]/20 transition-all text-xs md:text-sm font-medium cursor-pointer"
             style={inputStyle}
             value={filtros.tipo_comida}
-            onChange={(e) => setFiltros({...filtros, tipo_comida: e.target.value})}
+            onChange={(e) => setFiltros({...filtros, tipo_comida: e.target.value, subtipo_comida: ''})}
           >
             <option value="">Tipo de comida</option>
             {tiposComida.map(tipo => (
               <option key={tipo} value={tipo}>{tipo}</option>
+            ))}
+          </select>
+
+          <select
+            className="px-3 md:px-4 py-2.5 md:py-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#D97706]/20 transition-all text-xs md:text-sm font-medium cursor-pointer"
+            style={inputStyle}
+            value={filtros.subtipo_comida}
+            onChange={(e) => setFiltros({...filtros, subtipo_comida: e.target.value})}
+          >
+            <option value="">Subtipo</option>
+            {subtiposComida.map(subtipo => (
+              <option key={subtipo} value={subtipo}>{subtipo}</option>
             ))}
           </select>
 
@@ -187,14 +220,6 @@ function Explorar({ restaurantes, loading }) {
             <option value="precio_desc">↓ Precio: mayor</option>
           </select>
 
-          {hayFiltrosActivos && (
-            <button
-              onClick={() => setFiltros({ ciudad: '', tipo_comida: '', barrio: '', precio_categoria: '', busqueda: '', puntuacion_min: '', ordenar: 'puntuacion' })}
-              className="px-3 md:px-4 py-2.5 md:py-3 bg-[#D97706] text-white rounded-2xl text-xs md:text-sm font-medium hover:bg-[#D97706]/90 active:scale-95 transition-all"
-            >
-              ✕ Limpiar
-            </button>
-          )}
         </div>
       </div>
 
