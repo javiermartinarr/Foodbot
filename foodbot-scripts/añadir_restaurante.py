@@ -98,6 +98,17 @@ def input_precio_categoria():
             return valor
         print("  ⚠️  Debe ser $, $$, $$$ o $$$$")
 
+def input_precio_rango(prompt):
+    """Input de precio numérico (€/persona)."""
+    valor = input(f"{prompt} (€/persona, Enter para saltar): ").strip()
+    if not valor:
+        return None
+    try:
+        return int(valor)
+    except ValueError:
+        print("  ⚠️  Introduce un número entero")
+        return None
+
 def input_array(prompt):
     """Input para arrays (separado por comas)."""
     valor = input(f"{prompt} (separados por coma): ").strip()
@@ -254,7 +265,13 @@ def recoger_datos_personales():
     datos["ciudad"] = input_con_default("Ciudad", "Madrid")
     datos["tipo_comida"] = input_requerido("Tipo de comida (Española, Italiana, Asiática...)")
     datos["precio_categoria"] = input_precio_categoria()
-    
+    precio_min = input_precio_rango("Precio mínimo")
+    if precio_min is not None:
+        datos["precio_min"] = precio_min
+    precio_max = input_precio_rango("Precio máximo")
+    if precio_max is not None:
+        datos["precio_max"] = precio_max
+
     # Dirección provisional (se sobrescribirá con Google)
     datos["direccion"] = datos["barrio"] + ", " + datos["ciudad"]
     
@@ -263,9 +280,10 @@ def recoger_datos_personales():
     print("-" * 30)
     
     datos["subtipo_comida"] = input_con_default("Subtipo (Tapas, Sushi, Pasta...)", None)
-    datos["puntuacion"] = input_puntuacion("Puntuación general")
-    
+    puntuacion_manual = input_puntuacion("Puntuación general (opcional, se recalcula si pones detalladas)")
+
     # Puntuaciones detalladas
+    tiene_detalladas = False
     if input_si_no("¿Añadir puntuaciones detalladas?", 'n'):
         datos["punt_ambiente"] = input_puntuacion("  Ambiente")
         datos["punt_servicio"] = input_puntuacion("  Servicio")
@@ -273,6 +291,12 @@ def recoger_datos_personales():
         datos["punt_limpieza"] = input_puntuacion("  Limpieza")
         datos["punt_calidad_precio"] = input_puntuacion("  Calidad/Precio")
         datos["punt_cantidad"] = input_puntuacion("  Cantidad")
+        tiene_detalladas = True
+
+    # Si hay detalladas, el trigger de la DB calcula la puntuación → no enviamos la manual
+    # Si solo hay puntuación manual, la enviamos directamente
+    if not tiene_detalladas and puntuacion_manual is not None:
+        datos["puntuacion"] = puntuacion_manual
     
     print("\n📋 RECOMENDACIÓN (opcional)")
     print("-" * 30)
@@ -374,6 +398,8 @@ def mostrar_resumen(datos):
         ("tipo_comida", "Tipo"),
         ("subtipo_comida", "Subtipo"),
         ("precio_categoria", "Precio"),
+        ("precio_min", "Precio mín (€)"),
+        ("precio_max", "Precio máx (€)"),
         ("puntuacion", "Puntuación"),
         ("direccion", "Dirección"),
         ("telefono", "Teléfono"),
